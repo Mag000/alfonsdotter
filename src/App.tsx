@@ -1,5 +1,5 @@
 import { Image, makeStyles, shorthands } from "@fluentui/react-components";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 const useStyles = makeStyles({
@@ -36,8 +36,6 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    height: "40vh",
     backgroundColor: "rgb(198,196,188)",
     ...shorthands.padding("0px"),
   },
@@ -45,7 +43,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "left",
-
+    width: "90vw",
     fontFamily: "Source Sans Pro",
     color: "rgb(91,104,72)",
     backgroundColor: "white",
@@ -102,26 +100,34 @@ function App() {
   const footerRef = useRef<HTMLDivElement>(null); // Specify the type for the div
   const contentRef = useRef<HTMLDivElement>(null); // Specify the type for the div
 
+  const [isOpen, setIsOpen] = React.useState(false);
+
   useEffect(() => {
     const img = imgRef.current;
     const footer = footerRef.current;
     const content = contentRef.current;
 
-    if (img && content) {
+    if (img && footer) {
       // Adjust the width of the lower div to match the image
-      const updateDivHeight = () => {
-        content.style.height = `${img.clientHeight}px`;
+      const updateDivWidth = () => {
+        if (img.offsetWidth < window.innerWidth) {
+          footer.style.width = `${img.offsetWidth}px`;
+        } else {
+          footer.style.width = `${window.innerWidth * 0.9}px`;
+        }
+
+        console.log("Resizing", footer.style.width, `${img.offsetWidth}px`);
       };
 
       // Set initial width
-      updateDivHeight();
+      updateDivWidth();
 
       // Adjust on window resize
-      window.addEventListener("resize", updateDivHeight);
+      window.addEventListener("resize", updateDivWidth);
 
       // Cleanup event listener
       return () => {
-        window.removeEventListener("resize", updateDivHeight);
+        window.removeEventListener("resize", updateDivWidth);
       };
     }
   }, []);
@@ -161,7 +167,7 @@ function App() {
           ref={imgRef}
           src="img/yoga.png"
           style={{
-            width: "70%",
+            height: "60vh",
             margin: 0,
             padding: 0,
           }}
@@ -169,20 +175,17 @@ function App() {
       </div>
       {/* Footer */}
       <div ref={footerRef} className={styles.footer}>
-        <div className={styles.headline}>Rubrik</div>
-        <div className={styles.bread}>
-          Yinyoga kännetecknas av passiva positioner med en lätt, mjuk stretch
-          utförda i stillhet och medveten närvaro. Varje position hålls i minst
-          3-5 minuter vilket ger oss tid att även lugna sinnet. I yinyogan vill
-          vi komma åt kroppens fascia, bindväv, istället för musklerna. Detta
-          uppnås genom att inte gå så djupt i stretchen och hålla positionen en
-          längre stund. Stort fokus ligger på området runt höfter och ländrygg.
-          Dessa är särskilt rika på bindväv och lagrar enligt yogafilosofin
-          mycket fysiska såväl som emotionella spänningar. Välkommen att
-          kontakta mig om du behöver mer information om aktuella kurser,
-          evenemang och samarbete eller om du har någon annan fundering. Jag ser
-          fram emot att höra av dig.
-        </div>
+        Yinyoga kännetecknas av passiva positioner med en lätt, mjuk stretch
+        utförda i stillhet och medveten närvaro. Varje position hålls i minst
+        3-5 minuter vilket ger oss tid att även lugna sinnet. I yinyogan vill vi
+        komma åt kroppens fascia, bindväv, istället för musklerna. Detta uppnås
+        genom att inte gå så djupt i stretchen och hålla positionen en längre
+        stund. Stort fokus ligger på området runt höfter och ländrygg. Dessa är
+        särskilt rika på bindväv och lagrar enligt yogafilosofin mycket fysiska
+        såväl som emotionella spänningar. Välkommen att kontakta mig om du
+        behöver mer information om aktuella kurser, evenemang och samarbete
+        eller om du har någon annan fundering. Jag ser fram emot att höra av
+        dig.
       </div>
     </div>
   );
