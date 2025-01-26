@@ -1,0 +1,112 @@
+import { makeStyles } from "@fluentui/react-components";
+
+export const useStyles = makeStyles({
+  section: {
+    width: "100%",
+    height: "auto",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  section1: {
+    display: "flex",
+    maxWidth: "100%",
+    backgroundColor: "white",
+    justifyContent: "center",
+    verticalAlign: "center",
+    alignItems: "center",
+    marginTop: "20px",
+    marginBottom: "20px",
+    height: "auto",
+  },
+  hamburger: {
+    display: "none",
+    justifyContent: "left",
+    alignItems: "left",
+    verticalAlign: "center",
+    backgroundColor: "white",
+    height: "60px",
+    [`@media (max-width: 768px)`]: {
+      display: "flex",
+    },
+    position: "sticky",
+    top: 0,
+    zIndex: 99,
+  },
+  mobileMenu: {
+    backgroundColor: "rgb(198,196,188)",
+    display: "none",
+    justifyContent: "left",
+    alignItems: "left",
+    verticalAlign: "left",
+    flexDirection: "column",
+    [`@media (max-width: 768px)`]: {
+      display: "flex",
+    },
+  },
+  wideMenu: {
+    justifyContent: "center",
+    border: "solid 1px blue",
+    alignItems: "center",
+    verticalAlign: "center",
+    height: "60px",
+    gap: "30px",
+    display: "flex",
+    position: "sticky",
+    backgroundColor: "white",
+    top: 0,
+    zIndex: 99,
+    [`@media (max-width: 768px)`]: {
+      display: "none",
+    },
+  },
+
+  menuItem: {
+    fontFamily: "Source Sans Pro",
+    fontWeight: "bold",
+    color: "rgb(153,150,144)",
+    textTransform: "uppercase",
+    letterSpacing: "5px",
+    textDecoration: "none",
+  },
+
+  mobileMenuItem: {
+    fontFamily: "Source Sans Pro",
+    fontWeight: "bold",
+    color: "rgb(153,150,144)",
+    textTransform: "uppercase",
+    letterSpacing: "5px",
+    textDecoration: "none",
+  },
+  section2: {
+    backgroundColor: "rgb(198,196,188)",
+    margin: 0,
+  },
+  section3: {
+    fontFamily: "Source Sans Pro",
+    color: "rgb(91,104,72)",
+    backgroundColor: "white",
+    maxWidth: "90%",
+    width: "auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "left",
+    alignItems: "left",
+    marginLeft: "auto",
+    marginRight: "auto",
+    boxSizing: "border-box",
+    paddingTop: "20px",
+  },
+  image: {
+    maxWidth: "50%",
+    [`@media (max-width: 768px)`]: {
+      maxWidth: "90%",
+    },
+    height: "auto",
+  },
+  headline: {
+    fontWeight: "bolder",
+    lineHeight: 1.3,
+    width: "100%",
+  },
+});
