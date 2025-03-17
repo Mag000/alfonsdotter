@@ -1,0 +1,89 @@
+[
+  {
+    "navTitle": "/"
+  },
+    {
+      "navTitle": "/yoga",
+      "logoImage": {
+        "path": "/img/yoga/Logo_Yoga.jpg"
+    
+      }
+    },
+    {
+      "navTitle": "/yoga/yoga",
+      "navText":"Yoga",
+      "headline": "Yoga",
+      "text": "En text om yoga...",
+      "leadImage": {
+        "path": "/img/yoga/AY_Yoga.jpg"
+      }
+    },
+    {
+      "navTitle": "/yoga/om",
+      "navText":"Om",
+      "headline": "Om",
+      "text": "En text om yoga...",
+      "leadImage": {
+        "path": "/img/yoga/AY_Om.jpg"
+      }
+    },
+    {
+      "navTitle": "/yoga/news",
+      "navText":"Aktuellt",
+      "headline": "Aktuellt",
+      "text": "Aktuella nyheter...",
+      "leadImage": {
+        "path": "/img/yoga/AY_Aktuellt.jpg"
+      }
+    },
+    {
+      "navTitle": "/yoga/angesback",
+      "navText":"Ängesbäck gård",
+      "headline": "Ängesbäck gård",
+      "text": "En text om Ängesbäck gård...",
+      "leadImage": {
+        "path": "/img/yoga/AY_Angesback.jpg"
+      }
+    },
+    {
+      "navTitle": "/yoga/contact",
+      "navText": "Kontakt",
+      "headline": "Kontakt",
+      "leadImage": {
+        "path": "/img/yoga/AY_Kontakt.jpg"
+      }
+    },
+    {
+      "navTitle": "/form",
+      "logoImage": {
+        "path": "/img/form/Logo_Form.jpg"
+      }
+    },
+    {
+      "navTitle": "/form/om",
+      "navText": "Om",
+      "headline":"Om",
+      "text": "Detta är en text om form",
+      "leadImage": {
+        "path": "/img/form/AF_Om.jpg"
+      }
+    },
+    {
+      "navTitle": "/form/gallery",
+      "navText":"Galleri",
+      "leadImage": {
+        "path": "/img/form/AF_Portfolio.jpg"
+      },
+      "galleryItems": [{"path" : "/img/gallery/Arg_beskuren.jpg"}]
+    },
+    {
+      "navTitle": "/form/shop",
+      "navText":"Shop",
+      "leadImage": {
+        "path": "/img/form/AF_Shop.jpg"
+      },
+      "shopItems": [{"path" : "/img/gallery/Arg_beskuren.jpg"}]
+    }
+   
+  ]
+  
