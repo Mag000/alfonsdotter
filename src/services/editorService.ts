@@ -1,0 +1,252 @@
+import { IAdminSession, IValidationError } from "../model/IEditorState";
+import { IPage } from "../model/IPage";
+
+/** Admin password - in production, use REACT_APP_ADMIN_PASSWORD env var */
+const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || "admin123";
+
+/** Session duration in milliseconds (1 hour) */
+const SESSION_DURATION = 3600000;
+
+/** Local storage key for admin session */
+const SESSION_KEY = "admin-session";
+
+/**
+ * Parse JSON error to extract line and position information
+ */
+const parseJsonError = (error: SyntaxError, content: string): string => {
+  const match = error.message.match(/position (\d+)/i);
+  if (match) {
+    const position = parseInt(match[1], 10);
+    const lines = content.substring(0, position).split("\n");
+    const line = lines.length;
+    const column = lines[lines.length - 1].length + 1;
+    return `Invalid JSON at line ${line}, column ${column}: ${error.message}`;
+  }
+  return `Invalid JSON: ${error.message}`;
+};
+
+/**
+ * Load pages.json from a File object
+ */
+export const loadJsonFile = (file: File): Promise<IPage[]> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const json = JSON.parse(content);
+
+        // Validate basic structure
+        if (!Array.isArray(json)) {
+          reject(new Error("Invalid JSON: Expected an array of pages"));
+          return;
+        }
+
+        // Normalize line endings to \n
+        const normalized = normalizeLineEndings(json);
+
+        resolve(normalized);
+      } catch (error) {
+        if (error instanceof SyntaxError) {
+          const content = (e.target?.result as string) || "";
+          reject(new Error(parseJsonError(error, content)));
+        } else {
+          reject(error);
+        }
+      }
+    };
+
+    reader.onerror = () => {
+      reject(new Error("Failed to read file"));
+    };
+
+    reader.readAsText(file);
+  });
+};
+
+/**
+ * Normalize line endings to \n in all text fields
+ */
+const normalizeLineEndings = (pages: IPage[]): IPage[] => {
+  return pages.map((page) => ({
+    ...page,
+    text: page.text?.replace(/\r\n/g, "\n"),
+    headline: page.headline?.replace(/\r\n/g, "\n"),
+    navText: page.navText?.replace(/\r\n/g, "\n"),
+  }));
+};
+
+/**
+ * Download pages as JSON file
+ */
+export const downloadJson = (
+  pages: IPage[],
+  filename: string = "pages.json",
+): void => {
+  const json = JSON.stringify(pages, null, "\t");
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
+/**
+ * Validate pages and return list of errors/warnings
+ */
+export const validatePages = (pages: IPage[]): IValidationError[] => {
+  const errors: IValidationError[] = [];
+  const navTitles = new Set<string>();
+
+  pages.forEach((page, pageIndex) => {
+    // V-001: navTitle must be non-empty
+    if (!page.navTitle || page.navTitle.trim() === "") {
+      errors.push({
+        pageIndex,
+        field: "navTitle",
+        message: "Navigation title is required",
+        severity: "error",
+      });
+    } else {
+      // V-002: navTitle must be unique
+      if (navTitles.has(page.navTitle)) {
+        errors.push({
+          pageIndex,
+          field: "navTitle",
+          message: `Duplicate navigation title: ${page.navTitle}`,
+          severity: "error",
+        });
+      }
+      navTitles.add(page.navTitle);
+
+      // V-003: navTitle should start with /
+      if (!page.navTitle.startsWith("/")) {
+        errors.push({
+          pageIndex,
+          field: "navTitle",
+          message: "Navigation title should start with /",
+          severity: "warning",
+        });
+      }
+    }
+
+    // Validate images
+    if (page.logoImage) {
+      validateImage(page.logoImage, pageIndex, "logoImage", errors);
+    }
+    if (page.leadImage) {
+      validateImage(page.leadImage, pageIndex, "leadImage", errors);
+    }
+
+    // Validate gallery items
+    page.galleryItems?.forEach((item, itemIndex) => {
+      if (!item.path || item.path.trim() === "") {
+        errors.push({
+          pageIndex,
+          field: `galleryItems[${itemIndex}].path`,
+          message: "Gallery item path is required",
+          severity: "error",
+        });
+      } else if (!item.path.startsWith("/img/")) {
+        errors.push({
+          pageIndex,
+          field: `galleryItems[${itemIndex}].path`,
+          message: "Path should start with /img/",
+          severity: "warning",
+        });
+      }
+    });
+
+    // Validate shop items
+    page.shopItems?.forEach((item, itemIndex) => {
+      if (!item.path || item.path.trim() === "") {
+        errors.push({
+          pageIndex,
+          field: `shopItems[${itemIndex}].path`,
+          message: "Shop item path is required",
+          severity: "error",
+        });
+      }
+
+      // V-031: price must be positive or null
+      if (item.price !== undefined && item.price !== null && item.price < 0) {
+        errors.push({
+          pageIndex,
+          field: `shopItems[${itemIndex}].price`,
+          message: "Price must be positive or empty",
+          severity: "error",
+        });
+      }
+    });
+  });
+
+  return errors;
+};
+
+/**
+ * Validate an image field
+ */
+const validateImage = (
+  image: { path?: string },
+  pageIndex: number,
+  field: string,
+  errors: IValidationError[],
+): void => {
+  if (image.path && !image.path.startsWith("/img/")) {
+    errors.push({
+      pageIndex,
+      field: `${field}.path`,
+      message: "Image path should start with /img/",
+      severity: "warning",
+    });
+  }
+};
+
+/**
+ * Check if current session is authenticated
+ */
+export const isAuthenticated = (): boolean => {
+  try {
+    const sessionStr = localStorage.getItem(SESSION_KEY);
+    if (!sessionStr) return false;
+
+    const session: IAdminSession = JSON.parse(sessionStr);
+    return session.authenticated && session.expires > Date.now();
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * Attempt to login with password
+ */
+export const login = (password: string): boolean => {
+  if (password === ADMIN_PASSWORD) {
+    const session: IAdminSession = {
+      authenticated: true,
+      expires: Date.now() + SESSION_DURATION,
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    return true;
+  }
+  return false;
+};
+
+/**
+ * Logout and clear session
+ */
+export const logout = (): void => {
+  localStorage.removeItem(SESSION_KEY);
+};
+
+/**
+ * Deep compare two page arrays for equality
+ */
+export const pagesEqual = (a: IPage[], b: IPage[]): boolean => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};

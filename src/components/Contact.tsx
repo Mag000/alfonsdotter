@@ -1,6 +1,7 @@
 import { Button, Input, Label, Textarea } from "@fluentui/react-components";
 import { IContact } from "../model/IContact";
 import { useStyles } from "../utils/styles";
+import TinyMCE from "./TinyMCE";
 
 export const Contact = (props: IContact) => {
   const styles = useStyles();
@@ -35,6 +36,7 @@ export const Contact = (props: IContact) => {
         <Textarea id="message" style={{ backgroundColor: "white" }} />
       </div>
       <div className={styles.contactField}>
+        <TinyMCE></TinyMCE>
         <Button id="message" className={styles.sendButton}>
           SKICKA MEDDELANDE
         </Button>

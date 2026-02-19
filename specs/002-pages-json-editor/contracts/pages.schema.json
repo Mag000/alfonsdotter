@@ -1,0 +1,199 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://alfonsdotter.se/schemas/pages.json",
+  "title": "Pages Configuration",
+  "description": "Schema for pages.json - website content configuration for Alfonsdotter",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Page"
+  },
+  "definitions": {
+    "Page": {
+      "type": "object",
+      "description": "A website page with navigation info, content, and media collections",
+      "required": ["navTitle"],
+      "properties": {
+        "navTitle": {
+          "type": "string",
+          "description": "Route/identifier for the page, e.g., '/portfolio'",
+          "minLength": 1
+        },
+        "navText": {
+          "type": "string",
+          "description": "Display text for navigation menu"
+        },
+        "headline": {
+          "type": "string",
+          "description": "Page heading text"
+        },
+        "text": {
+          "type": "string",
+          "description": "Body content text. Use \\n for line breaks."
+        },
+        "logoImage": {
+          "$ref": "#/definitions/Image"
+        },
+        "leadImage": {
+          "$ref": "#/definitions/Image"
+        },
+        "contactForm": {
+          "type": "boolean",
+          "description": "Whether to display contact form on this page"
+        },
+        "galleryItems": {
+          "type": "array",
+          "description": "Portfolio gallery entries for this page",
+          "items": {
+            "$ref": "#/definitions/GalleryItem"
+          }
+        },
+        "shopItems": {
+          "type": "array",
+          "description": "Shop product entries for this page",
+          "items": {
+            "$ref": "#/definitions/ShopItem"
+          }
+        },
+        "menuItems": {
+          "type": "array",
+          "description": "Nested subpages for menu structure",
+          "items": {
+            "$ref": "#/definitions/Page"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Image": {
+      "type": "object",
+      "description": "An image reference with path and metadata",
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Image path relative to public folder, e.g., '/img/gallery/art.jpg'",
+          "pattern": "^/img/.+"
+        },
+        "altText": {
+          "type": "string",
+          "description": "Accessibility description for the image"
+        },
+        "width": {
+          "type": "integer",
+          "description": "Image width in pixels",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "description": "Image height in pixels",
+          "minimum": 1
+        },
+        "description": {
+          "type": "string",
+          "description": "Extended description of the image"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GalleryItem": {
+      "type": "object",
+      "description": "An artwork entry for portfolio display",
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Image path for the artwork",
+          "pattern": "^/img/.+"
+        },
+        "title": {
+          "type": "string",
+          "description": "Artwork title"
+        },
+        "tagLine": {
+          "type": "string",
+          "description": "Short promotional text"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed artwork description"
+        },
+        "thumbnail": {
+          "$ref": "#/definitions/Image"
+        },
+        "variants": {
+          "type": "array",
+          "description": "Variations of the artwork",
+          "items": {
+            "$ref": "#/definitions/GalleryItem"
+          }
+        },
+        "navTitle": {
+          "type": "string",
+          "description": "Navigation identifier (legacy)"
+        },
+        "altText": {
+          "type": "string",
+          "description": "Image alt text (legacy, prefer using Image object)"
+        },
+        "width": {
+          "type": "integer",
+          "description": "Image width in pixels",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "description": "Image height in pixels",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ShopItem": {
+      "type": "object",
+      "description": "A purchasable artwork entry",
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Image path for the product",
+          "pattern": "^/img/.+"
+        },
+        "title": {
+          "type": "string",
+          "description": "Product title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Product description"
+        },
+        "price": {
+          "oneOf": [
+            {
+              "type": "number",
+              "description": "Price in SEK",
+              "minimum": 0
+            },
+            {
+              "type": "null",
+              "description": "null indicates 'contact for pricing'"
+            }
+          ]
+        },
+        "thumbnail": {
+          "$ref": "#/definitions/Image"
+        },
+        "image": {
+          "$ref": "#/definitions/Image"
+        },
+        "variants": {
+          "type": "array",
+          "description": "Product variants",
+          "items": {
+            "$ref": "#/definitions/ShopItem"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

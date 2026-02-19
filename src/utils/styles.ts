@@ -25,6 +25,7 @@ export const useStyles = makeStyles({
     verticalAlign: "center",
     alignItems: "center",
     height: "auto",
+    marginTop: "70px",
   },
   mobileMenu: {
     display: "none",
@@ -153,6 +154,7 @@ export const useStyles = makeStyles({
   textContent: {
     lineHeight: 1,
     width: "100%",
+    whiteSpace: "pre-wrap",
   },
 
   sendButton: {
@@ -169,5 +171,26 @@ export const useStyles = makeStyles({
     justifyContent: "space-between",
   },
 
-  galleryItem: { maxWidth: "270px" },
+  galleryItem: {
+    maxWidth: "270px",
+    cursor: "pointer",
+    position: "relative",
+    "&:hover $overlay": {
+      opacity: 0.5,
+    },
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjusted to rgba for transparency
+    color: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0,
+    transition: "opacity 0.9s ease",
+  },
 });

@@ -1,4 +1,6 @@
+import { IGalleryItem } from "./IGalleryItem";
 import { IImage } from "./IImage";
+import { IShopItem } from "./IShopItem";
 
 export interface IPage {
   navTitle: string;
@@ -8,6 +10,7 @@ export interface IPage {
   logoImage?: IImage;
   leadImage?: IImage;
   contactForm?: boolean;
-  galleryItems?: IImage[];
+  galleryItems?: IGalleryItem[];
+  shopItems?: IShopItem[];
   menuItems?: IPage[];
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IImage } from "../model/IImage";
+import { IGalleryItem } from "../model/IGalleryItem";
 import { IPage } from "../model/IPage";
 import { pageService } from "../services/pageService";
 import { useStyles } from "../utils/styles";
@@ -12,6 +12,7 @@ const ResponsivePage = (props: IPage) => {
   const [imageWidth, setImageWidth] = useState("900px");
   const [menuItems, setMenuItems] = useState<IPage[]>([]);
   const [cartOpen, toggleCartOpen] = useState<boolean>(false);
+  const [serie, setSerie] = useState<IGalleryItem>();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,13 +31,15 @@ const ResponsivePage = (props: IPage) => {
   }, []);
 
   useEffect(() => {
-    if (props.navTitle != "/") {
+    if (props.navTitle != "/tt") {
       pageService.getPages().then((pages: IPage[]) => {
         const mItems = pages.filter((m) => m.navText);
 
         setMenuItems(
-          mItems.filter((f) =>
-            f.navTitle.startsWith("/" + location.pathname.split("/")[1])
+          mItems.filter(
+            (f) =>
+              // f.navTitle.startsWith("/" + location.pathname.split("/")[1])
+              !f.navTitle.startsWith("/yoga")
           )
         );
       });
@@ -46,15 +49,19 @@ const ResponsivePage = (props: IPage) => {
   return (
     <>
       <div className={styles.page}>
-        {menuItems && props.navTitle != "/" && (
+        {menuItems && props.navTitle != "/tt" && (
           <Menu
             width={imageWidth}
             menuItems={menuItems}
             onCartClicked={() => toggleCartOpen(!cartOpen)}
+            onNavigate={(navTitle: string) => {
+              setSerie(undefined);
+              navigate(navTitle);
+            }}
           />
         )}
 
-        {props.navTitle == "/" && (
+        {/* {props.navTitle == "/" && (
           <div
             style={{
               display: "flex",
@@ -76,7 +83,7 @@ const ResponsivePage = (props: IPage) => {
               alt="form"
             />
           </div>
-        )}
+        )} */}
 
         {props.logoImage && (
           <div className={styles.section1}>
@@ -88,8 +95,11 @@ const ResponsivePage = (props: IPage) => {
           </div>
         )}
 
-        {props.leadImage && (
-          <div className={`${styles.section} ${styles.section2}`}>
+        {props.leadImage && !serie && (
+          <div
+            className={`${styles.section} ${styles.section2}`}
+            style={{ marginTop: props.logoImage ? 0 : "70px" }}
+          >
             <img
               className={styles.image}
               src={props.leadImage?.path}
@@ -135,16 +145,88 @@ const ResponsivePage = (props: IPage) => {
           </div>
         )}
 
-        {(props.galleryItems || []).length > 0 && (
+        {(props.galleryItems || []).length > 0 && !serie && (
           <div
             className={styles.galleryContainer}
             style={{ maxWidth: imageWidth }}
           >
-            {(props.galleryItems || []).map((i: IImage) => (
-              <div className={styles.galleryItem}>
+            {(props.galleryItems || []).map((i: IGalleryItem) => (
+              <div className={styles.galleryItem} onClick={() => setSerie(i)}>
                 <img src={i.path} style={{ maxWidth: "100%" }} />
+                <div
+                  className={styles.overlay}
+                  onMouseOver={(e) => {
+                    (e.currentTarget as any).style.opacity = 1;
+                  }}
+                  onMouseOut={(e) => {
+                    (e.currentTarget as any).style.opacity = 0;
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      paddingLeft: "10px",
+                      paddingRight: "10px",
+                      paddingTop: "5px",
+                      paddingBottom: "5px",
+                    }}
+                  >
+                    <h1 style={{ padding: 0, margin: 0, fontSize: "16px" }}>
+                      {i.title}
+                    </h1>
+                    <p style={{ fontSize: "14px" }}>{i.tagLine}</p>
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+        )}
+        {serie && (
+          <div
+            className={styles.galleryContainer}
+            style={{
+              width: imageWidth,
+              flexDirection: "row",
+              marginTop: "70px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "60%",
+              }}
+            >
+              {(serie.variants || [serie]).map((i: IGalleryItem) => (
+                <img
+                  src={i.path}
+                  style={{ width: "100%", paddingBottom: "30px" }}
+                />
+              ))}
+            </div>
+
+            <div
+              style={{
+                width: "35%",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "5px",
+                  paddingBottom: "5px",
+                }}
+              >
+                <h1 style={{ padding: 0, margin: 0, fontSize: "20px" }}>
+                  {serie.title}
+                </h1>
+                <p style={{ fontSize: "16px" }}>{serie.description}</p>
+              </div>
+            </div>
           </div>
         )}
         {/* {props.navTitle != "/" && (

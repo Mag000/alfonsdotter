@@ -1,7 +1,13 @@
 import { Spinner } from "@fluentui/react-components";
-import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider,
+} from "react-router-dom";
 import ResponsivePage from "./components/ResponsivePage";
+import TinyMCE from "./components/TinyMCE";
+import PagesEditor from "./components/admin/PagesEditor";
 import { IPage } from "./model/IPage";
 import { pageService } from "./services/pageService";
 
@@ -14,19 +20,20 @@ export default function App() {
     });
   }, []);
 
-  return pages.length > 0 ? (
-    <BrowserRouter>
-      <Routes>
-        {pages.map((p) => (
-          <Route
-            key={p.navTitle}
-            path={`${p.navTitle}`}
-            element={<ResponsivePage {...p} />}
-          />
-        ))}
-      </Routes>
-    </BrowserRouter>
-  ) : (
-    <Spinner />
-  );
+  const router = useMemo(() => {
+    if (pages.length === 0) return null;
+
+    const routes: RouteObject[] = [
+      ...pages.map((p) => ({
+        path: p.navTitle,
+        element: <ResponsivePage {...p} />,
+      })),
+      { path: "/admin", element: <PagesEditor /> },
+      { path: "/tinymce", element: <TinyMCE /> },
+    ];
+
+    return createBrowserRouter(routes);
+  }, [pages]);
+
+  return router ? <RouterProvider router={router} /> : <Spinner />;
 }
