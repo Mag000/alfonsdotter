@@ -1,8 +1,8 @@
 import { IAdminSession, IValidationError } from "../model/IEditorState";
 import { IPage } from "../model/IPage";
 
-/** Admin password - in production, use REACT_APP_ADMIN_PASSWORD env var */
-const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || "admin123";
+/** Admin password - in production, use VITE_ADMIN_PASSWORD env var */
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
 
 /** Session duration in milliseconds (1 hour) */
 const SESSION_DURATION = 3600000;
@@ -249,4 +249,69 @@ export const logout = (): void => {
  */
 export const pagesEqual = (a: IPage[], b: IPage[]): boolean => {
   return JSON.stringify(a) === JSON.stringify(b);
+};
+
+/** Base path for the Azure Functions API. Vite proxies /api → http://localhost:7071 in dev. */
+const API_BASE = "/api";
+
+/**
+ * Build the URL for a function endpoint, appending the function key when set.
+ * Set VITE_FUNCTIONS_KEY in .env.production for deployed environments.
+ */
+const functionUrl = (path: string): string => {
+  const key = import.meta.env.VITE_FUNCTIONS_KEY;
+  return key ? `${API_BASE}/${path}?code=${key}` : `${API_BASE}/${path}`;
+};
+
+/**
+ * Deploy pages.json to the web host via SFTP through the Azure Function.
+ * Throws on failure.
+ */
+export const deployPages = async (pages: IPage[]): Promise<void> => {
+  const json = JSON.stringify(pages, null, "\t");
+
+  const res = await fetch(functionUrl("deploy/pages"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: json,
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({ error: res.statusText }));
+    throw new Error(
+      (data as { error?: string }).error ?? `Deploy failed: ${res.status}`,
+    );
+  }
+};
+
+/**
+ * Upload an image file to the web host via SFTP through the Azure Function.
+ * @param file   The image file to upload.
+ * @param folder Optional subdirectory under /img/ (e.g. "yoga").
+ * @returns The public path of the uploaded image (e.g. "/img/yoga/photo.jpg").
+ */
+export const uploadImage = async (
+  file: File,
+  folder?: string,
+): Promise<string> => {
+  const form = new FormData();
+  form.append("file", file);
+  if (folder) form.append("folder", folder);
+
+  const res = await fetch(functionUrl("deploy/upload"), {
+    method: "POST",
+    body: form,
+  });
+
+  const data = (await res.json()) as {
+    success: boolean;
+    path?: string;
+    error?: string;
+  };
+
+  if (!res.ok || !data.success) {
+    throw new Error(data.error ?? `Upload failed: ${res.status}`);
+  }
+
+  return data.path!;
 };

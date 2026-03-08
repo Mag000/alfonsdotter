@@ -5,6 +5,7 @@ import {
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
+import HousecatPage from "./components/HousecatPage";
 import ResponsivePage from "./components/ResponsivePage";
 import TinyMCE from "./components/TinyMCE";
 import PagesEditor from "./components/admin/PagesEditor";
@@ -26,7 +27,11 @@ export default function App() {
     const routes: RouteObject[] = [
       ...pages.map((p) => ({
         path: p.navTitle,
-        element: <ResponsivePage {...p} />,
+        element: p.navTitle.startsWith("/new") ? (
+          <HousecatPage {...p} />
+        ) : (
+          <ResponsivePage {...p} />
+        ),
       })),
       { path: "/admin", element: <PagesEditor /> },
       { path: "/tinymce", element: <TinyMCE /> },

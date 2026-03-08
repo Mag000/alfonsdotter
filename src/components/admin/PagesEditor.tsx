@@ -24,6 +24,7 @@ import {
   ArrowRedo24Regular,
   ArrowUndo24Regular,
   ArrowUpload24Regular,
+  CloudArrowUp24Regular,
   SignOut24Regular,
 } from "@fluentui/react-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -31,6 +32,7 @@ import { useBlocker } from "react-router-dom";
 import { IEditorHistory, IValidationError } from "../../model/IEditorState";
 import { IPage } from "../../model/IPage";
 import {
+  deployPages,
   downloadJson,
   isAuthenticated,
   loadJsonFile,
@@ -109,6 +111,10 @@ export const PagesEditor: React.FC = () => {
     [],
   );
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [deployStatus, setDeployStatus] = useState<
+    "idle" | "deploying" | "success" | "error"
+  >("idle");
+  const [deployError, setDeployError] = useState<string | null>(null);
 
   // History state for undo/redo
   const [history, setHistory] = useState<IEditorHistory>({
@@ -265,6 +271,21 @@ export const PagesEditor: React.FC = () => {
     [pages, selectedPageIndex, updatePages],
   );
 
+  // Handle deploy via SFTP
+  const handleDeploy = useCallback(async () => {
+    setDeployStatus("deploying");
+    setDeployError(null);
+    try {
+      await deployPages(pages);
+      setSavedPages(JSON.parse(JSON.stringify(pages)));
+      setDeployStatus("success");
+      setTimeout(() => setDeployStatus("idle"), 4000);
+    } catch (error) {
+      setDeployError(error instanceof Error ? error.message : "Deploy failed");
+      setDeployStatus("error");
+    }
+  }, [pages]);
+
   // Handle logout
   const handleLogout = useCallback(() => {
     logout();
@@ -322,6 +343,16 @@ export const PagesEditor: React.FC = () => {
             </ToolbarButton>
           </Tooltip>
 
+          <Tooltip content="Deploy pages.json via SFTP" relationship="label">
+            <ToolbarButton
+              icon={<CloudArrowUp24Regular />}
+              onClick={handleDeploy}
+              disabled={pages.length === 0 || deployStatus === "deploying"}
+            >
+              {deployStatus === "deploying" ? "Deploying…" : "Deploy"}
+            </ToolbarButton>
+          </Tooltip>
+
           <ToolbarDivider />
 
           <Tooltip content="Undo (Ctrl+Z)" relationship="label">
@@ -362,6 +393,24 @@ export const PagesEditor: React.FC = () => {
             <MessageBarBody>
               <MessageBarTitle>Load Error</MessageBarTitle>
               {loadError}
+            </MessageBarBody>
+          </MessageBar>
+        )}
+
+        {/* Deploy status messages */}
+        {deployStatus === "success" && (
+          <MessageBar intent="success" className={styles.messageBar}>
+            <MessageBarBody>
+              <MessageBarTitle>Deployed</MessageBarTitle>
+              pages.json has been published to the server.
+            </MessageBarBody>
+          </MessageBar>
+        )}
+        {deployStatus === "error" && deployError && (
+          <MessageBar intent="error" className={styles.messageBar}>
+            <MessageBarBody>
+              <MessageBarTitle>Deploy Failed</MessageBarTitle>
+              {deployError}
             </MessageBarBody>
           </MessageBar>
         )}
