@@ -6,9 +6,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import HousecatPage from "./components/HousecatPage";
-import ResponsivePage from "./components/ResponsivePage";
 import TinyMCE from "./components/TinyMCE";
 import PagesEditor from "./components/admin/PagesEditor";
+import { CartProvider } from "./context/CartContext";
 import { IPage } from "./model/IPage";
 import { pageService } from "./services/pageService";
 
@@ -27,11 +27,7 @@ export default function App() {
     const routes: RouteObject[] = [
       ...pages.map((p) => ({
         path: p.navTitle,
-        element: p.navTitle.startsWith("/new") ? (
-          <HousecatPage {...p} />
-        ) : (
-          <ResponsivePage {...p} />
-        ),
+        element: <HousecatPage {...p} />,
       })),
       { path: "/admin", element: <PagesEditor /> },
       { path: "/tinymce", element: <TinyMCE /> },
@@ -40,5 +36,9 @@ export default function App() {
     return createBrowserRouter(routes);
   }, [pages]);
 
-  return router ? <RouterProvider router={router} /> : <Spinner />;
+  return (
+    <CartProvider>
+      {router ? <RouterProvider router={router} /> : <Spinner />}
+    </CartProvider>
+  );
 }

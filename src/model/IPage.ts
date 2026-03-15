@@ -2,6 +2,11 @@ import { IGalleryItem } from "./IGalleryItem";
 import { IImage } from "./IImage";
 import { IShopItem } from "./IShopItem";
 
+export interface IBottomSection {
+  image?: IImage;
+  text?: string;
+}
+
 export interface IPage {
   navTitle: string;
   navText?: string;
@@ -13,4 +18,5 @@ export interface IPage {
   galleryItems?: IGalleryItem[];
   shopItems?: IShopItem[];
   menuItems?: IPage[];
+  bottomSection?: IBottomSection;
 }

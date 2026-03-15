@@ -3,10 +3,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Allow the Vite dev server to call us during local development
+// Allow the Vite dev server (dev) and the live site (production)
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? ["http://localhost:5173"];
+
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader()));
 

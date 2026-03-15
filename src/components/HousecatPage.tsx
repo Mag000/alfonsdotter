@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { IGalleryItem } from "../model/IGalleryItem";
 import { IPage } from "../model/IPage";
 import { pageService } from "../services/pageService";
+import ShopGrid from "./ShopGrid";
+import ShoppingCartWithBadge from "./ShoppingCartWithBadge";
 
 const useStyles = makeStyles({
   root: {
     fontFamily: "'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif",
-    backgroundColor: "#fff",
+    backgroundColor: "rgb(235, 231, 221)",
     minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
@@ -25,7 +27,6 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     paddingInline: "24px",
     paddingBlock: "24px",
-    backgroundColor: "#fff",
     width: "100%",
     boxSizing: "border-box",
     position: "relative",
@@ -36,11 +37,12 @@ const useStyles = makeStyles({
     },
   },
   logo: {
-    maxWidth: "180px",
+    maxWidth: "234px",
     height: "auto",
     cursor: "pointer",
     display: "block",
     flexShrink: "0",
+    alignSelf: "center",
   },
   nav: {
     display: "flex",
@@ -55,36 +57,62 @@ const useStyles = makeStyles({
     [`@media (max-width: 600px)`]: {
       gap: "20px",
     },
-    [`@media (max-width: 768px)`]: {
-      display: "none",
-    },
   },
   navItem: {
     fontFamily: "'Source Sans Pro', sans-serif",
     fontSize: "0.78rem",
     fontWeight: "400",
-    letterSpacing: "3px",
-    textTransform: "uppercase",
+    letterSpacing: "0.5px",
     color: "#999",
     cursor: "pointer",
-    paddingBottom: "4px",
-    borderBottom: "1px solid transparent",
-    transition: "color 0.2s, border-color 0.2s",
+    transition: "color 0.2s",
     ":hover": {
       color: "#333",
-      borderBottomColor: "#333",
     },
   },
   navItemActive: {
     color: "#333",
-    borderBottomColor: "#333",
+    fontWeight: "700",
+    borderBottomColor: "transparent",
+  },
+  headerIcons: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "16px",
+    flexShrink: "0",
+  },
+  navRight: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "24px",
+    [`@media (max-width: 768px)`]: {
+      display: "none",
+    },
+  },
+  headerIconBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    padding: "4px",
+    color: "#999",
+    ":hover": {
+      color: "#333",
+    },
   },
   navRule: {
-    width: "100%",
+    position: "absolute",
+    bottom: "0",
+    left: "0",
+    right: "0",
     height: "1px",
     backgroundColor: "#e6e6e2",
-    marginTop: "22px",
     border: "none",
+    margin: "0",
   },
   hamburgerBtn: {
     display: "none",
@@ -105,7 +133,7 @@ const useStyles = makeStyles({
     top: "100%",
     left: "0",
     right: "0",
-    backgroundColor: "#fff",
+    backgroundColor: "rgb(235, 231, 221)",
     boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
     zIndex: "200",
     display: "flex",
@@ -117,8 +145,7 @@ const useStyles = makeStyles({
     fontFamily: "'Source Sans Pro', sans-serif",
     fontSize: "0.85rem",
     fontWeight: "400",
-    letterSpacing: "3px",
-    textTransform: "uppercase",
+    letterSpacing: "0.5px",
     color: "#999",
     cursor: "pointer",
     paddingBlock: "14px",
@@ -130,9 +157,8 @@ const useStyles = makeStyles({
   mobileMenuItemActive: {
     fontFamily: "'Source Sans Pro', sans-serif",
     fontSize: "0.85rem",
-    fontWeight: "400",
-    letterSpacing: "3px",
-    textTransform: "uppercase",
+    fontWeight: "700",
+    letterSpacing: "0.5px",
     color: "#333",
     cursor: "pointer",
     paddingBlock: "14px",
@@ -150,7 +176,7 @@ const useStyles = makeStyles({
   heroPlaceholder: {
     width: "100%",
     height: "320px",
-    backgroundColor: "#f5f5f0",
+    backgroundColor: "rgb(235, 231, 221)",
   },
 
   // ── Text content block ────────────────────────────────────────────────────
@@ -222,6 +248,7 @@ const useStyles = makeStyles({
     maxWidth: "1200px",
     marginInline: "auto",
     paddingInline: "24px",
+    paddingTop: "20px",
     paddingBottom: "64px",
     width: "100%",
     boxSizing: "border-box",
@@ -229,7 +256,7 @@ const useStyles = makeStyles({
   galleryGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "10px",
+    gap: "20px",
     [`@media (max-width: 900px)`]: {
       gridTemplateColumns: "repeat(2, 1fr)",
     },
@@ -276,17 +303,78 @@ const useStyles = makeStyles({
     textTransform: "uppercase",
   },
 
+  // ── Bottom section ──────────────────────────────────────────────────
+  bottomSection: {
+    backgroundColor: "rgb(196, 194, 187)",
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "34px",
+    paddingInline: "34px",
+    paddingBlock: "34px",
+    boxSizing: "border-box",
+    [`@media (max-width: 700px)`]: {
+      flexDirection: "column",
+      gap: "17px",
+      paddingInline: "17px",
+    },
+  },
+  bottomImage: {
+    width: "28%",
+    maxWidth: "280px",
+    height: "auto",
+    display: "block",
+    flexShrink: "0",
+    [`@media (max-width: 700px)`]: {
+      width: "100%",
+      maxWidth: "100%",
+    },
+  },
+  bottomText: {
+    flex: "1",
+    fontSize: "1rem",
+    lineHeight: "1.8",
+    color: "#fff",
+    whiteSpace: "pre-wrap",
+    margin: "0",
+  },
+
   // ── Footer ────────────────────────────────────────────────────────────────
   footer: {
     marginTop: "auto",
-    borderTop: "1px solid #e6e6e2",
-    paddingBlock: "28px",
+    width: "100%",
+    backgroundColor: "rgb(235, 231, 221)",
+    paddingBlock: "20px",
+    paddingInline: "24px",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     fontSize: "0.75rem",
-    color: "#bbb",
-    letterSpacing: "2px",
-    textTransform: "uppercase",
+    color: "#555",
+    letterSpacing: "1.5px",
+    boxSizing: "border-box",
+    [`@media (max-width: 600px)`]: {
+      flexDirection: "column",
+      gap: "12px",
+      alignItems: "flex-start",
+    },
+  },
+  footerLinks: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "24px",
+    alignItems: "center",
+  },
+  footerLink: {
+    color: "#555",
+    textDecoration: "none",
+    letterSpacing: "1.5px",
+    fontSize: "0.75rem",
+    ":hover": {
+      textDecoration: "underline",
+    },
   },
 });
 
@@ -302,13 +390,29 @@ const HousecatPage = (props: IPage) => {
 
   useEffect(() => {
     pageService.getPages().then((pages: IPage[]) => {
-      const root = pages.find((p) => p.navTitle === "/new");
-      if (root?.logoImage?.path) {
-        setLogoSrc(root.logoImage.path);
+      // Derive the root path: /new/home → /new, /about → /
+      const firstSegment = props.navTitle.split("/").filter(Boolean)[0];
+      const rootPath = firstSegment ? `/${firstSegment}` : "/";
+
+      const rootPage = pages.find((p) => p.navTitle === rootPath);
+      if (rootPage?.logoImage?.path) {
+        setLogoSrc(rootPage.logoImage.path);
       }
-      setMenuItems(
-        pages.filter((p) => p.navTitle.startsWith("/new/") && !!p.navText),
-      );
+
+      // Nav items: at root level show all depth-1 pages with navText;
+      // in a sub-tree (e.g. /new/*) show pages under that prefix.
+      const navPages =
+        rootPath === "/"
+          ? pages.filter(
+              (p) =>
+                p.navTitle.split("/").filter(Boolean).length <= 1 &&
+                !!p.navText,
+            )
+          : pages.filter(
+              (p) => p.navTitle.startsWith(`${rootPath}/`) && !!p.navText,
+            );
+
+      setMenuItems(navPages);
     });
   }, []);
 
@@ -334,6 +438,7 @@ const HousecatPage = (props: IPage) => {
 
   const isAboutPage = props.navTitle.includes("/about");
   const hasGallery = (props.galleryItems || []).length > 0;
+  const hasShop = (props.shopItems || []).length > 0;
 
   return (
     <div className={styles.root}>
@@ -344,24 +449,59 @@ const HousecatPage = (props: IPage) => {
             src={logoSrc}
             alt="Logo"
             className={styles.logo}
-            onClick={() => navigate("/new")}
+            onClick={() => {
+              const firstSegment = props.navTitle.split("/").filter(Boolean)[0];
+              navigate(firstSegment ? `/${firstSegment}` : "/");
+            }}
           />
         )}
 
-        <nav>
-          <ul className={styles.nav}>
-            {menuItems.map((item) => (
-              <li
-                key={item.navTitle}
-                className={`${styles.navItem}${props.navTitle === item.navTitle ? ` ${styles.navItemActive}` : ""}`}
-                onClick={() => navigate(item.navTitle)}
+        <div className={styles.navRight}>
+          <nav>
+            <ul className={styles.nav}>
+              {menuItems.map((item) => (
+                <li
+                  key={item.navTitle}
+                  className={`${styles.navItem}${props.navTitle === item.navTitle ? ` ${styles.navItemActive}` : ""}`}
+                  onClick={() => navigate(item.navTitle)}
+                >
+                  {item.navText}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className={styles.headerIcons}>
+            <a
+              href="https://www.instagram.com/byalfonsdotter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.headerIconBtn}
+              aria-label="Instagram"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {item.navText}
-              </li>
-            ))}
-          </ul>
-        </nav>
-
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle
+                  cx="17.5"
+                  cy="6.5"
+                  r="0.8"
+                  fill="currentColor"
+                  stroke="none"
+                />
+              </svg>
+            </a>
+            <ShoppingCartWithBadge />
+          </div>{" "}
+        </div>
         <button
           className={styles.hamburgerBtn}
           onClick={() => setMenuOpen((o) => !o)}
@@ -395,44 +535,25 @@ const HousecatPage = (props: IPage) => {
         <hr className={styles.navRule} />
       </header>
 
-      {/* ── About layout: image + text side by side ── */}
-      {isAboutPage && props.leadImage ? (
-        <div className={styles.aboutSection}>
-          <img
-            src={props.leadImage.path}
-            alt={props.leadImage.altText || ""}
-            className={styles.aboutImage}
-          />
-          <div className={styles.aboutText}>
-            {props.headline && (
-              <h1 className={styles.headline}>{props.headline}</h1>
-            )}
-            {props.text && <p className={styles.bodyText}>{props.text}</p>}
-          </div>
-        </div>
+      {/* ── Lead image — always full width ── */}
+      {props.leadImage ? (
+        <img
+          src={props.leadImage.path}
+          alt={props.leadImage.altText || ""}
+          className={styles.hero}
+        />
       ) : (
-        <>
-          {/* ── Hero image ── */}
-          {props.leadImage ? (
-            <img
-              src={props.leadImage.path}
-              alt={props.leadImage.altText || ""}
-              className={styles.hero}
-            />
-          ) : (
-            <div className={styles.heroPlaceholder} />
-          )}
+        <div className={styles.heroPlaceholder} />
+      )}
 
-          {/* ── Headline + text ── */}
-          {(props.headline || props.text) && (
-            <div className={styles.contentBlock}>
-              {props.headline && (
-                <h1 className={styles.headline}>{props.headline}</h1>
-              )}
-              {props.text && <p className={styles.bodyText}>{props.text}</p>}
-            </div>
+      {/* ── Headline + text ── */}
+      {(props.headline || props.text) && (
+        <div className={styles.contentBlock}>
+          {props.headline && (
+            <h1 className={styles.headline}>{props.headline}</h1>
           )}
-        </>
+          {props.text && <p className={styles.bodyText}>{props.text}</p>}
+        </div>
       )}
 
       {/* ── Gallery grid ── */}
@@ -452,6 +573,9 @@ const HousecatPage = (props: IPage) => {
         </section>
       )}
 
+      {/* ── Shop grid ── */}
+      {hasShop && <ShopGrid items={props.shopItems!} />}
+
       {/* ── Lightbox ── */}
       {lightboxItem && (
         <div
@@ -469,9 +593,42 @@ const HousecatPage = (props: IPage) => {
         </div>
       )}
 
+      {/* ── Bottom section ── */}
+      {props.bottomSection &&
+        (props.bottomSection.image || props.bottomSection.text) && (
+          <div className={styles.bottomSection}>
+            {props.bottomSection.image && (
+              <img
+                src={props.bottomSection.image.path}
+                alt={props.bottomSection.image.altText || ""}
+                className={styles.bottomImage}
+              />
+            )}
+            {props.bottomSection.text && (
+              <p className={styles.bottomText}>{props.bottomSection.text}</p>
+            )}
+          </div>
+        )}
+
       {/* ── Footer ── */}
       <footer className={styles.footer}>
-        <span>© {new Date().getFullYear()}</span>
+        <span>
+          © {new Date().getFullYear()} Kristina Alfonsdotter / By Alfonsdotter
+        </span>
+        <div className={styles.footerLinks}>
+          <a
+            href="https://www.instagram.com/byalfonsdotter"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.footerLink}
+          >
+            Instagram
+          </a>
+          <span>|</span>
+          <a href="mailto:hello@example.com" className={styles.footerLink}>
+            Email
+          </a>
+        </div>
       </footer>
     </div>
   );

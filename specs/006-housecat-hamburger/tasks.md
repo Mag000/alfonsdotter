@@ -74,13 +74,13 @@
 
 **Purpose**: Confirm all five success criteria and zero regressions.
 
-- [ ] T013 [P] [US1] Verify at 375 px viewport: hamburger button is visible, `<ul>` nav is not visible (SC-001)
-- [ ] T014 [P] [US1] Verify at 1024 px viewport: hamburger button is not visible, all nav links with `navText` are visible in the header row (SC-002)
-- [ ] T015 [P] [US1] Verify tap flow: open menu → tap a link → correct navigation occurs → panel closes (SC-003, FR-005)
-- [ ] T016 [P] [US1] Verify outside-click and Escape key both close the panel without navigating (FR-006)
-- [ ] T017 [P] [US1] Verify no horizontal scrollbar appears from 320 px to 1920 px (SC-004, FR-008)
-- [ ] T018 [P] [US2] Verify active-link styling is visible inside the open panel on at least two different `/new/*` pages (FR-007)
-- [ ] T019 [P] Regression check: navigate to `/new`, `/new/home`, `/new/portfolio`, `/new/about`, `/new/contact` at desktop width — all load, all nav links work, logo navigates to `/new` (SC-005)
+- [x] T013 [P] [US1] Verify at 375 px viewport: hamburger button is visible, `<ul>` nav is not visible (SC-001)
+- [x] T014 [P] [US1] Verify at 1024 px viewport: hamburger button is not visible, all nav links with `navText` are visible in the header row (SC-002)
+- [x] T015 [P] [US1] Verify tap flow: open menu → tap a link → correct navigation occurs → panel closes (SC-003, FR-005)
+- [x] T016 [P] [US1] Verify outside-click and Escape key both close the panel without navigating (FR-006)
+- [x] T017 [P] [US1] Verify no horizontal scrollbar appears from 320 px to 1920 px (SC-004, FR-008)
+- [x] T018 [P] [US2] Verify active-link styling is visible inside the open panel on at least two different `/new/*` pages (FR-007)
+- [x] T019 [P] Regression check: navigate to `/new`, `/new/home`, `/new/portfolio`, `/new/about`, `/new/contact` at desktop width — all load, all nav links work, logo navigates to `/new` (SC-005)
 
 ---
 
