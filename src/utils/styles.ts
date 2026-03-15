@@ -53,7 +53,7 @@ export const useStyles = makeStyles({
   menuItem: {
     fontFamily: "Source Sans Pro",
     fontSize: "1em",
-    fontWeight: "bold",
+    fontWeight: "400",
     color: "rgb(153,150,144)",
     textTransform: "uppercase",
     letterSpacing: "5px",
@@ -65,7 +65,7 @@ export const useStyles = makeStyles({
   mobileMenuItem: {
     fontFamily: "Source Sans Pro",
     fontSize: "1.2em",
-    fontWeight: "bold",
+    fontWeight: "400",
     color: "rgb(153,150,144)",
     textTransform: "uppercase",
     letterSpacing: "5px",
@@ -147,7 +147,7 @@ export const useStyles = makeStyles({
     cursor: "pointer",
   },
   headline: {
-    fontWeight: "bolder",
+    fontWeight: "400",
     lineHeight: 1.1,
     width: "100%",
   },

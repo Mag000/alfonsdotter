@@ -98,7 +98,68 @@ app.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
     }
 });
 
+// ── POST /send-order ─────────────────────────────────────────────────────────
+// Body: { name, email, message?, items: [{title, quantity, unitPrice?}], total? }
+app.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
+{
+    var order = await req.ReadFromJsonAsync<OrderRequest>();
+    if (order is null || string.IsNullOrWhiteSpace(order.Name) || string.IsNullOrWhiteSpace(order.Email))
+        return Results.BadRequest(new { success = false, error = "Name and email are required" });
+
+    var host = config["Smtp:Host"];
+    var to = config["Smtp:To"];
+    var from = config["Smtp:From"];
+    var user = config["Smtp:User"];
+    var pass = config["Smtp:Password"];
+    var port = int.TryParse(config["Smtp:Port"], out var p) ? p : 587;
+
+    if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(to) || string.IsNullOrEmpty(from))
+        return Results.Problem(detail: "SMTP is not configured (Smtp:Host / Smtp:From / Smtp:To)", statusCode: 500);
+
+    var itemLines = order.Items.Select(i =>
+        i.UnitPrice.HasValue
+            ? $"  {i.Title} x{i.Quantity} = {i.UnitPrice.Value * i.Quantity} kr"
+            : $"  {i.Title} x{i.Quantity} = Kontakta för pris");
+
+    var totalLine = order.Total.HasValue ? $"{order.Total.Value} kr" : "—";
+
+    var body = $"""Ny beställning från {order.Name} ({order.Email})
+
+Artiklar:
+    { string.Join("\n", itemLines)}
+
+Totalt: { totalLine}
+
+Meddelande:
+    { order.Message ?? "(inget meddelande)"}
+    """;
+
+    try
+    {
+        using var smtp = new System.Net.Mail.SmtpClient(host, port)
+        {
+            Credentials = new System.Net.NetworkCredential(user, pass),
+            EnableSsl = true,
+        };
+        var mail = new System.Net.Mail.MailMessage(from, to)
+        {
+            Subject = $"Ny beställning – {order.Name}",
+            Body = body,
+        };
+        await smtp.SendMailAsync(mail);
+        return Results.Ok(new { success = true });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(detail: ex.Message, statusCode: 500);
+    }
+});
+
 app.Run();
+
+// ── records ───────────────────────────────────────────────────────────────────
+record OrderItem(string Title, int Quantity, decimal? UnitPrice);
+record OrderRequest(string Name, string Email, string? Message, List<OrderItem> Items, decimal? Total);
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 

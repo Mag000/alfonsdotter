@@ -353,7 +353,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     fontSize: "0.75rem",
     color: "#555",
-    letterSpacing: "1.5px",
     boxSizing: "border-box",
     [`@media (max-width: 600px)`]: {
       flexDirection: "column",
@@ -370,7 +369,6 @@ const useStyles = makeStyles({
   footerLink: {
     color: "#555",
     textDecoration: "none",
-    letterSpacing: "1.5px",
     fontSize: "0.75rem",
     ":hover": {
       textDecoration: "underline",
@@ -535,15 +533,13 @@ const HousecatPage = (props: IPage) => {
         <hr className={styles.navRule} />
       </header>
 
-      {/* ── Lead image — always full width ── */}
-      {props.leadImage ? (
+      {/* ── Lead image — only when provided ── */}
+      {props.leadImage && (
         <img
           src={props.leadImage.path}
           alt={props.leadImage.altText || ""}
           className={styles.hero}
         />
-      ) : (
-        <div className={styles.heroPlaceholder} />
       )}
 
       {/* ── Headline + text ── */}
