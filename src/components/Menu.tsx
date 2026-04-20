@@ -21,29 +21,29 @@ export const Menu = (props: IMenu) => {
   let mobileItems = props.menuItems.map((p) => (
     <div
       onClick={() => {
-        props.onNavigate(p.navTitle);
+        props.onNavigate(p.navSection?.navTitle ?? "/");
       }}
       className={styles.menuItem}
     >
-      {p.headline}
+      {p.navSection?.navText}
     </div>
   ));
 
   if (menuOpen) {
     mobileItems = mobileItems.concat(
       props.menuItems
-        .filter((f) => f.navTitle != location.pathname)
+        .filter((f) => f.navSection?.navTitle != location.pathname)
         .map((p) => (
           <div
             onClick={() => {
               toggleMenuOpen(false);
-              props.onNavigate(p.navTitle);
+              props.onNavigate(p.navSection?.navTitle ?? "/");
             }}
             className={styles.menuItem}
           >
-            {p.headline}
+            {p.navSection?.navText}
           </div>
-        ))
+        )),
     );
   } else {
     mobileItems = mobileItems.concat(
@@ -54,7 +54,7 @@ export const Menu = (props: IMenu) => {
         className={styles.menuItem}
       >
         ☰
-      </div>
+      </div>,
     );
   }
 
@@ -76,11 +76,11 @@ export const Menu = (props: IMenu) => {
         {props.menuItems.map((p) => (
           <div
             onClick={() => {
-              props.onNavigate(p.navTitle);
+              props.onNavigate(p.navSection?.navTitle ?? "/");
             }}
             className={styles.menuItem}
           >
-            {p.navText}
+            {p.navSection?.navText}
           </div>
         ))}
         {/* {orderQtyTotal > 0 && (

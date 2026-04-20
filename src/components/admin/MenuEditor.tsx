@@ -72,8 +72,10 @@ interface IMenuEditorProps {
 }
 
 const createEmptyMenuItem = (): IPage => ({
-  navTitle: "",
-  navText: "",
+  navSection: {
+    navTitle: "",
+    navText: "",
+  },
 });
 
 export const MenuEditor: React.FC<IMenuEditorProps> = ({ items, onChange }) => {
@@ -158,13 +160,15 @@ export const MenuEditor: React.FC<IMenuEditorProps> = ({ items, onChange }) => {
                 <div className={styles.itemHeader}>
                   <Navigation24Regular />
                   <Text weight="semibold">
-                    {item.navText || item.navTitle || `Item ${index + 1}`}
+                    {item.navSection?.navText ||
+                      item.navSection?.navTitle ||
+                      `Item ${index + 1}`}
                   </Text>
                   <Text
                     size={200}
                     style={{ color: tokens.colorNeutralForeground3 }}
                   >
-                    {item.navTitle}
+                    {item.navSection?.navTitle}
                   </Text>
                 </div>
               </AccordionHeader>
@@ -172,9 +176,15 @@ export const MenuEditor: React.FC<IMenuEditorProps> = ({ items, onChange }) => {
                 <div className={styles.itemFields}>
                   <Field label="Navigation Route" required>
                     <Input
-                      value={item.navTitle || ""}
+                      value={item.navSection?.navTitle || ""}
                       onChange={(e, data) =>
-                        handleUpdate(index, { ...item, navTitle: data.value })
+                        handleUpdate(index, {
+                          ...item,
+                          navSection: {
+                            ...item.navSection,
+                            navTitle: data.value,
+                          },
+                        })
                       }
                       placeholder="/path/to/page"
                     />
@@ -182,9 +192,15 @@ export const MenuEditor: React.FC<IMenuEditorProps> = ({ items, onChange }) => {
 
                   <Field label="Display Text">
                     <Input
-                      value={item.navText || ""}
+                      value={item.navSection?.navText || ""}
                       onChange={(e, data) =>
-                        handleUpdate(index, { ...item, navText: data.value })
+                        handleUpdate(index, {
+                          ...item,
+                          navSection: {
+                            ...item.navSection,
+                            navText: data.value,
+                          },
+                        })
                       }
                       placeholder="Menu text"
                     />
@@ -231,8 +247,8 @@ export const MenuEditor: React.FC<IMenuEditorProps> = ({ items, onChange }) => {
                           <DialogTitle>Remove Menu Item?</DialogTitle>
                           <DialogContent>
                             Are you sure you want to remove "
-                            {item.navText ||
-                              item.navTitle ||
+                            {item.navSection?.navText ||
+                              item.navSection?.navTitle ||
                               `Item ${index + 1}`}
                             "? This action cannot be undone.
                           </DialogContent>

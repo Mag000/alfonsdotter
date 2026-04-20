@@ -14,6 +14,10 @@ import {
 import { Folder24Regular, Search24Regular } from "@fluentui/react-icons";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const prefixImgPath = (path: string) =>
+  path.startsWith("/img/") ? BASE + path : path;
+
 const useStyles = makeStyles({
   container: {
     display: "flex",
@@ -114,7 +118,7 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
 
   // Load images manifest
   useEffect(() => {
-    fetch("/images.json")
+    fetch(import.meta.env.BASE_URL + "images.json")
       .then((res) => res.json())
       .then((data: string[]) => setImages(data))
       .catch(() => setImages([]));
@@ -211,7 +215,7 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
 
       {value && (
         <img
-          src={value}
+          src={prefixImgPath(value)}
           alt="Preview"
           className={styles.previewSmall}
           onError={(e) => {
@@ -293,7 +297,7 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
                       }}
                     >
                       <img
-                        src={path}
+                        src={prefixImgPath(path)}
                         alt={getFilename(path)}
                         className={styles.thumbnail}
                         onError={(e) => {

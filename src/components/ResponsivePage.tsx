@@ -31,25 +31,21 @@ const ResponsivePage = (props: IPage) => {
   }, []);
 
   useEffect(() => {
-    if (props.navTitle != "/tt") {
+    if (props.navSection?.navTitle != "/tt") {
       pageService.getPages().then((pages: IPage[]) => {
-        const mItems = pages.filter((m) => m.navText);
+        const mItems = pages.filter((m) => m.navSection?.navText);
 
         setMenuItems(
-          mItems.filter(
-            (f) =>
-              // f.navTitle.startsWith("/" + location.pathname.split("/")[1])
-              !f.navTitle.startsWith("/yoga")
-          )
+          mItems.filter((f) => !f.navSection?.navTitle?.startsWith("/yoga")),
         );
       });
     }
-  }, [props.navTitle]);
+  }, [props.navSection?.navTitle]);
 
   return (
     <>
       <div className={styles.page}>
-        {menuItems && props.navTitle != "/tt" && (
+        {menuItems && props.navSection?.navTitle != "/tt" && (
           <Menu
             width={imageWidth}
             menuItems={menuItems}
@@ -61,58 +57,38 @@ const ResponsivePage = (props: IPage) => {
           />
         )}
 
-        {/* {props.navTitle == "/" && (
-          <div
-            style={{
-              display: "flex",
-              marginTop: "10%",
-              gap: "40px",
-              flexWrap: "wrap",
-            }}
-          >
-            <img
-              onClick={() => navigate("/yoga")}
-              className={styles.startImage}
-              src="img/yoga/Logo_Yoga.jpg"
-              alt="Yoga"
-            />
-            <img
-              onClick={() => navigate("/form")}
-              className={styles.startImage}
-              src="img/form/Logo_Form.jpg"
-              alt="form"
-            />
-          </div>
-        )} */}
-
-        {props.logoImage && (
+        {props.navSection?.logoImage && (
           <div className={styles.section1}>
             <img
               className={styles.logoImage}
-              src={props.logoImage?.path}
-              alt={props.logoImage?.altText}
+              src={props.navSection?.logoImage?.path}
+              alt={props.navSection?.logoImage?.altText}
             />
           </div>
         )}
 
-        {props.leadImage && !serie && (
+        {props.leadSection?.leadImage && !serie && (
           <div
             className={`${styles.section} ${styles.section2}`}
-            style={{ marginTop: props.logoImage ? 0 : "70px" }}
+            style={{ marginTop: props.navSection?.logoImage ? 0 : "70px" }}
           >
             <img
               className={styles.image}
-              src={props.leadImage?.path}
-              alt={props.leadImage?.altText || ""}
+              src={props.leadSection?.leadImage?.path}
+              alt={props.leadSection?.leadImage?.altText || ""}
             />
           </div>
         )}
-        {!props.leadImage && (
+        {!props.leadSection?.leadImage && (
           <div
             className={`${styles.section} ${styles.section2}`}
             style={{ backgroundColor: "white" }}
           >
-            <img className={styles.image} src="/img/900pxwhite.png" alt="" />
+            <img
+              className={styles.image}
+              src={`${import.meta.env.BASE_URL}img/900pxwhite.png`}
+              alt=""
+            />
           </div>
         )}
 
@@ -130,13 +106,17 @@ const ResponsivePage = (props: IPage) => {
           className={`${styles.section} ${styles.section3}`}
           style={{ maxWidth: imageWidth }}
         >
-          {props.headline && (
-            <h1 className={styles.headline}>{props.headline}</h1>
+          {props.contentSection?.headline && (
+            <h1 className={styles.headline}>{props.contentSection.headline}</h1>
           )}
 
-          {props.text && <div className={styles.textContent}>{props.text}</div>}
+          {props.contentSection?.text && (
+            <div className={styles.textContent}>
+              {props.contentSection.text}
+            </div>
+          )}
         </div>
-        {props.navTitle == "/yoga/contact" && (
+        {props.navSection?.navTitle == "/yoga/contact" && (
           <div
             className={`${styles.section} ${styles.section3}`}
             style={{ maxWidth: imageWidth }}
@@ -145,41 +125,43 @@ const ResponsivePage = (props: IPage) => {
           </div>
         )}
 
-        {(props.galleryItems || []).length > 0 && !serie && (
+        {(props.contentSection?.galleryItems || []).length > 0 && !serie && (
           <div
             className={styles.galleryContainer}
             style={{ maxWidth: imageWidth }}
           >
-            {(props.galleryItems || []).map((i: IGalleryItem) => (
-              <div className={styles.galleryItem} onClick={() => setSerie(i)}>
-                <img src={i.path} style={{ maxWidth: "100%" }} />
-                <div
-                  className={styles.overlay}
-                  onMouseOver={(e) => {
-                    (e.currentTarget as any).style.opacity = 1;
-                  }}
-                  onMouseOut={(e) => {
-                    (e.currentTarget as any).style.opacity = 0;
-                  }}
-                >
+            {(props.contentSection?.galleryItems || []).map(
+              (i: IGalleryItem) => (
+                <div className={styles.galleryItem} onClick={() => setSerie(i)}>
+                  <img src={i.path} style={{ maxWidth: "100%" }} />
                   <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      paddingLeft: "10px",
-                      paddingRight: "10px",
-                      paddingTop: "5px",
-                      paddingBottom: "5px",
+                    className={styles.overlay}
+                    onMouseOver={(e) => {
+                      (e.currentTarget as any).style.opacity = 1;
+                    }}
+                    onMouseOut={(e) => {
+                      (e.currentTarget as any).style.opacity = 0;
                     }}
                   >
-                    <h1 style={{ padding: 0, margin: 0, fontSize: "16px" }}>
-                      {i.title}
-                    </h1>
-                    <p style={{ fontSize: "14px" }}>{i.tagLine}</p>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        paddingLeft: "10px",
+                        paddingRight: "10px",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
+                      }}
+                    >
+                      <h1 style={{ padding: 0, margin: 0, fontSize: "16px" }}>
+                        {i.title}
+                      </h1>
+                      <p style={{ fontSize: "14px" }}>{i.tagLine}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         )}
         {serie && (

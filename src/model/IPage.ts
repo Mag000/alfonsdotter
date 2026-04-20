@@ -2,21 +2,86 @@ import { IGalleryItem } from "./IGalleryItem";
 import { IImage } from "./IImage";
 import { IShopItem } from "./IShopItem";
 
+export interface INavSection {
+  navTitle?: string;
+  navText?: string;
+  logoImage?: IImage;
+}
+
+export interface ILeadSection {
+  leadImage?: IImage;
+}
+
+export interface IMailFormField {
+  name: string;
+  label: string;
+  type: "text" | "email" | "tel" | "textarea";
+  required?: boolean;
+}
+
+export interface IMailFormSubmitAction {
+  endpoint: string;
+  method: string;
+  successMessage?: string;
+  errorMessage?: string;
+}
+
+export interface IMailForm {
+  fields: IMailFormField[];
+  submitAction: IMailFormSubmitAction;
+}
+
+export interface IContentColumn {
+  width?: number;
+  headline?: string;
+  text?: string;
+  image?: IImage;
+  mailForm?: IMailForm;
+}
+
+export interface IContentSection {
+  headline?: string;
+  text?: string;
+  columns?: IContentColumn[];
+  galleryItems?: IGalleryItem[];
+  shopItems?: IShopItem[];
+  contactForm?: boolean;
+  mailForm?: IMailForm;
+}
+
 export interface IBottomSection {
   image?: IImage;
+  title?: string;
   text?: string;
 }
 
+export interface ICarouselItem {
+  path: string;
+  title?: string;
+  altText?: string;
+}
+
+export interface ICarouselSection {
+  items?: ICarouselItem[];
+}
+
+export interface ICard {
+  image?: IImage;
+  title?: string;
+  teaser?: string;
+  longText?: string;
+}
+
+export interface ICardSection {
+  cards: ICard[];
+}
+
 export interface IPage {
-  navTitle: string;
-  navText?: string;
-  headline?: string;
-  text?: string;
-  logoImage?: IImage;
-  leadImage?: IImage;
-  contactForm?: boolean;
-  galleryItems?: IGalleryItem[];
-  shopItems?: IShopItem[];
-  menuItems?: IPage[];
+  navSection?: INavSection;
+  leadSection?: ILeadSection;
+  contentSection?: IContentSection;
+  carouselSection?: ICarouselSection;
+  cardSection?: ICardSection;
   bottomSection?: IBottomSection;
+  menuItems?: IPage[];
 }

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { IGalleryItem } from "../model/IGalleryItem";
 import { IPage } from "../model/IPage";
 import { pageService } from "../services/pageService";
+import { CardSection } from "./CardSection";
+import { MailForm } from "./MailForm";
 import ShopGrid from "./ShopGrid";
 import ShoppingCartWithBadge from "./ShoppingCartWithBadge";
 
@@ -169,8 +171,6 @@ const useStyles = makeStyles({
   // ── Hero image ────────────────────────────────────────────────────────────
   hero: {
     width: "100%",
-    maxHeight: "520px",
-    objectFit: "cover",
     display: "block",
   },
   heroPlaceholder: {
@@ -184,10 +184,36 @@ const useStyles = makeStyles({
     maxWidth: "760px",
     marginInline: "auto",
     paddingInline: "24px",
-    paddingTop: "56px",
-    paddingBottom: "56px",
+    paddingTop: "76px",
+    paddingBottom: "76px",
     width: "100%",
     boxSizing: "border-box",
+  },
+  contentBlockWide: {
+    maxWidth: "1200px",
+    marginInline: "auto",
+    paddingInline: "24px",
+    paddingTop: "76px",
+    paddingBottom: "76px",
+    width: "100%",
+    boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "row",
+    gap: "40px",
+    alignItems: "flex-start",
+    [`@media (max-width: 700px)`]: {
+      flexDirection: "column",
+      gap: "24px",
+      alignItems: "center",
+    },
+  },
+  contentColumn: {
+    boxSizing: "border-box",
+    paddingInline: "16px",
+    [`@media (max-width: 700px)`]: {
+      width: "100% !important" as "100%",
+      textAlign: "center",
+    },
   },
   headline: {
     fontSize: "2rem",
@@ -203,7 +229,7 @@ const useStyles = makeStyles({
   bodyText: {
     fontSize: "1rem",
     lineHeight: "1.8",
-    color: "#555",
+    color: "#3b2a1a",
     whiteSpace: "pre-wrap",
     margin: "0",
   },
@@ -243,8 +269,8 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
 
-  // ── Gallery grid ──────────────────────────────────────────────────────────
-  gallerySection: {
+  // ── Gallery carousel ─────────────────────────────────────────────────────
+  carouselSection: {
     maxWidth: "1200px",
     marginInline: "auto",
     paddingInline: "24px",
@@ -253,18 +279,28 @@ const useStyles = makeStyles({
     width: "100%",
     boxSizing: "border-box",
   },
-  galleryGrid: {
+  carouselWrapper: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+  },
+  carouselClip: {
+    flex: "1",
+    minWidth: "0",
+    overflow: "hidden",
+  },
+  carouselTrack: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gap: "20px",
-    [`@media (max-width: 900px)`]: {
-      gridTemplateColumns: "repeat(2, 1fr)",
-    },
-    [`@media (max-width: 500px)`]: {
-      gridTemplateColumns: "1fr",
-    },
   },
-  galleryThumb: {
+  carouselItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "10px",
+  },
+  carouselItemImg: {
     display: "block",
     width: "100%",
     aspectRatio: "1 / 1",
@@ -274,6 +310,40 @@ const useStyles = makeStyles({
     ":hover": {
       opacity: "0.8",
     },
+  },
+  carouselItemTitle: {
+    fontSize: "0.82rem",
+    letterSpacing: "0.5px",
+    color: "#555",
+    textAlign: "center",
+    margin: "0",
+  },
+  carouselNavRow: {
+    display: "none",
+  },
+  carouselArrow: {
+    background: "none",
+    border: "1px solid #bbb",
+    borderRadius: "50%",
+    width: "40px",
+    height: "40px",
+    flexShrink: "0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    color: "#555",
+    fontSize: "1.1rem",
+    transition: "border-color 0.2s, color 0.2s",
+    ":hover": {
+      border: "1px solid #555",
+      color: "#222",
+    },
+  },
+  carouselArrowDisabled: {
+    opacity: "0.25",
+    cursor: "default",
+    pointerEvents: "none",
   },
 
   // ── Lightbox ──────────────────────────────────────────────────────────────
@@ -323,19 +393,32 @@ const useStyles = makeStyles({
   bottomImage: {
     width: "28%",
     maxWidth: "280px",
-    height: "auto",
+    aspectRatio: "1 / 1",
+    objectFit: "cover",
+    borderRadius: "50%",
     display: "block",
     flexShrink: "0",
     [`@media (max-width: 700px)`]: {
-      width: "100%",
-      maxWidth: "100%",
+      width: "60%",
+      maxWidth: "280px",
     },
   },
-  bottomText: {
+  bottomTextBlock: {
     flex: "1",
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+  },
+  bottomTitle: {
+    fontSize: "1.1rem",
+    fontWeight: "600",
+    color: "#3b2a1a",
+    margin: "0",
+  },
+  bottomText: {
     fontSize: "1rem",
     lineHeight: "1.8",
-    color: "#fff",
+    color: "#3b2a1a",
     whiteSpace: "pre-wrap",
     margin: "0",
   },
@@ -376,6 +459,14 @@ const useStyles = makeStyles({
   },
 });
 
+function getCarouselSlice<T>(items: T[], start: number, count: number): T[] {
+  if (items.length === 0) return [];
+  return Array.from(
+    { length: count },
+    (_, i) => items[(start + i) % items.length],
+  );
+}
+
 const HousecatPage = (props: IPage) => {
   const styles = useStyles();
   const navigate = useNavigate();
@@ -384,17 +475,27 @@ const HousecatPage = (props: IPage) => {
   const [logoSrc, setLogoSrc] = useState<string | undefined>();
   const [lightboxItem, setLightboxItem] = useState<IGalleryItem | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [carouselStart, setCarouselStart] = useState<number>(0);
+  const [gallerySliding, setGallerySliding] = useState<
+    "idle" | "next" | "prev"
+  >("idle");
+  const [carouselSectionStart, setCarouselSectionStart] = useState<number>(0);
+  const [sectionSliding, setSectionSliding] = useState<
+    "idle" | "next" | "prev"
+  >("idle");
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     pageService.getPages().then((pages: IPage[]) => {
-      // Derive the root path: /new/home → /new, /about → /
-      const firstSegment = props.navTitle.split("/").filter(Boolean)[0];
-      const rootPath = firstSegment ? `/${firstSegment}` : "/";
+      const segments =
+        props.navSection?.navTitle?.split("/").filter(Boolean) ?? [];
+      // A top-level page (0 or 1 segment) belongs to the root tree;
+      // a nested page (e.g. /byalfonsdotter/shop) belongs to its first-segment tree.
+      const rootPath = segments.length <= 1 ? "/" : `/${segments[0]}`;
 
-      const rootPage = pages.find((p) => p.navTitle === rootPath);
-      if (rootPage?.logoImage?.path) {
-        setLogoSrc(rootPage.logoImage.path);
+      const rootPage = pages.find((p) => p.navSection?.navTitle === "/");
+      if (rootPage?.navSection?.logoImage?.path) {
+        setLogoSrc(rootPage.navSection.logoImage.path);
       }
 
       // Nav items: at root level show all depth-1 pages with navText;
@@ -403,16 +504,18 @@ const HousecatPage = (props: IPage) => {
         rootPath === "/"
           ? pages.filter(
               (p) =>
-                p.navTitle.split("/").filter(Boolean).length <= 1 &&
-                !!p.navText,
+                (p.navSection?.navTitle?.split("/").filter(Boolean).length ??
+                  0) <= 1 && !!p.navSection?.navText,
             )
           : pages.filter(
-              (p) => p.navTitle.startsWith(`${rootPath}/`) && !!p.navText,
+              (p) =>
+                p.navSection?.navTitle?.startsWith(`${rootPath}/`) &&
+                !!p.navSection?.navText,
             );
 
       setMenuItems(navPages);
     });
-  }, []);
+  }, [props.navSection?.navTitle]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -434,9 +537,42 @@ const HousecatPage = (props: IPage) => {
     };
   }, [menuOpen]);
 
-  const isAboutPage = props.navTitle.includes("/about");
-  const hasGallery = (props.galleryItems || []).length > 0;
-  const hasShop = (props.shopItems || []).length > 0;
+  const isAboutPage = props.navSection?.navTitle?.includes("/about") ?? false;
+  const hasGallery = (props.contentSection?.galleryItems || []).length > 0;
+  const hasShop = (props.contentSection?.shopItems || []).length > 0;
+
+  const PAGE = 3;
+  const gItems = props.contentSection?.galleryItems || [];
+  const gTotal = gItems.length;
+  // 5-item flat strip: [start-1, start, start+1, start+2, start+3]
+  // idle at -20% (shows indices 1-3), prev animates to 0%, next to -40%
+  const gSlice5 =
+    gTotal > 0
+      ? getCarouselSlice(gItems, (carouselStart - 1 + gTotal) % gTotal, 5)
+      : [];
+  const gOffset =
+    gallerySliding === "next"
+      ? "-40%"
+      : gallerySliding === "prev"
+        ? "0%"
+        : "-20%";
+
+  const sItems = props.carouselSection?.items || [];
+  const sTotal = sItems.length;
+  const sSlice5 =
+    sTotal > 0
+      ? getCarouselSlice(
+          sItems,
+          (carouselSectionStart - 1 + sTotal) % sTotal,
+          5,
+        )
+      : [];
+  const sOffset =
+    sectionSliding === "next"
+      ? "-40%"
+      : sectionSliding === "prev"
+        ? "0%"
+        : "-20%";
 
   return (
     <div className={styles.root}>
@@ -448,7 +584,9 @@ const HousecatPage = (props: IPage) => {
             alt="Logo"
             className={styles.logo}
             onClick={() => {
-              const firstSegment = props.navTitle.split("/").filter(Boolean)[0];
+              const firstSegment = props.navSection?.navTitle
+                ?.split("/")
+                .filter(Boolean)[0];
               navigate(firstSegment ? `/${firstSegment}` : "/");
             }}
           />
@@ -459,11 +597,11 @@ const HousecatPage = (props: IPage) => {
             <ul className={styles.nav}>
               {menuItems.map((item) => (
                 <li
-                  key={item.navTitle}
-                  className={`${styles.navItem}${props.navTitle === item.navTitle ? ` ${styles.navItemActive}` : ""}`}
-                  onClick={() => navigate(item.navTitle)}
+                  key={item.navSection?.navTitle}
+                  className={`${styles.navItem}${props.navSection?.navTitle === item.navSection?.navTitle ? ` ${styles.navItemActive}` : ""}`}
+                  onClick={() => navigate(item.navSection?.navTitle ?? "/")}
                 >
-                  {item.navText}
+                  {item.navSection?.navText}
                 </li>
               ))}
             </ul>
@@ -513,18 +651,18 @@ const HousecatPage = (props: IPage) => {
           <div ref={menuRef} className={styles.mobileMenuPanel}>
             {menuItems.map((item) => (
               <div
-                key={item.navTitle}
+                key={item.navSection?.navTitle}
                 className={
-                  props.navTitle === item.navTitle
+                  props.navSection?.navTitle === item.navSection?.navTitle
                     ? styles.mobileMenuItemActive
                     : styles.mobileMenuItem
                 }
                 onClick={() => {
-                  navigate(item.navTitle);
+                  navigate(item.navSection?.navTitle ?? "/");
                   setMenuOpen(false);
                 }}
               >
-                {item.navText}
+                {item.navSection?.navText}
               </div>
             ))}
           </div>
@@ -534,43 +672,222 @@ const HousecatPage = (props: IPage) => {
       </header>
 
       {/* ── Lead image — only when provided ── */}
-      {props.leadImage && (
+      {props.leadSection?.leadImage && (
         <img
-          src={props.leadImage.path}
-          alt={props.leadImage.altText || ""}
+          src={props.leadSection.leadImage.path}
+          alt={props.leadSection.leadImage.altText || ""}
           className={styles.hero}
         />
       )}
 
       {/* ── Headline + text ── */}
-      {(props.headline || props.text) && (
-        <div className={styles.contentBlock}>
-          {props.headline && (
-            <h1 className={styles.headline}>{props.headline}</h1>
-          )}
-          {props.text && <p className={styles.bodyText}>{props.text}</p>}
+      {(props.contentSection?.columns?.length ?? 0) > 0 ? (
+        <div className={styles.contentBlockWide}>
+          {props.contentSection!.columns!.map((col, i) => (
+            <div
+              key={i}
+              className={styles.contentColumn}
+              style={{
+                width: col.width ? `${col.width}%` : undefined,
+                flex: col.width ? undefined : "1",
+                flexShrink: 0,
+              }}
+            >
+              {col.image && (
+                <img
+                  src={col.image.path}
+                  alt={col.image.altText || ""}
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                />
+              )}
+              {col.headline && (
+                <h1 className={styles.headline}>{col.headline}</h1>
+              )}
+              {col.text && <p className={styles.bodyText}>{col.text}</p>}
+              {col.mailForm && <MailForm mailForm={col.mailForm} />}
+            </div>
+          ))}
         </div>
+      ) : (
+        (props.contentSection?.headline || props.contentSection?.text) && (
+          <div className={styles.contentBlock}>
+            {props.contentSection?.headline && (
+              <h1 className={styles.headline}>
+                {props.contentSection.headline}
+              </h1>
+            )}
+            {props.contentSection?.text && (
+              <p className={styles.bodyText}>{props.contentSection.text}</p>
+            )}
+            {props.contentSection?.mailForm && (
+              <MailForm mailForm={props.contentSection.mailForm} />
+            )}
+          </div>
+        )
       )}
 
-      {/* ── Gallery grid ── */}
+      {/* ── Gallery carousel ── */}
       {hasGallery && (
-        <section className={styles.gallerySection}>
-          <div className={styles.galleryGrid}>
-            {(props.galleryItems || []).map((item) => (
-              <img
-                key={item.path}
-                src={item.path}
-                alt={item.title || ""}
-                className={styles.galleryThumb}
-                onClick={() => setLightboxItem(item)}
-              />
-            ))}
+        <section className={styles.carouselSection}>
+          <div className={styles.carouselWrapper}>
+            {gTotal > PAGE && (
+              <button
+                className={styles.carouselArrow}
+                onClick={() => {
+                  if (gallerySliding !== "idle") return;
+                  setGallerySliding("prev");
+                  setTimeout(() => {
+                    setCarouselStart((s) => (s - 1 + gTotal) % gTotal);
+                    setGallerySliding("idle");
+                  }, 510);
+                }}
+                aria-label="Previous"
+                style={{ marginRight: "16px" }}
+              >
+                &#8592;
+              </button>
+            )}
+            <div className={styles.carouselClip}>
+              <div
+                style={{
+                  display: "flex",
+                  width: "calc(500% / 3)",
+                  transform: `translateX(${gOffset})`,
+                  transition:
+                    gallerySliding === "idle"
+                      ? "none"
+                      : "transform 500ms linear",
+                }}
+              >
+                {gSlice5.map((item, i) => (
+                  <div
+                    key={`${item.path}-${i}`}
+                    style={{
+                      flex: "0 0 20%",
+                      padding: "0 10px",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <div className={styles.carouselItem}>
+                      <img
+                        src={item.path}
+                        alt={item.title || ""}
+                        className={styles.carouselItemImg}
+                        onClick={() => setLightboxItem(item)}
+                      />
+                      {item.title && (
+                        <p className={styles.carouselItemTitle}>{item.title}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {gTotal > PAGE && (
+              <button
+                className={styles.carouselArrow}
+                onClick={() => {
+                  if (gallerySliding !== "idle") return;
+                  setGallerySliding("next");
+                  setTimeout(() => {
+                    setCarouselStart((s) => (s + 1) % gTotal);
+                    setGallerySliding("idle");
+                  }, 510);
+                }}
+                aria-label="Next"
+                style={{ marginLeft: "16px" }}
+              >
+                &#8594;
+              </button>
+            )}
           </div>
         </section>
       )}
 
       {/* ── Shop grid ── */}
-      {hasShop && <ShopGrid items={props.shopItems!} />}
+      {hasShop && <ShopGrid items={props.contentSection!.shopItems!} />}
+
+      {/* ── Card section ── */}
+      {props.cardSection && props.cardSection.cards.length > 0 && (
+        <CardSection cardSection={props.cardSection} />
+      )}
+
+      {/* ── Carousel section ── */}
+      {sTotal > 0 && (
+        <section className={styles.carouselSection}>
+          <div className={styles.carouselWrapper}>
+            {sTotal > PAGE && (
+              <button
+                className={styles.carouselArrow}
+                onClick={() => {
+                  if (sectionSliding !== "idle") return;
+                  setSectionSliding("prev");
+                  setTimeout(() => {
+                    setCarouselSectionStart((s) => (s - 1 + sTotal) % sTotal);
+                    setSectionSliding("idle");
+                  }, 510);
+                }}
+                aria-label="Previous"
+                style={{ marginRight: "16px" }}
+              >
+                &#8592;
+              </button>
+            )}
+            <div className={styles.carouselClip}>
+              <div
+                style={{
+                  display: "flex",
+                  width: "calc(500% / 3)",
+                  transform: `translateX(${sOffset})`,
+                  transition:
+                    sectionSliding === "idle"
+                      ? "none"
+                      : "transform 500ms linear",
+                }}
+              >
+                {sSlice5.map((item, i) => (
+                  <div
+                    key={`${item.path}-${i}`}
+                    style={{
+                      flex: "0 0 20%",
+                      padding: "0 10px",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <div className={styles.carouselItem}>
+                      <img
+                        src={item.path}
+                        alt={item.altText || item.title || ""}
+                        className={styles.carouselItemImg}
+                      />
+                      {item.title && (
+                        <p className={styles.carouselItemTitle}>{item.title}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {sTotal > PAGE && (
+              <button
+                className={styles.carouselArrow}
+                onClick={() => {
+                  if (sectionSliding !== "idle") return;
+                  setSectionSliding("next");
+                  setTimeout(() => {
+                    setCarouselSectionStart((s) => (s + 1) % sTotal);
+                    setSectionSliding("idle");
+                  }, 510);
+                }}
+                aria-label="Next"
+                style={{ marginLeft: "16px" }}
+              >
+                &#8594;
+              </button>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ── Lightbox ── */}
       {lightboxItem && (
@@ -600,8 +917,19 @@ const HousecatPage = (props: IPage) => {
                 className={styles.bottomImage}
               />
             )}
-            {props.bottomSection.text && (
-              <p className={styles.bottomText}>{props.bottomSection.text}</p>
+            {(props.bottomSection.title || props.bottomSection.text) && (
+              <div className={styles.bottomTextBlock}>
+                {props.bottomSection.title && (
+                  <p className={styles.bottomTitle}>
+                    {props.bottomSection.title}
+                  </p>
+                )}
+                {props.bottomSection.text && (
+                  <p className={styles.bottomText}>
+                    {props.bottomSection.text}
+                  </p>
+                )}
+              </div>
             )}
           </div>
         )}

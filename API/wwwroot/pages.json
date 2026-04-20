@@ -1,0 +1,119 @@
+[
+	{
+		"navTitle": "/",
+		"navText": "Portfolio",
+		"logoImage": {
+			"path": "/img/new/Loggo_BY_Alfonsdotter.png"
+		},
+		"leadImage": {
+			"path": "/img/new/Toppbild_Alfonsdotter.jpg"
+		},
+		"galleryItems": [
+			{
+				"path": "/img/gallery/Arg_beskuren.jpg",
+				"title": "Illustration I",
+				"description": "Personal work"
+			},
+			{
+				"path": "/img/gallery/Dass_beskuren.jpg",
+				"title": "Illustration II",
+				"description": "Editorial commission"
+			},
+			{
+				"path": "/img/gallery/Dissociation_beskuren.jpg",
+				"title": "Illustration III",
+				"description": "Personal work"
+			},
+			{
+				"path": "/img/gallery/Glimmingehus_beskuren.jpg",
+				"title": "Illustration IV",
+				"description": "Book cover"
+			},
+			{
+				"path": "/img/gallery/Nyfiken på hus_Östra torp dag_beskuren.jpg",
+				"title": "Illustration V",
+				"description": "Packaging design"
+			}
+		],
+		"bottomSection": {
+			"image": { "path": "/img/new/Alfonsdotter_Portratt.png" },
+			"text": "Hi, I'm a freelance illustrator and graphic designer with a knack for lightheartedness.\n\nI would love to work with you and create sweet, fun and playful illustrations that bring magic to your projects. I'm available for a wide range of illustration projects — from children's books and packaging design to editorial work.\n\nGet in touch and let's make something beautiful."}
+	},
+	{
+		"navTitle": "/shop",
+		"navText": "Shop",
+	
+		"shopItems": [
+			{
+				"path": "/img/gallery/Arg_beskuren.jpg",
+				"title": "Illustration I",
+				"description": "Personal work",
+				"price": 1200,
+				"subItems": [
+					{ "path": "/img/gallery/Arg.jpg" },
+					{ "path": "/img/gallery/Dass_beskuren.jpg" },
+					{ "path": "/img/gallery/Dass.jpg" }
+				],
+				"variants": [
+					{
+						"title": "A4 print",
+						"price": 1200
+					},
+					{
+						"title": "A3 print",
+						"price": 1800
+					}
+				]
+			},
+			{
+				"path": "/img/gallery/Dass_beskuren.jpg",
+				"title": "Illustration II",
+				"description": "Editorial commission",
+				"price": 950,
+				"subItems": [
+					{ "path": "/img/gallery/Dass.jpg" },
+					{ "path": "/img/gallery/Arg_beskuren.jpg" }
+				]
+			},
+			{
+				"path": "/img/gallery/Dissociation_beskuren.jpg",
+				"title": "Illustration III",
+				"description": "Personal work",
+				"price": 0,
+				"subItems": [
+					{ "path": "/img/gallery/Dissociation.jpg" },
+					{ "path": "/img/gallery/Glimmingehus_beskuren.jpg" }
+				]
+			},
+			{
+				"path": "/img/gallery/Glimmingehus_beskuren.jpg",
+				"title": "Illustration IV",
+				"description": "Book cover",
+				"price": null,
+				"subItems": [
+					{ "path": "/img/gallery/Glimmingehus.jpg" },
+					{ "path": "/img/gallery/Nyfiken på hus_Östra torp dag.jpg" }
+				]
+			}
+			
+		]
+	},
+	{
+		"navTitle": "/about",
+		"navText": "About",
+		"headline": "Hi, I'm a freelance illustrator",
+		"text": "I create sweet, fun and playful illustrations for children's books, packaging, and editorial projects.\n\nWith a background in graphic design I bring both a creative eye and a structured approach to every project — whether it's a single illustration or a full visual identity.\n\nI'm based in Sweden and available for commissions worldwide.",
+		"leadImage": {
+			"path": "/img/new/about.jpg"
+		}
+	},
+	{
+		"navTitle": "/contact",
+		"navText": "Contact",
+		"headline": "Get in touch",
+		"text": "I'd love to hear about your project!\n\nFeel free to reach out by email and I'll get back to you within a few days.\n\nEmail: hello@example.com\nInstagram: @example",
+		"leadImage": {
+			"path": "/img/new/contact.jpg"
+		}
+	}
+]

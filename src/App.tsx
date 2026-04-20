@@ -26,14 +26,16 @@ export default function App() {
 
     const routes: RouteObject[] = [
       ...pages.map((p) => ({
-        path: p.navTitle,
+        path: p.navSection?.navTitle ?? "/",
         element: <HousecatPage {...p} />,
       })),
       { path: "/admin", element: <PagesEditor /> },
       { path: "/tinymce", element: <TinyMCE /> },
     ];
 
-    return createBrowserRouter(routes);
+    return createBrowserRouter(routes, {
+      basename: import.meta.env.BASE_URL.replace(/\/$/, ""),
+    });
   }, [pages]);
 
   return (

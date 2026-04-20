@@ -1,5 +1,10 @@
+using Azure.Identity;
+using Microsoft.Graph;
+using Microsoft.Graph.Models;
+using Microsoft.Graph.Users.Item.SendMail;
 using Renci.SshNet;
 using System.Text;
+using WebApplication = Microsoft.AspNetCore.Builder.WebApplication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +17,16 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader()));
+
+builder.Services.AddSingleton(sp =>
+{
+    var cfg = sp.GetRequiredService<IConfiguration>();
+    var credential = new ClientSecretCredential(
+        cfg["Graph:TenantId"],
+        cfg["Graph:ClientId"],
+        cfg["Graph:ClientSecret"]);
+    return new GraphServiceClient(credential, ["https://graph.microsoft.com/.default"]);
+});
 
 var app = builder.Build();
 
@@ -98,23 +113,53 @@ app.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
     }
 });
 
+// ── POST /send-contact ────────────────────────────────────────────────────────
+// Body: { namn, epost, telefon?, meddelande }
+app.MapPost("/send-contact", async (HttpRequest req, IConfiguration config, GraphServiceClient graph) =>
+{
+    var form = await req.ReadFromJsonAsync<ContactRequest>();
+    if (form is null || string.IsNullOrWhiteSpace(form.Namn) || string.IsNullOrWhiteSpace(form.Epost))
+        return Results.BadRequest(new { success = false, error = "Namn och e-post är obligatoriska" });
+
+    var from = config["Graph:From"];
+    var to = config["Graph:To"];
+    if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to))
+        return Results.Problem(detail: "Graph:From / Graph:To are not configured", statusCode: 500);
+
+    var body = $"""
+        Nytt kontaktmeddelande
+
+        Namn:     {form.Namn}
+        E-post:   {form.Epost}
+        Telefon:  {form.Telefon ?? "—"}
+
+        Meddelande:
+        {form.Meddelande}
+        """;
+
+    try
+    {
+        await SendGraphMailAsync(graph, from, to, $"Nytt meddelande från {form.Namn}", body);
+        return Results.Ok(new { success = true });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(detail: ex.Message, statusCode: 500);
+    }
+});
+
 // ── POST /send-order ─────────────────────────────────────────────────────────
 // Body: { name, email, message?, items: [{title, quantity, unitPrice?}], total? }
-app.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
+app.MapPost("/send-order", async (HttpRequest req, IConfiguration config, GraphServiceClient graph) =>
 {
     var order = await req.ReadFromJsonAsync<OrderRequest>();
     if (order is null || string.IsNullOrWhiteSpace(order.Name) || string.IsNullOrWhiteSpace(order.Email))
         return Results.BadRequest(new { success = false, error = "Name and email are required" });
 
-    var host = config["Smtp:Host"];
-    var to = config["Smtp:To"];
-    var from = config["Smtp:From"];
-    var user = config["Smtp:User"];
-    var pass = config["Smtp:Password"];
-    var port = int.TryParse(config["Smtp:Port"], out var p) ? p : 587;
-
-    if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(to) || string.IsNullOrEmpty(from))
-        return Results.Problem(detail: "SMTP is not configured (Smtp:Host / Smtp:From / Smtp:To)", statusCode: 500);
+    var from = config["Graph:From"];
+    var to = config["Graph:To"];
+    if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to))
+        return Results.Problem(detail: "Graph:From / Graph:To are not configured", statusCode: 500);
 
     var itemLines = order.Items.Select(i =>
         i.UnitPrice.HasValue
@@ -123,30 +168,21 @@ app.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
 
     var totalLine = order.Total.HasValue ? $"{order.Total.Value} kr" : "—";
 
-    var body = $"""Ny beställning från {order.Name} ({order.Email})
+    var body = $"""
+        Ny beställning från {order.Name} ({order.Email})
 
-Artiklar:
-    { string.Join("\n", itemLines)}
+        Artiklar:
+        {string.Join("\n", itemLines)}
 
-Totalt: { totalLine}
+        Totalt: {totalLine}
 
-Meddelande:
-    { order.Message ?? "(inget meddelande)"}
-    """;
+        Meddelande:
+        {order.Message ?? "(inget meddelande)"}
+        """;
 
     try
     {
-        using var smtp = new System.Net.Mail.SmtpClient(host, port)
-        {
-            Credentials = new System.Net.NetworkCredential(user, pass),
-            EnableSsl = true,
-        };
-        var mail = new System.Net.Mail.MailMessage(from, to)
-        {
-            Subject = $"Ny beställning – {order.Name}",
-            Body = body,
-        };
-        await smtp.SendMailAsync(mail);
+        await SendGraphMailAsync(graph, from, to, $"Ny beställning – {order.Name}", body);
         return Results.Ok(new { success = true });
     }
     catch (Exception ex)
@@ -157,11 +193,18 @@ Meddelande:
 
 app.Run();
 
-// ── records ───────────────────────────────────────────────────────────────────
-record OrderItem(string Title, int Quantity, decimal? UnitPrice);
-record OrderRequest(string Name, string Email, string? Message, List<OrderItem> Items, decimal? Total);
-
 // ── helpers ───────────────────────────────────────────────────────────────────
+
+static async Task SendGraphMailAsync(GraphServiceClient graph, string from, string to, string subject, string body)
+{
+    var message = new Message
+    {
+        Subject = subject,
+        Body = new ItemBody { ContentType = BodyType.Text, Content = body },
+        ToRecipients = [new Recipient { EmailAddress = new EmailAddress { Address = to } }],
+    };
+    await graph.Users[from].SendMail.PostAsync(new SendMailPostRequestBody { Message = message });
+}
 
 static SftpClient? CreateClient(IConfiguration config, out string? error)
 {
@@ -192,3 +235,7 @@ static void EnsureDirectory(SftpClient client, string path)
     }
 }
 
+// ── records ───────────────────────────────────────────────────────────────────
+record ContactRequest(string Namn, string Epost, string? Telefon, string Meddelande);
+record OrderItem(string Title, int Quantity, decimal? UnitPrice);
+record OrderRequest(string Name, string Email, string? Message, List<OrderItem> Items, decimal? Total);

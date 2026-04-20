@@ -71,9 +71,19 @@ export const loadJsonFile = (file: File): Promise<IPage[]> => {
 const normalizeLineEndings = (pages: IPage[]): IPage[] => {
   return pages.map((page) => ({
     ...page,
-    text: page.text?.replace(/\r\n/g, "\n"),
-    headline: page.headline?.replace(/\r\n/g, "\n"),
-    navText: page.navText?.replace(/\r\n/g, "\n"),
+    navSection: page.navSection
+      ? {
+          ...page.navSection,
+          navText: page.navSection.navText?.replace(/\r\n/g, "\n"),
+        }
+      : undefined,
+    contentSection: page.contentSection
+      ? {
+          ...page.contentSection,
+          text: page.contentSection.text?.replace(/\r\n/g, "\n"),
+          headline: page.contentSection.headline?.replace(/\r\n/g, "\n"),
+        }
+      : undefined,
   }));
 };
 
@@ -105,7 +115,7 @@ export const validatePages = (pages: IPage[]): IValidationError[] => {
 
   pages.forEach((page, pageIndex) => {
     // V-001: navTitle must be non-empty
-    if (!page.navTitle || page.navTitle.trim() === "") {
+    if (!page.navSection?.navTitle || page.navSection.navTitle.trim() === "") {
       errors.push({
         pageIndex,
         field: "navTitle",
@@ -114,18 +124,18 @@ export const validatePages = (pages: IPage[]): IValidationError[] => {
       });
     } else {
       // V-002: navTitle must be unique
-      if (navTitles.has(page.navTitle)) {
+      if (navTitles.has(page.navSection.navTitle)) {
         errors.push({
           pageIndex,
           field: "navTitle",
-          message: `Duplicate navigation title: ${page.navTitle}`,
+          message: `Duplicate navigation title: ${page.navSection.navTitle}`,
           severity: "error",
         });
       }
-      navTitles.add(page.navTitle);
+      navTitles.add(page.navSection.navTitle);
 
       // V-003: navTitle should start with /
-      if (!page.navTitle.startsWith("/")) {
+      if (!page.navSection.navTitle.startsWith("/")) {
         errors.push({
           pageIndex,
           field: "navTitle",
@@ -136,15 +146,15 @@ export const validatePages = (pages: IPage[]): IValidationError[] => {
     }
 
     // Validate images
-    if (page.logoImage) {
-      validateImage(page.logoImage, pageIndex, "logoImage", errors);
+    if (page.navSection?.logoImage) {
+      validateImage(page.navSection.logoImage, pageIndex, "logoImage", errors);
     }
-    if (page.leadImage) {
-      validateImage(page.leadImage, pageIndex, "leadImage", errors);
+    if (page.leadSection?.leadImage) {
+      validateImage(page.leadSection.leadImage, pageIndex, "leadImage", errors);
     }
 
     // Validate gallery items
-    page.galleryItems?.forEach((item, itemIndex) => {
+    page.contentSection?.galleryItems?.forEach((item, itemIndex) => {
       if (!item.path || item.path.trim() === "") {
         errors.push({
           pageIndex,
@@ -163,7 +173,7 @@ export const validatePages = (pages: IPage[]): IValidationError[] => {
     });
 
     // Validate shop items
-    page.shopItems?.forEach((item, itemIndex) => {
+    page.contentSection?.shopItems?.forEach((item, itemIndex) => {
       if (!item.path || item.path.trim() === "") {
         errors.push({
           pageIndex,

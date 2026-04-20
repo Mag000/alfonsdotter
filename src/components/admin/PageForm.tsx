@@ -19,7 +19,12 @@ import React, { useCallback } from "react";
 import { IValidationError } from "../../model/IEditorState";
 import { IGalleryItem } from "../../model/IGalleryItem";
 import { IImage } from "../../model/IImage";
-import { IPage } from "../../model/IPage";
+import {
+  IContentSection,
+  ILeadSection,
+  INavSection,
+  IPage,
+} from "../../model/IPage";
 import { IShopItem } from "../../model/IShopItem";
 import { GalleryEditor } from "./GalleryEditor";
 import { ImageField } from "./ImageField";
@@ -113,9 +118,33 @@ export const PageForm: React.FC<IPageFormProps> = ({
   // Handle field change
   const handleChange = useCallback(
     <K extends keyof IPage>(field: K, value: IPage[K]) => {
+      onChange({ ...page, [field]: value });
+    },
+    [page, onChange],
+  );
+
+  const handleNavChange = useCallback(
+    <K extends keyof INavSection>(field: K, value: INavSection[K]) => {
+      onChange({ ...page, navSection: { ...page.navSection, [field]: value } });
+    },
+    [page, onChange],
+  );
+
+  const handleLeadChange = useCallback(
+    <K extends keyof ILeadSection>(field: K, value: ILeadSection[K]) => {
       onChange({
         ...page,
-        [field]: value,
+        leadSection: { ...(page.leadSection ?? {}), [field]: value },
+      });
+    },
+    [page, onChange],
+  );
+
+  const handleContentChange = useCallback(
+    <K extends keyof IContentSection>(field: K, value: IContentSection[K]) => {
+      onChange({
+        ...page,
+        contentSection: { ...(page.contentSection ?? {}), [field]: value },
       });
     },
     [page, onChange],
@@ -134,7 +163,7 @@ export const PageForm: React.FC<IPageFormProps> = ({
             <div className={styles.header}>
               <Document24Regular />
               <Text weight="semibold" size={500}>
-                {page.navText || page.navTitle}
+                {page.navSection?.navText || page.navSection?.navTitle}
               </Text>
               {errors.length > 0 && (
                 <Badge color="danger" size="small">
@@ -183,16 +212,16 @@ export const PageForm: React.FC<IPageFormProps> = ({
             {...getFieldValidation("navTitle")}
           >
             <Input
-              value={page.navTitle || ""}
-              onChange={(e, data) => handleChange("navTitle", data.value)}
+              value={page.navSection?.navTitle || ""}
+              onChange={(e, data) => handleNavChange("navTitle", data.value)}
               placeholder="/path/to/page"
             />
           </Field>
 
           <Field label="Navigation Text">
             <Input
-              value={page.navText || ""}
-              onChange={(e, data) => handleChange("navText", data.value)}
+              value={page.navSection?.navText || ""}
+              onChange={(e, data) => handleNavChange("navText", data.value)}
               placeholder="Menu display text"
             />
           </Field>
@@ -207,16 +236,18 @@ export const PageForm: React.FC<IPageFormProps> = ({
         <div className={styles.fieldGroup}>
           <Field label="Headline" className={styles.fullWidth}>
             <Input
-              value={page.headline || ""}
-              onChange={(e, data) => handleChange("headline", data.value)}
+              value={page.contentSection?.headline || ""}
+              onChange={(e, data) =>
+                handleContentChange("headline", data.value)
+              }
               placeholder="Page headline"
             />
           </Field>
 
           <Field label="Body Text" className={styles.fullWidth}>
             <Textarea
-              value={page.text || ""}
-              onChange={(e, data) => handleChange("text", data.value)}
+              value={page.contentSection?.text || ""}
+              onChange={(e, data) => handleContentChange("text", data.value)}
               placeholder="Page content text. Press Enter for line breaks."
               resize="vertical"
               rows={10}
@@ -232,16 +263,16 @@ export const PageForm: React.FC<IPageFormProps> = ({
         <Text className={styles.sectionTitle}>Images</Text>
         <ImageField
           label="Logo Image"
-          image={page.logoImage}
+          image={page.navSection?.logoImage}
           onChange={(image: IImage | undefined) =>
-            handleChange("logoImage", image)
+            handleNavChange("logoImage", image)
           }
         />
         <ImageField
           label="Lead Image"
-          image={page.leadImage}
+          image={page.leadSection?.leadImage}
           onChange={(image: IImage | undefined) =>
-            handleChange("leadImage", image)
+            handleLeadChange("leadImage", image)
           }
         />
       </div>
@@ -251,9 +282,9 @@ export const PageForm: React.FC<IPageFormProps> = ({
         <Divider />
         <div className={styles.section}>
           <GalleryEditor
-            items={page.galleryItems || []}
+            items={page.contentSection?.galleryItems || []}
             onChange={(items: IGalleryItem[]) =>
-              handleChange("galleryItems", items)
+              handleContentChange("galleryItems", items)
             }
           />
         </div>
@@ -264,8 +295,10 @@ export const PageForm: React.FC<IPageFormProps> = ({
         <Divider />
         <div className={styles.section}>
           <ShopEditor
-            items={page.shopItems || []}
-            onChange={(items: IShopItem[]) => handleChange("shopItems", items)}
+            items={page.contentSection?.shopItems || []}
+            onChange={(items: IShopItem[]) =>
+              handleContentChange("shopItems", items)
+            }
           />
         </div>
       </>

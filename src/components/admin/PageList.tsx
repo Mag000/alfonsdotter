@@ -146,10 +146,13 @@ export const PageList: React.FC<IPageListProps> = ({
                   <div className={styles.itemContent}>
                     <div className={styles.navTitle}>
                       <Text weight={isSelected ? "semibold" : "regular"}>
-                        {page.navText || page.navTitle}
+                        {page.navSection?.navText || page.navSection?.navTitle}
                       </Text>
-                      {page.navText && (
-                        <Text className={styles.navText}> {page.navTitle}</Text>
+                      {page.navSection?.navText && (
+                        <Text className={styles.navText}>
+                          {" "}
+                          {page.navSection?.navTitle}
+                        </Text>
                       )}
                     </div>
                   </div>
