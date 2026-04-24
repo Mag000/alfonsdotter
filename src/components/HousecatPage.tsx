@@ -1,11 +1,13 @@
 import { makeStyles } from "@fluentui/react-components";
 import { Dismiss24Regular, Navigation24Regular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IGalleryItem } from "../model/IGalleryItem";
-import { IPage } from "../model/IPage";
+import { IPage, ISiteSettings, SectionType } from "../model/IPage";
 import { pageService } from "../services/pageService";
+import { testService } from "../services/testService";
 import { CardSection } from "./CardSection";
+import { InfoSection } from "./InfoSection";
 import { MailForm } from "./MailForm";
 import ShopGrid from "./ShopGrid";
 import ShoppingCartWithBadge from "./ShoppingCartWithBadge";
@@ -204,7 +206,7 @@ const useStyles = makeStyles({
     [`@media (max-width: 700px)`]: {
       flexDirection: "column",
       gap: "24px",
-      alignItems: "center",
+      alignItems: "flex-start",
     },
   },
   contentColumn: {
@@ -212,7 +214,7 @@ const useStyles = makeStyles({
     paddingInline: "16px",
     [`@media (max-width: 700px)`]: {
       width: "100% !important" as "100%",
-      textAlign: "center",
+      textAlign: "left",
     },
   },
   headline: {
@@ -274,8 +276,8 @@ const useStyles = makeStyles({
     maxWidth: "1200px",
     marginInline: "auto",
     paddingInline: "24px",
-    paddingTop: "20px",
-    paddingBottom: "64px",
+    paddingTop: "76px",
+    paddingBottom: "76px",
     width: "100%",
     boxSizing: "border-box",
   },
@@ -315,7 +317,7 @@ const useStyles = makeStyles({
     fontSize: "0.82rem",
     letterSpacing: "0.5px",
     color: "#555",
-    textAlign: "center",
+    textAlign: "left",
     margin: "0",
   },
   carouselNavRow: {
@@ -377,13 +379,19 @@ const useStyles = makeStyles({
   bottomSection: {
     backgroundColor: "rgb(196, 194, 187)",
     width: "100%",
+    boxSizing: "border-box",
+  },
+  bottomSectionInner: {
+    maxWidth: "1200px",
+    marginInline: "auto",
+    paddingInline: "24px",
+    paddingBlock: "76px",
+    width: "100%",
+    boxSizing: "border-box",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: "34px",
-    paddingInline: "34px",
-    paddingBlock: "34px",
-    boxSizing: "border-box",
     [`@media (max-width: 700px)`]: {
       flexDirection: "column",
       gap: "17px",
@@ -467,14 +475,23 @@ function getCarouselSlice<T>(items: T[], start: number, count: number): T[] {
   );
 }
 
-const HousecatPage = (props: IPage) => {
+const HousecatPage = (props: IPage & { showCart?: boolean }) => {
   const styles = useStyles();
   const navigate = useNavigate();
 
   const [menuItems, setMenuItems] = useState<IPage[]>([]);
   const [logoSrc, setLogoSrc] = useState<string | undefined>();
+  const [siteSettings, setSiteSettings] = useState<ISiteSettings>({});
   const [lightboxItem, setLightboxItem] = useState<IGalleryItem | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [apiTestMessage, setApiTestMessage] = useState<string>("");
+
+  useEffect(() => {
+    testService
+      .getTestMessage()
+      .then(setApiTestMessage)
+      .catch((e) => setApiTestMessage("error: " + e));
+  }, []);
   const [carouselStart, setCarouselStart] = useState<number>(0);
   const [gallerySliding, setGallerySliding] = useState<
     "idle" | "next" | "prev"
@@ -486,7 +503,9 @@ const HousecatPage = (props: IPage) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    pageService.getPages().then((pages: IPage[]) => {
+    pageService.getPagesData().then((data) => {
+      const pages = data.pages;
+      setSiteSettings(data.siteSettings);
       const segments =
         props.navSection?.navTitle?.split("/").filter(Boolean) ?? [];
       // A top-level page (0 or 1 segment) belongs to the root tree;
@@ -574,6 +593,292 @@ const HousecatPage = (props: IPage) => {
         ? "0%"
         : "-20%";
 
+  const DEFAULT_SECTION_ORDER: SectionType[] = [
+    "leadSection",
+    "contentSection",
+    "cardSection",
+    "carouselSection",
+    "infoSection",
+    "bottomSection",
+  ];
+
+  const renderBodySection = (type: SectionType): React.ReactNode => {
+    switch (type) {
+      case "leadSection":
+        if (!props.leadSection?.leadImage) return null;
+        return (
+          <img
+            src={props.leadSection.leadImage.path}
+            alt={props.leadSection.leadImage.altText || ""}
+            className={styles.hero}
+          />
+        );
+
+      case "contentSection":
+        return (
+          <>
+            {(props.contentSection?.columns?.length ?? 0) > 0 ? (
+              <div className={styles.contentBlockWide}>
+                {props.contentSection!.columns!.map((col, i) => (
+                  <div
+                    key={i}
+                    className={styles.contentColumn}
+                    style={{
+                      width: col.width ? `${col.width}%` : undefined,
+                      flex: col.width ? undefined : "1",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {col.image && (
+                      <img
+                        src={col.image.path}
+                        alt={col.image.altText || ""}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          display: "block",
+                        }}
+                      />
+                    )}
+                    {col.headline && (
+                      <h1 className={styles.headline}>{col.headline}</h1>
+                    )}
+                    {col.text && <p className={styles.bodyText}>{col.text}</p>}
+                    {col.mailForm && <MailForm mailForm={col.mailForm} />}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              (props.contentSection?.headline ||
+                props.contentSection?.text) && (
+                <div className={styles.contentBlock}>
+                  {props.contentSection?.headline && (
+                    <h1 className={styles.headline}>
+                      {props.contentSection.headline}
+                    </h1>
+                  )}
+                  {props.contentSection?.text && (
+                    <p className={styles.bodyText}>
+                      {props.contentSection.text}
+                    </p>
+                  )}
+                  {props.contentSection?.mailForm && (
+                    <MailForm mailForm={props.contentSection.mailForm} />
+                  )}
+                </div>
+              )
+            )}
+            {hasGallery && (
+              <section className={styles.carouselSection}>
+                <div className={styles.carouselWrapper}>
+                  {gTotal > PAGE && (
+                    <button
+                      className={styles.carouselArrow}
+                      onClick={() => {
+                        if (gallerySliding !== "idle") return;
+                        setGallerySliding("prev");
+                        setTimeout(() => {
+                          setCarouselStart((s) => (s - 1 + gTotal) % gTotal);
+                          setGallerySliding("idle");
+                        }, 510);
+                      }}
+                      aria-label="Previous"
+                      style={{ marginRight: "16px" }}
+                    >
+                      &#8592;
+                    </button>
+                  )}
+                  <div className={styles.carouselClip}>
+                    <div
+                      style={{
+                        display: "flex",
+                        width: "calc(500% / 3)",
+                        transform: `translateX(${gOffset})`,
+                        transition:
+                          gallerySliding === "idle"
+                            ? "none"
+                            : "transform 500ms linear",
+                      }}
+                    >
+                      {gSlice5.map((item, i) => (
+                        <div
+                          key={`${item.path}-${i}`}
+                          style={{
+                            flex: "0 0 20%",
+                            padding: "0 10px",
+                            boxSizing: "border-box",
+                          }}
+                        >
+                          <div className={styles.carouselItem}>
+                            <img
+                              src={item.path}
+                              alt={item.title || ""}
+                              className={styles.carouselItemImg}
+                              onClick={() => setLightboxItem(item)}
+                            />
+                            {item.title && (
+                              <p className={styles.carouselItemTitle}>
+                                {item.title}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {gTotal > PAGE && (
+                    <button
+                      className={styles.carouselArrow}
+                      onClick={() => {
+                        if (gallerySliding !== "idle") return;
+                        setGallerySliding("next");
+                        setTimeout(() => {
+                          setCarouselStart((s) => (s + 1) % gTotal);
+                          setGallerySliding("idle");
+                        }, 510);
+                      }}
+                      aria-label="Next"
+                      style={{ marginLeft: "16px" }}
+                    >
+                      &#8594;
+                    </button>
+                  )}
+                </div>
+              </section>
+            )}
+            {hasShop && <ShopGrid items={props.contentSection!.shopItems!} />}
+          </>
+        );
+
+      case "cardSection":
+        if (!props.cardSection || props.cardSection.cards.length === 0)
+          return null;
+        return <CardSection cardSection={props.cardSection} />;
+
+      case "carouselSection":
+        if (sTotal === 0) return null;
+        return (
+          <section className={styles.carouselSection}>
+            <div className={styles.carouselWrapper}>
+              {sTotal > PAGE && (
+                <button
+                  className={styles.carouselArrow}
+                  onClick={() => {
+                    if (sectionSliding !== "idle") return;
+                    setSectionSliding("prev");
+                    setTimeout(() => {
+                      setCarouselSectionStart((s) => (s - 1 + sTotal) % sTotal);
+                      setSectionSliding("idle");
+                    }, 510);
+                  }}
+                  aria-label="Previous"
+                  style={{ marginRight: "16px" }}
+                >
+                  &#8592;
+                </button>
+              )}
+              <div className={styles.carouselClip}>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "calc(500% / 3)",
+                    transform: `translateX(${sOffset})`,
+                    transition:
+                      sectionSliding === "idle"
+                        ? "none"
+                        : "transform 500ms linear",
+                  }}
+                >
+                  {sSlice5.map((item, i) => (
+                    <div
+                      key={`${item.path}-${i}`}
+                      style={{
+                        flex: "0 0 20%",
+                        padding: "0 10px",
+                        boxSizing: "border-box",
+                      }}
+                    >
+                      <div className={styles.carouselItem}>
+                        <img
+                          src={item.path}
+                          alt={item.altText || item.title || ""}
+                          className={styles.carouselItemImg}
+                        />
+                        {item.title && (
+                          <p className={styles.carouselItemTitle}>
+                            {item.title}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {sTotal > PAGE && (
+                <button
+                  className={styles.carouselArrow}
+                  onClick={() => {
+                    if (sectionSliding !== "idle") return;
+                    setSectionSliding("next");
+                    setTimeout(() => {
+                      setCarouselSectionStart((s) => (s + 1) % sTotal);
+                      setSectionSliding("idle");
+                    }, 510);
+                  }}
+                  aria-label="Next"
+                  style={{ marginLeft: "16px" }}
+                >
+                  &#8594;
+                </button>
+              )}
+            </div>
+          </section>
+        );
+
+      case "infoSection":
+        if (!props.infoSection || props.infoSection.items.length === 0)
+          return null;
+        return <InfoSection infoSection={props.infoSection} />;
+
+      case "bottomSection":
+        if (
+          !props.bottomSection ||
+          (!props.bottomSection.image && !props.bottomSection.text)
+        )
+          return null;
+        return (
+          <div className={styles.bottomSection}>
+            <div className={styles.bottomSectionInner}>
+              {props.bottomSection.image && (
+                <img
+                  src={props.bottomSection.image.path}
+                  alt={props.bottomSection.image.altText || ""}
+                  className={styles.bottomImage}
+                />
+              )}
+              {(props.bottomSection.title || props.bottomSection.text) && (
+                <div className={styles.bottomTextBlock}>
+                  {props.bottomSection.title && (
+                    <p className={styles.bottomTitle}>
+                      {props.bottomSection.title}
+                    </p>
+                  )}
+                  {props.bottomSection.text && (
+                    <p className={styles.bottomText}>
+                      {props.bottomSection.text}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={styles.root}>
       {/* ── Header ── */}
@@ -635,7 +940,7 @@ const HousecatPage = (props: IPage) => {
                 />
               </svg>
             </a>
-            <ShoppingCartWithBadge />
+            {props.showCart && <ShoppingCartWithBadge />}
           </div>{" "}
         </div>
         <button
@@ -671,223 +976,9 @@ const HousecatPage = (props: IPage) => {
         <hr className={styles.navRule} />
       </header>
 
-      {/* ── Lead image — only when provided ── */}
-      {props.leadSection?.leadImage && (
-        <img
-          src={props.leadSection.leadImage.path}
-          alt={props.leadSection.leadImage.altText || ""}
-          className={styles.hero}
-        />
-      )}
-
-      {/* ── Headline + text ── */}
-      {(props.contentSection?.columns?.length ?? 0) > 0 ? (
-        <div className={styles.contentBlockWide}>
-          {props.contentSection!.columns!.map((col, i) => (
-            <div
-              key={i}
-              className={styles.contentColumn}
-              style={{
-                width: col.width ? `${col.width}%` : undefined,
-                flex: col.width ? undefined : "1",
-                flexShrink: 0,
-              }}
-            >
-              {col.image && (
-                <img
-                  src={col.image.path}
-                  alt={col.image.altText || ""}
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                />
-              )}
-              {col.headline && (
-                <h1 className={styles.headline}>{col.headline}</h1>
-              )}
-              {col.text && <p className={styles.bodyText}>{col.text}</p>}
-              {col.mailForm && <MailForm mailForm={col.mailForm} />}
-            </div>
-          ))}
-        </div>
-      ) : (
-        (props.contentSection?.headline || props.contentSection?.text) && (
-          <div className={styles.contentBlock}>
-            {props.contentSection?.headline && (
-              <h1 className={styles.headline}>
-                {props.contentSection.headline}
-              </h1>
-            )}
-            {props.contentSection?.text && (
-              <p className={styles.bodyText}>{props.contentSection.text}</p>
-            )}
-            {props.contentSection?.mailForm && (
-              <MailForm mailForm={props.contentSection.mailForm} />
-            )}
-          </div>
-        )
-      )}
-
-      {/* ── Gallery carousel ── */}
-      {hasGallery && (
-        <section className={styles.carouselSection}>
-          <div className={styles.carouselWrapper}>
-            {gTotal > PAGE && (
-              <button
-                className={styles.carouselArrow}
-                onClick={() => {
-                  if (gallerySliding !== "idle") return;
-                  setGallerySliding("prev");
-                  setTimeout(() => {
-                    setCarouselStart((s) => (s - 1 + gTotal) % gTotal);
-                    setGallerySliding("idle");
-                  }, 510);
-                }}
-                aria-label="Previous"
-                style={{ marginRight: "16px" }}
-              >
-                &#8592;
-              </button>
-            )}
-            <div className={styles.carouselClip}>
-              <div
-                style={{
-                  display: "flex",
-                  width: "calc(500% / 3)",
-                  transform: `translateX(${gOffset})`,
-                  transition:
-                    gallerySliding === "idle"
-                      ? "none"
-                      : "transform 500ms linear",
-                }}
-              >
-                {gSlice5.map((item, i) => (
-                  <div
-                    key={`${item.path}-${i}`}
-                    style={{
-                      flex: "0 0 20%",
-                      padding: "0 10px",
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    <div className={styles.carouselItem}>
-                      <img
-                        src={item.path}
-                        alt={item.title || ""}
-                        className={styles.carouselItemImg}
-                        onClick={() => setLightboxItem(item)}
-                      />
-                      {item.title && (
-                        <p className={styles.carouselItemTitle}>{item.title}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {gTotal > PAGE && (
-              <button
-                className={styles.carouselArrow}
-                onClick={() => {
-                  if (gallerySliding !== "idle") return;
-                  setGallerySliding("next");
-                  setTimeout(() => {
-                    setCarouselStart((s) => (s + 1) % gTotal);
-                    setGallerySliding("idle");
-                  }, 510);
-                }}
-                aria-label="Next"
-                style={{ marginLeft: "16px" }}
-              >
-                &#8594;
-              </button>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* ── Shop grid ── */}
-      {hasShop && <ShopGrid items={props.contentSection!.shopItems!} />}
-
-      {/* ── Card section ── */}
-      {props.cardSection && props.cardSection.cards.length > 0 && (
-        <CardSection cardSection={props.cardSection} />
-      )}
-
-      {/* ── Carousel section ── */}
-      {sTotal > 0 && (
-        <section className={styles.carouselSection}>
-          <div className={styles.carouselWrapper}>
-            {sTotal > PAGE && (
-              <button
-                className={styles.carouselArrow}
-                onClick={() => {
-                  if (sectionSliding !== "idle") return;
-                  setSectionSliding("prev");
-                  setTimeout(() => {
-                    setCarouselSectionStart((s) => (s - 1 + sTotal) % sTotal);
-                    setSectionSliding("idle");
-                  }, 510);
-                }}
-                aria-label="Previous"
-                style={{ marginRight: "16px" }}
-              >
-                &#8592;
-              </button>
-            )}
-            <div className={styles.carouselClip}>
-              <div
-                style={{
-                  display: "flex",
-                  width: "calc(500% / 3)",
-                  transform: `translateX(${sOffset})`,
-                  transition:
-                    sectionSliding === "idle"
-                      ? "none"
-                      : "transform 500ms linear",
-                }}
-              >
-                {sSlice5.map((item, i) => (
-                  <div
-                    key={`${item.path}-${i}`}
-                    style={{
-                      flex: "0 0 20%",
-                      padding: "0 10px",
-                      boxSizing: "border-box",
-                    }}
-                  >
-                    <div className={styles.carouselItem}>
-                      <img
-                        src={item.path}
-                        alt={item.altText || item.title || ""}
-                        className={styles.carouselItemImg}
-                      />
-                      {item.title && (
-                        <p className={styles.carouselItemTitle}>{item.title}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {sTotal > PAGE && (
-              <button
-                className={styles.carouselArrow}
-                onClick={() => {
-                  if (sectionSliding !== "idle") return;
-                  setSectionSliding("next");
-                  setTimeout(() => {
-                    setCarouselSectionStart((s) => (s + 1) % sTotal);
-                    setSectionSliding("idle");
-                  }, 510);
-                }}
-                aria-label="Next"
-                style={{ marginLeft: "16px" }}
-              >
-                &#8594;
-              </button>
-            )}
-          </div>
-        </section>
-      )}
+      {(props.sectionOrder ?? DEFAULT_SECTION_ORDER).map((type) => (
+        <React.Fragment key={type}>{renderBodySection(type)}</React.Fragment>
+      ))}
 
       {/* ── Lightbox ── */}
       {lightboxItem && (
@@ -906,52 +997,68 @@ const HousecatPage = (props: IPage) => {
         </div>
       )}
 
-      {/* ── Bottom section ── */}
-      {props.bottomSection &&
-        (props.bottomSection.image || props.bottomSection.text) && (
-          <div className={styles.bottomSection}>
-            {props.bottomSection.image && (
-              <img
-                src={props.bottomSection.image.path}
-                alt={props.bottomSection.image.altText || ""}
-                className={styles.bottomImage}
-              />
-            )}
-            {(props.bottomSection.title || props.bottomSection.text) && (
-              <div className={styles.bottomTextBlock}>
-                {props.bottomSection.title && (
-                  <p className={styles.bottomTitle}>
-                    {props.bottomSection.title}
-                  </p>
-                )}
-                {props.bottomSection.text && (
-                  <p className={styles.bottomText}>
-                    {props.bottomSection.text}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
       {/* ── Footer ── */}
       <footer className={styles.footer}>
         <span>
-          © {new Date().getFullYear()} Kristina Alfonsdotter / By Alfonsdotter
+          {(
+            siteSettings.footerCopyright ??
+            "© {year} Kristina Alfonsdotter / By Alfonsdotter"
+          ).replace("{year}", String(new Date().getFullYear()))}
         </span>
         <div className={styles.footerLinks}>
-          <a
-            href="https://www.instagram.com/byalfonsdotter"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
+          {siteSettings.instagramUrl && (
+            <>
+              <a
+                href={siteSettings.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.footerLink}
+              >
+                Instagram
+              </a>
+              <span>|</span>
+            </>
+          )}
+          {siteSettings.contactEmail && (
+            <a
+              href={`mailto:${siteSettings.contactEmail}`}
+              className={styles.footerLink}
+            >
+              Email
+            </a>
+          )}
+        </div>
+        <div
+          title={
+            apiTestMessage === "testing api"
+              ? "API is connected"
+              : `API is disconnected: ${apiTestMessage}`
+          }
+          style={{ marginTop: "8px", lineHeight: 1 }}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={apiTestMessage === "testing api" ? "#3a7d44" : "#aaa"}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-label={`API status: ${apiTestMessage}`}
           >
-            Instagram
-          </a>
-          <span>|</span>
-          <a href="mailto:hello@example.com" className={styles.footerLink}>
-            Email
-          </a>
+            {/* Wifi-style network icon */}
+            <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+            <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+            <circle
+              cx="12"
+              cy="20"
+              r="1"
+              fill={apiTestMessage === "testing api" ? "#3a7d44" : "#aaa"}
+              stroke="none"
+            />
+          </svg>
         </div>
       </footer>
     </div>

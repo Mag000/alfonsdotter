@@ -8,11 +8,23 @@ import {
   DialogTitle,
   Input,
   makeStyles,
+  Spinner,
   Text,
   tokens,
 } from "@fluentui/react-components";
-import { Folder24Regular, Search24Regular } from "@fluentui/react-icons";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ArrowUpload24Regular,
+  Folder24Regular,
+  Search24Regular,
+} from "@fluentui/react-icons";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { uploadImage } from "../../services/editorService";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const prefixImgPath = (path: string) =>
@@ -115,6 +127,8 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
   const [pendingSelection, setPendingSelection] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Load images manifest
   useEffect(() => {
@@ -195,6 +209,30 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
     onChange("");
   }, [onChange]);
 
+  // Handle file upload
+  const handleFileChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      e.target.value = "";
+      setUploading(true);
+      try {
+        const folder =
+          selectedFolder && selectedFolder !== "root"
+            ? selectedFolder
+            : undefined;
+        const path = await uploadImage(file, folder);
+        setImages((prev) => (prev.includes(path) ? prev : [...prev, path]));
+        setPendingSelection(path);
+      } catch (err) {
+        alert("Upload failed: " + (err instanceof Error ? err.message : err));
+      } finally {
+        setUploading(false);
+      }
+    },
+    [selectedFolder],
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.inputWrapper}>
@@ -238,7 +276,7 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
                 contentBefore={<Search24Regular />}
               />
 
-              {/* Folder filters */}
+              {/* Folder filters + Upload */}
               <div className={styles.folderFilter}>
                 <Button
                   appearance={selectedFolder === null ? "primary" : "secondary"}
@@ -273,6 +311,29 @@ export const ImagePicker: React.FC<IImagePickerProps> = ({
                     {folder}
                   </Button>
                 ))}
+                <Button
+                  appearance="subtle"
+                  size="small"
+                  icon={
+                    uploading ? (
+                      <Spinner size="tiny" />
+                    ) : (
+                      <ArrowUpload24Regular />
+                    )
+                  }
+                  disabled={uploading}
+                  onClick={() => fileInputRef.current?.click()}
+                  style={{ marginLeft: "auto" }}
+                >
+                  {uploading ? "Uploading…" : "Upload image"}
+                </Button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
               </div>
 
               {/* Image grid */}

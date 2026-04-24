@@ -1,144 +1,262 @@
-[
-	{
-		"navSection": {
-			"navTitle": "/",
-			"navText": "GÅRDEN",
-			"logoImage": {
-				"path": "/img/angesback/Loggo_Angesback.webp"
-			}
-		},
-		"leadSection": {
-			"leadImage": {
-				"path": "/img/angesback/Topp_1.webp"
-			}
-		},
-		"contentSection": {
-			 "columns": [
-    { "width": 30, "image": { "path": "/img/angesback/Citat_1.webp" } },
-    { "width": 70, "text": "Välkommen till oss på Ängesbäck Gård\n\nÄngesbäck Gård är en plats för dig som vill ta hand om dig själv och finna lugnet. En stadsnära oas där yogaverksamhet och kreativt skapande erbjuder plats för eget växande. Genom rörelse och stillhet ges du möjlighet till att växa både själsligt och kreativt. En plats att landa på och möta likasinnade. Vår tänkta verksamhet handlar om att hitta inre lugn och större närvaro i oss själva. Vi övar på att andas bättre, vi tränar medveten närvaro och praktiserar stillsam yoga och meditation. Vi erbjuder kurser och workshops på olika teman, är öppen för spännande samarbeten och inspel. När vädret och årstiden tillåter låter vi delar av verksamheten flytta ut i vår trädgård. I de snart färdigställda verksamhetslokalerna inrymda i den 100-åriga vinkelladugården är tanken att kropp och själ ska få mötas genom yoga, keramik och andra skapande aktiviteter. Sommarcafé, försäljning av designade produkter, återbruk är andra versamheter som förhoppningsvis kommer att kunna startas upp framöver. Välkommen med på vår resa!." }
+{
+  "siteSettings": {
+    "instagramUrl": "https://www.instagram.com/byalfonsdotter",
+    "contactEmail": "kristina@alfonsdotter.se",
+    "footerCopyright": "© {year} Kristina Alfonsdotter / By Alfonsdotter"
+  },
+  "pages": [
+    {
+      "navSection": {
+        "navTitle": "/",
+        "navText": "GÅRDEN",
+        "logoImage": {
+          "path": "/img/angesback/Loggo_Angesback.webp"
+        }
+      },
+      "leadSection": {
+        "leadImage": {
+          "path": "/img/angesback/Topp_1.webp"
+        }
+      },
+      "contentSection": {
+        "columns": [
+          {
+            "width": 30,
+            "image": {
+              "path": "/img/angesback/Citat_1.webp"
+            }
+          },
+          {
+            "width": 70,
+            "text": "Välkommen till oss på Ängesbäck Gård\n\nÄngesbäck Gård är en plats för dig som vill ta hand om dig själv och finna lugnet. En stadsnära oas där yogaverksamhet och kreativt skapande erbjuder plats för eget växande. Genom rörelse och stillhet ges du möjlighet till att växa både själsligt och kreativt. En plats att landa på och möta likasinnade. Vår tänkta verksamhet handlar om att hitta inre lugn och större närvaro i oss själva. Vi övar på att andas bättre, vi tränar medveten närvaro och praktiserar stillsam yoga och meditation. Vi erbjuder kurser och workshops på olika teman, är öppen för spännande samarbeten och inspel. När vädret och årstiden tillåter låter vi delar av verksamheten flytta ut i vår trädgård. I de snart färdigställda verksamhetslokalerna inrymda i den 100-åriga vinkelladugården är tanken att kropp och själ ska få mötas genom yoga, keramik och andra skapande aktiviteter. Sommarcafé, försäljning av designade produkter, återbruk är andra versamheter som förhoppningsvis kommer att kunna startas upp framöver. Välkommen med på vår resa!."
+          }
+        ]
+      },
+      "bottomSection": {
+        "image": {
+          "path": "/img/angesback/Ang.webp"
+        },
+        "text": "Ängesbäck Gård är lantligt belägen i stadsdelen Stämningsgården 5 km nord-väst om Skellefteå. Närheten till Klintforsån och med ett omgivande landskap som är varierande med öppna ängar, kuperad terräng och skog bjuder på omgivningarna på vackra cykel- och promenadvägar.\n\nVarmt välkommen förbi :)"
+      }
+    },
+    {
+      "navSection": {
+        "navTitle": "/aktuellt",
+        "navText": "AKTUELLT",
+        "logoImage": {
+          "path": "/img/angesback/Loggo_Angesback.webp"
+        }
+      },
+      "leadSection": {
+        "leadImage": {
+          "path": "/img/angesback/Topp_2.webp"
+        }
+      },
+      "cardSection": {
+        "cards": [
+          {
+            "image": {
+              "path": "/img/aktuellt/Sommaryoga.webp"
+            },
+            "title": "Sommaryoga",
+            "teaser": "Text om vad som erbjuds under sommaryoga.",
+            "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avslappning, där man"
+          },
+          {
+            "image": {
+              "path": "/img/aktuellt/Sommarcafe.webp"
+            },
+            "title": "Sommarcafé",
+            "teaser": "Text om vad som erbjuds under sommarcafé.",
+            "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avsl"
+          }
+        ]
+      },
+      "bottomSection": {
+        "image": {
+          "path": "/img/new/Alfonsdotter_Portratt.png"
+        },
+        "text": "Här kommer snart en kort text om mig"
+      }
+    },
+    {
+      "navSection": {
+        "navTitle": "/yoga",
+        "navText": "YOGA",
+        "logoImage": {
+          "path": "/img/angesback/Loggo_Angesback.webp"
+        }
+      },
+      "leadSection": {
+        "leadImage": {
+          "path": "/img/angesback/Topp_3.webp"
+        }
+      },
+      "contentSection": {
+        "columns": [
+          {
+            "width": 30,
+            "image": {
+              "path": "/img/angesback/Citat_3.webp"
+            }
+          },
+          {
+            "width": 70,
+            "text": "Under varumärket By Alfonsdotter gömmer sig den kreativa delen av min verksamhet där jag arbetar som illustratör och formgivare. Jag har tidigare huvudsakligen arbetat mot kund där jag haft uppdrag inom allt från formgivning av utbildnings- och informationsmaterial till bilderböcker där jag ansvarat för både text och bild till rena illustrationsuppdrag. Genom Ängesbäck gård har idén om illustrerade produkter, där återbruk och redesign är ett övergripande koncept vuxit fram. Genom att hitta nya användingsområden för existerande föremål och pryda dessa med illustrationer skapas unika handgjorda föremål. Hållbarhet och kvalité är två ord som jag hoppas kunna förknippas med By Alfonsdotter. Produkterna kommer till en början att säljas via en egen webbshop och en liten fysisk butik på gården."
+          }
+        ]
+      },
+      "cardSection": {
+        "cards": [
+          {
+            "image": {
+              "path": "/img/yoga/Yinyoga_fri.webp"
+            },
+            "title": "Yinyoga fristående pass",
+            "teaser": "Ett fristående pass i yinyoga för alla nivåer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avslappning, där man"
+          },
+          {
+            "image": {
+              "path": "/img/yoga/Yinyoga_ny.webp"
+            },
+            "title": "Yinyoga nybörjarkurs",
+            "teaser": "En nybörjarkurs i yinyoga för dig som vill börja.",
+            "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avsl"
+          },
+          {
+            "image": {
+              "path": "/img/yoga/Mindful_yoga.webp"
+            },
+            "title": "Mindful yoga",
+            "teaser": "Yoga med fokus på medveten närvaro och mindfulness.",
+            "longText": "Mindful yoga är en form av yoga som kombinerar traditionella yogapositioner med mindfulness-tekniker. Under ett pass i mindful yoga"
+          },
+          {
+            "image": {
+              "path": "/img/yoga/Yinyoga_fri.webp"
+            },
+            "title": "Yinyoga fristående pass",
+            "teaser": "Ett fristående pass i yinyoga för alla nivåer.",
+            "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avslappning, där man",
+            "infoSection": {
+              "items": [
+                {
+                  "text": "Plats: Ladugården"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "bottomSection": {
+        "title": "Yoga på Ängesbäck gård",
+        "image": {
+          "path": "/img/yoga/Tekopp.webp"
+        },
+        "text": "Under våren och sommaren kommer det att erbjudas yoga på Ängesbäck gård. Håll utkik här för mer information om tider och priser."
+      }
+    },
+    {
+      "navSection": {
+        "navTitle": "/byalfonsdotter",
+        "navText": "BY ALFONSDOTTER",
+        "logoImage": {
+          "path": "/img/angesback/Loggo_Angesback.webp"
+        }
+      },
+      "leadSection": {
+        "leadImage": {
+          "path": "/img/angesback/Topp_4.webp"
+        }
+      },
+      "contentSection": {
+        "columns": [
+          {
+            "width": 30,
+            "image": {
+              "path": "/img/angesback/Citat_3.webp"
+            }
+          },
+          {
+            "width": 70,
+            "text": "Under varumärket By Alfonsdotter gömmer sig den kreativa delen av min verksamhet där jag arbetar som illustratör och formgivare. Jag har tidigare huvudsakligen arbetat mot kund där jag haft uppdrag inom allt från formgivning av utbildnings- och informationsmaterial till bilderböcker där jag ansvarat för både text och bild till rena illustrationsuppdrag. Genom Ängesbäck gård har idén om illustrerade produkter, där återbruk och redesign är ett övergripande koncept vuxit fram. Genom att hitta nya användingsområden för existerande föremål och pryda dessa med illustrationer skapas unika handgjorda föremål. Hållbarhet och kvalité är två ord som jag hoppas kunna förknippas med By Alfonsdotter. Produkterna kommer till en början att säljas via en egen webbshop och en liten fysisk butik på gården."
+          }
+        ]
+      },
+      "bottomSection": {
+        "image": {
+          "path": "/img/new/Alfonsdotter_Portratt.png"
+        },
+        "text": "Nyfiken på att veta mer om form-verksamheten, eller bara för att säga hej, kontakta mig på kristina@alfonsdotter.se\n\nFölj mig på instagram @alfonsdotterform\n\nEller besök www.alfonsdotter.se där det även finns en liten shop :)"
+      }
+    },
+    {
+      "navSection": {
+        "navTitle": "/kontakt",
+        "navText": "KONTAKT",
+        "logoImage": {
+          "path": "/img/angesback/Loggo_Angesback.webp"
+        }
+      },
+      "leadSection": {
+        "leadImage": {
+          "path": "/img/angesback/Topp_5.webp"
+        }
+      },
+      "contentSection": {
+        "columns": [
+          {
+            "width": 30,
+            "image": {
+              "path": "/img/angesback/Citat_3.webp"
+            }
+          },
+          {
+            "width": 70,
+            "mailForm": {
+              "fields": [
+                {
+                  "name": "namn",
+                  "label": "Namn",
+                  "type": "text",
+                  "required": true
+                },
+                {
+                  "name": "epost",
+                  "label": "E-post",
+                  "type": "email",
+                  "required": true
+                },
+                {
+                  "name": "telefon",
+                  "label": "Telefon",
+                  "type": "tel",
+                  "required": false
+                },
+                {
+                  "name": "meddelande",
+                  "label": "Meddelande",
+                  "type": "textarea",
+                  "required": true
+                }
+              ],
+              "submitAction": {
+                "endpoint": "/api/send-contact",
+                "method": "POST",
+                "successMessage": "Tack för ditt meddelande! Vi återkommer inom kort.",
+                "errorMessage": "Något gick fel. Försök igen eller kontakta oss direkt."
+              }
+            }
+          }
+        ]
+      },
+      "bottomSection": {
+        "image": {
+          "path": "/img/kontakt/karta.webp"
+        },
+        "text": "Hitta hit\n\nFrån Skellefteå, ta väg 95 mot Boliden. Efter ca 5 km, sväng höger in på Gamla Varuträskvägen 15\nStämningsgården 5 km nord-väst om Skellefteå\n\nVarmt välkommen förbi :)"
+      }
+    }
   ]
-		},
-		"bottomSection": {
-			"image": { "path": "/img/angesback/Ang.webp" },
-			"text": "Ängesbäck Gård är lantligt belägen i stadsdelen Stämningsgården 5 km nord-väst om Skellefteå. Närheten till Klintforsån och med ett omgivande landskap som är varierande med öppna ängar, kuperad terräng och skog bjuder på omgivningarna på vackra cykel- och promenadvägar.\n\nVarmt välkommen förbi :)"
-		}
-	},
-	{
-		"navSection": {
-			"navTitle": "/aktuellt",
-			"navText": "AKTUELLT",
-			"logoImage": {
-				"path": "/img/angesback/Loggo_Angesback.webp"
-			}
-		},
-		"leadSection": {
-			"leadImage": {
-				"path": "/img/angesback/Topp_2.webp"
-			}
-		},
-		"carouselSection": {
-  "items": [
-    { "path": "/img/aktuellt/Sommaryoga.webp", "title": "Sommaryoga" },
-	 { "path": "/img/aktuellt/Sommarcafe.webp", "title": "Sommarcafé" }
-  ]
-},
-		"bottomSection": {
-			"image": { "path": "/img/new/Alfonsdotter_Portratt.png" },
-			"text": "Här kommer snart en kort text om mig"
-		}
-	},
-	{
-		"navSection": {
-			"navTitle": "/yoga",
-			"navText": "YOGA",
-			"logoImage": {
-				"path": "/img/angesback/Loggo_Angesback.webp"
-			}
-		},
-		"leadSection": {
-			"leadImage": {
-				"path": "/img/angesback/Topp_3.webp"
-			}
-		},
-		"contentSection": {
-			 "columns": [
-    { "width": 30, "image": { "path": "/img/angesback/Citat_3.webp" } },
-    { "width": 70, "text": "Under varumärket By Alfonsdotter gömmer sig den kreativa delen av min verksamhet där jag arbetar som illustratör och formgivare. Jag har tidigare huvudsakligen arbetat mot kund där jag haft uppdrag inom allt från formgivning av utbildnings- och informationsmaterial till bilderböcker där jag ansvarat för både text och bild till rena illustrationsuppdrag. Genom Ängesbäck gård har idén om illustrerade produkter, där återbruk och redesign är ett övergripande koncept vuxit fram. Genom att hitta nya användingsområden för existerande föremål och pryda dessa med illustrationer skapas unika handgjorda föremål. Hållbarhet och kvalité är två ord som jag hoppas kunna förknippas med By Alfonsdotter. Produkterna kommer till en början att säljas via en egen webbshop och en liten fysisk butik på gården." }
-  ]
-		},
-			"cardSection": {
-  "cards": [
-    { "image": { "path": "/img/yoga/Yinyoga_fri.webp" }, "title": "Yinyoga fristående pass", "teaser": "Ett fristående pass i yinyoga för alla nivåer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avslappning, där man"},
-	 { "image": { "path": "/img/yoga/Yinyoga_ny.webp" }, "title": "Yinyoga nybörjarkurs", "teaser": "En nybörjarkurs i yinyoga för dig som vill börja.", "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avsl"},
-	  { "image": { "path": "/img/yoga/Mindful_yoga.webp" }, "title": "Mindful yoga", "teaser": "Yoga med fokus på medveten närvaro och mindfulness.", "longText": "Mindful yoga är en form av yoga som kombinerar traditionella yogapositioner med mindfulness-tekniker. Under ett pass i mindful yoga"},
-      { "image": { "path": "/img/yoga/Yinyoga_fri.webp" }, "title": "Yinyoga fristående pass", "teaser": "Ett fristående pass i yinyoga för alla nivåer.", "longText": "Yinyoga är en lugn och stillsam form av yoga där positionerna hålls i längre tid, vanligtvis mellan 3-5 minuter. Genom att hålla positionerna under längre tid stimuleras bindväven i kroppen, vilket kan öka rörligheten och minska spänningar. Yinyoga fokuserar på att hitta en balans mellan anspänning och avslappning, där man"}]
-},
-		"bottomSection": {
-			"title": "Yoga på Ängesbäck gård",
-			"image": { "path": "/img/yoga/Tekopp.webp" },
-			"text": "Under våren och sommaren kommer det att erbjudas yoga på Ängesbäck gård. Håll utkik här för mer information om tider och priser."
-		}
-	},
-	{
-		"navSection": {
-			"navTitle": "/byalfonsdotter",
-			"navText": "BY ALFONSDOTTER",
-			"logoImage": {
-				"path": "/img/angesback/Loggo_Angesback.webp"
-			}
-		},
-		"leadSection": {
-			"leadImage": {
-				"path": "/img/angesback/Topp_4.webp"
-			}
-		},
-		"contentSection": {
-			 "columns": [
-    { "width": 30, "image": { "path": "/img/angesback/Citat_3.webp" } },
-    { "width": 70, "text": "Under varumärket By Alfonsdotter gömmer sig den kreativa delen av min verksamhet där jag arbetar som illustratör och formgivare. Jag har tidigare huvudsakligen arbetat mot kund där jag haft uppdrag inom allt från formgivning av utbildnings- och informationsmaterial till bilderböcker där jag ansvarat för både text och bild till rena illustrationsuppdrag. Genom Ängesbäck gård har idén om illustrerade produkter, där återbruk och redesign är ett övergripande koncept vuxit fram. Genom att hitta nya användingsområden för existerande föremål och pryda dessa med illustrationer skapas unika handgjorda föremål. Hållbarhet och kvalité är två ord som jag hoppas kunna förknippas med By Alfonsdotter. Produkterna kommer till en början att säljas via en egen webbshop och en liten fysisk butik på gården." }
-  ]
-		},
-		"bottomSection": {
-			"image": { "path": "/img/new/Alfonsdotter_Portratt.png" },
-			"text": "Nyfiken på att veta mer om form-verksamheten, eller bara för att säga hej, kontakta mig på kristina@alfonsdotter.se\n\nFölj mig på instagram @alfonsdotterform\n\nEller besök www.alfonsdotter.se där det även finns en liten shop :)"
-		}
-	},
-	{
-		"navSection": {
-			"navTitle": "/kontakt",
-			"navText": "KONTAKT",
-			"logoImage": {
-				"path": "/img/angesback/Loggo_Angesback.webp"
-			}
-		},
-		"leadSection": {
-			"leadImage": {
-				"path": "/img/angesback/Topp_5.webp"
-			}
-		},
-		"contentSection": {
-				 "columns": [
-    { "width": 30, "image": { "path": "/img/angesback/Citat_3.webp" } },
-    { "width": 70, "mailForm": {
-				"fields": [
-					{ "name": "namn", "label": "Namn", "type": "text", "required": true },
-					{ "name": "epost", "label": "E-post", "type": "email", "required": true },
-					{ "name": "telefon", "label": "Telefon", "type": "tel", "required": false },
-					{ "name": "meddelande", "label": "Meddelande", "type": "textarea", "required": true }
-				],
-				"submitAction": {
-					"endpoint": "/api/send-contact",
-					"method": "POST",
-					"successMessage": "Tack för ditt meddelande! Vi återkommer inom kort.",
-					"errorMessage": "Något gick fel. Försök igen eller kontakta oss direkt."
-				}
-			}
-			
-		}]
-		},
-		"bottomSection": {
-			"image": { "path": "/img/kontakt/karta.webp" },
-			"text": "Hitta hit\n\nFrån Skellefteå, ta väg 95 mot Boliden. Efter ca 5 km, sväng höger in på Gamla Varuträskvägen 15\nStämningsgården 5 km nord-väst om Skellefteå\n\nVarmt välkommen förbi :)"
-		}
-	}
-]
+}

@@ -1,14 +1,14 @@
 import { makeStyles } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
-import { ICardSection } from "../model/IPage";
+import { ICardSection, IInfoItem } from "../model/IPage";
 
 const useStyles = makeStyles({
   section: {
     maxWidth: "1200px",
     marginInline: "auto",
     paddingInline: "24px",
-    paddingTop: "44px",
-    paddingBottom: "44px",
+    paddingTop: "76px",
+    paddingBottom: "76px",
     width: "100%",
     boxSizing: "border-box",
   },
@@ -98,37 +98,44 @@ const useStyles = makeStyles({
       border: "1px solid #555",
     },
   },
-  // Drawer overlay
+  // Dialog overlay
   drawerOverlay: {
     position: "fixed",
     top: "0",
     right: "0",
     bottom: "0",
     left: "0",
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: "rgba(255,255,255,0.15)",
+    backdropFilter: "blur(8px)",
     zIndex: 1000,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    padding: "24px",
+    boxSizing: "border-box",
   },
   drawer: {
     backgroundColor: "#fff",
-    width: "100vw",
-    height: "100vh",
+    borderRadius: "12px",
+    maxWidth: "860px",
+    width: "100%",
+    maxHeight: "90vh",
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",
+    boxShadow: "0 8px 40px rgba(0,0,0,0.3)",
   },
   drawerHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    padding: "24px 24px 12px",
+    padding: "24px 24px 16px",
     gap: "12px",
+    borderBottom: "1px solid #e8e5de",
   },
   drawerTitle: {
     fontFamily: "'Source Sans Pro', sans-serif",
-    fontSize: "1.2rem",
+    fontSize: "1.4rem",
     fontWeight: "700",
     color: "#333",
     margin: "0",
@@ -141,21 +148,91 @@ const useStyles = makeStyles({
     color: "#999",
     lineHeight: "1",
     padding: "0",
+    flexShrink: "0",
     ":hover": { color: "#333" },
+  },
+  drawerContent: {
+    display: "flex",
+    flexDirection: "row",
+    flex: "1",
+    minHeight: "0",
+    padding: "16px",
+    gap: "24px",
+    boxSizing: "border-box",
   },
   drawerImg: {
     display: "block",
-    width: "100%",
-    aspectRatio: "4 / 3",
+    width: "45%",
+    flexShrink: "0",
     objectFit: "cover",
+    borderRadius: "8px",
   },
   drawerBody: {
-    padding: "20px 24px 32px",
+    padding: "8px 8px 16px",
     fontFamily: "'Source Sans Pro', sans-serif",
     fontSize: "0.95rem",
     color: "#444",
-    lineHeight: "1.6",
+    lineHeight: "1.7",
     whiteSpace: "pre-wrap",
+    overflowY: "auto",
+    flex: "1",
+  },
+  drawerTeaser: {
+    fontFamily: "'Source Sans Pro', sans-serif",
+    fontSize: "1rem",
+    fontWeight: "600",
+    color: "#555",
+    marginBottom: "16px",
+    lineHeight: "1.5",
+  },
+  drawerLeftCol: {
+    display: "flex",
+    flexDirection: "column",
+    width: "45%",
+    flexShrink: "0",
+    gap: "12px",
+  },
+  infoItemCard: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "8px",
+  },
+  infoItemCardImg: {
+    display: "block",
+    width: "48px",
+    height: "48px",
+    objectFit: "cover",
+    borderRadius: "4px",
+    flexShrink: "0",
+  },
+  infoItemCardText: {
+    fontFamily: "'Source Sans Pro', sans-serif",
+    fontSize: "0.78rem",
+    color: "#555",
+    lineHeight: "1.4",
+    margin: "0",
+  },
+  infoItemDialogImg: {
+    display: "block",
+    width: "100%",
+    height: "auto",
+    borderRadius: "6px",
+    objectFit: "cover",
+  },
+  infoItemDialogText: {
+    fontFamily: "'Source Sans Pro', sans-serif",
+    fontSize: "0.85rem",
+    color: "#555",
+    lineHeight: "1.5",
+    margin: "0",
+    whiteSpace: "pre-wrap",
+  },
+  infoItemDialog: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "8px",
   },
 });
 
@@ -245,6 +322,22 @@ export const CardSection = ({ cardSection }: CardSectionProps) => {
                       {card.title && (
                         <p className={styles.cardTitle}>{card.title}</p>
                       )}
+                      {card.infoSection?.items.map((item, j) => (
+                        <div key={j} className={styles.infoItemCard}>
+                          {item.image && (
+                            <img
+                              src={item.image.path}
+                              alt={item.image.altText || ""}
+                              className={styles.infoItemCardImg}
+                            />
+                          )}
+                          {item.text && (
+                            <p className={styles.infoItemCardText}>
+                              {item.text}
+                            </p>
+                          )}
+                        </div>
+                      ))}
                       {card.teaser && (
                         <p className={styles.cardTeaser}>{card.teaser}</p>
                       )}
@@ -276,7 +369,7 @@ export const CardSection = ({ cardSection }: CardSectionProps) => {
         </div>
       </section>
 
-      {/* ── Drawer ── */}
+      {/* ── Dialog ── */}
       {drawerCard && (
         <div
           className={styles.drawerOverlay}
@@ -293,7 +386,54 @@ export const CardSection = ({ cardSection }: CardSectionProps) => {
                 ✕
               </button>
             </div>
-            <div className={styles.drawerBody}>{drawerCard.longText}</div>
+            <div className={styles.drawerContent}>
+              {(drawerCard.image || drawerCard.infoSection?.items.length) && (
+                <div className={styles.drawerLeftCol}>
+                  {drawerCard.image && (
+                    <img
+                      src={drawerCard.image.path}
+                      alt={drawerCard.image.altText || drawerCard.title || ""}
+                      className={styles.drawerImg}
+                    />
+                  )}
+                  {drawerCard.infoSection?.items.map(
+                    (item: IInfoItem, j: number) => (
+                      <div
+                        key={j}
+                        className={
+                          item.image && item.text
+                            ? styles.infoItemDialog
+                            : undefined
+                        }
+                      >
+                        {item.image && (
+                          <img
+                            src={item.image.path}
+                            alt={item.image.altText || ""}
+                            className={
+                              item.text
+                                ? styles.infoItemCardImg
+                                : styles.infoItemDialogImg
+                            }
+                          />
+                        )}
+                        {item.text && (
+                          <p className={styles.infoItemDialogText}>
+                            {item.text}
+                          </p>
+                        )}
+                      </div>
+                    ),
+                  )}
+                </div>
+              )}
+              <div className={styles.drawerBody}>
+                {drawerCard.teaser && (
+                  <p className={styles.drawerTeaser}>{drawerCard.teaser}</p>
+                )}
+                {drawerCard.longText}
+              </div>
+            </div>
           </div>
         </div>
       )}

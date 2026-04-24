@@ -1,11 +1,20 @@
-using Renci.SshNet;
+using FluentFTP;
 using System.Text;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    // Serve static files from the app root so no wwwroot/ subfolder is needed on the server.
+    WebRootPath = "."
+});
 
-// Allow the Vite dev server (dev) and the live site (production)
-var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
-    ?? ["http://localhost:5173"];
+// CORS — allow the production domain and local dev
+var allowedOrigins = builder.Environment.IsDevelopment()
+    ? (builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? ["http://localhost:5173"])
+    : ["https://angesbackgard.se", "https://www.angesbackgard.se",
+       "http://angesbackgard.se",  "http://www.angesbackgard.se",
+       "https://alfonsdotter.se",  "https://www.alfonsdotter.se",
+       "http://alfonsdotter.se",   "http://www.alfonsdotter.se"];
 
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
@@ -15,46 +24,69 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// When hosted as an IIS sub-application at /api, strip that prefix so routing works
-app.UsePathBase("/api");
+app.UseCors();
 
-if (app.Environment.IsDevelopment())
-    app.UseCors();
-
-// ── POST /deploy/pages ────────────────────────────────────────────────────
-// Body: raw JSON content of pages.json
-app.MapPost("/deploy/pages", async (HttpRequest req, IConfiguration config) =>
+// Block direct HTTP access to server-side config files before static files are served.
+app.Use(async (ctx, next) =>
 {
-    using var client = CreateClient(config, out var err);
-    if (client is null)
-        return Results.Problem(detail: err, statusCode: 500);
+    var name = Path.GetFileName(ctx.Request.Path.Value ?? "");
+    if (name.StartsWith("appsettings", StringComparison.OrdinalIgnoreCase) ||
+        name.Equals("local.settings.json", StringComparison.OrdinalIgnoreCase))
+    {
+        ctx.Response.StatusCode = 404;
+        return;
+    }
+    await next(ctx);
+});
 
-    var remotePath = config["Sftp:PagesPath"] ?? "/public_html/pages.json";
+// Serve SPA static files from the app root directory (index.html, assets/, img/, pages.json …)
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        // Never cache pages.json — it is updated by the admin and must always be fresh.
+        if (ctx.File.Name.Equals("pages.json", StringComparison.OrdinalIgnoreCase))
+        {
+            ctx.Context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+            ctx.Context.Response.Headers["Pragma"] = "no-cache";
+        }
+    }
+});
+
+// ── API routes under /api ─────────────────────────────────────────────────────
+var api = app.MapGroup("/api");
+
+// ── GET /api/test ────────────────────────────────────────────────────────────
+api.MapGet("/test", () => Results.Ok(new { message = "testing api" }));
+
+// ── POST /api/deploy/pages ──────────────────────────────────────────────────
+// Body: raw JSON content of pages.json
+api.MapPost("/deploy/pages", async (HttpRequest req, IConfiguration config) =>
+{
     var content = await new StreamReader(req.Body).ReadToEndAsync();
 
     if (string.IsNullOrWhiteSpace(content))
         return Results.BadRequest(new { success = false, error = "Request body is empty" });
 
+    var remotePath = config["Ftp:PagesPath"] ?? "/Content/pages.json";
+
     try
     {
-        client.Connect();
+        await using var ftp = await CreateFtpClient(config);
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
-        client.UploadFile(stream, remotePath, true);
+        await ftp.UploadStream(stream, remotePath, FtpRemoteExists.Overwrite, true);
+        await ftp.Disconnect();
         return Results.Ok(new { success = true, path = remotePath });
     }
     catch (Exception ex)
     {
         return Results.Problem(detail: ex.Message, statusCode: 500);
     }
-    finally
-    {
-        if (client.IsConnected) client.Disconnect();
-    }
 });
 
-// ── POST /deploy/upload ───────────────────────────────────────────────────────
+// ── POST /api/deploy/upload ─────────────────────────────────────────────────
 // Form fields: file (binary), folder (optional subfolder under img/)
-app.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
+api.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
 {
     if (!req.HasFormContentType)
         return Results.BadRequest(new { success = false, error = "Expected multipart/form-data" });
@@ -66,21 +98,18 @@ app.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
     if (file is null)
         return Results.BadRequest(new { success = false, error = "No file provided" });
 
-    var remoteBase = config["Sftp:ImgBasePath"] ?? "/public_html/img";
+    var remoteBase = config["Ftp:ImgBasePath"] ?? "/Content/img";
     var safeName = Path.GetFileName(file.FileName);
     var remoteDir = string.IsNullOrEmpty(folder) ? remoteBase : $"{remoteBase}/{folder}";
     var remotePath = $"{remoteDir}/{safeName}";
 
-    using var client = CreateClient(config, out var err);
-    if (client is null)
-        return Results.Problem(detail: err, statusCode: 500);
-
     try
     {
-        client.Connect();
-        EnsureDirectory(client, remoteDir);
+        await using var ftp = await CreateFtpClient(config);
+        await ftp.CreateDirectory(remoteDir, true);
         using var stream = file.OpenReadStream();
-        client.UploadFile(stream, remotePath, true);
+        await ftp.UploadStream(stream, remotePath, FtpRemoteExists.Overwrite, true);
+        await ftp.Disconnect();
 
         var publicPath = string.IsNullOrEmpty(folder)
             ? $"/img/{safeName}"
@@ -92,29 +121,21 @@ app.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
     {
         return Results.Problem(detail: ex.Message, statusCode: 500);
     }
-    finally
-    {
-        if (client.IsConnected) client.Disconnect();
-    }
 });
 
-// ── POST /send-order ─────────────────────────────────────────────────────────
+// ── POST /api/send-order ─────────────────────────────────────────────────────
 // Body: { name, email, message?, items: [{title, quantity, unitPrice?}], total? }
-app.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
+api.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
 {
     var order = await req.ReadFromJsonAsync<OrderRequest>();
     if (order is null || string.IsNullOrWhiteSpace(order.Name) || string.IsNullOrWhiteSpace(order.Email))
         return Results.BadRequest(new { success = false, error = "Name and email are required" });
 
-    var host = config["Smtp:Host"];
-    var to = config["Smtp:To"];
-    var from = config["Smtp:From"];
-    var user = config["Smtp:User"];
-    var pass = config["Smtp:Password"];
-    var port = int.TryParse(config["Smtp:Port"], out var p) ? p : 587;
+    var sender = config["Graph:SenderAddress"];
+    var recipient = config["Graph:RecipientAddress"];
 
-    if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(to) || string.IsNullOrEmpty(from))
-        return Results.Problem(detail: "SMTP is not configured (Smtp:Host / Smtp:From / Smtp:To)", statusCode: 500);
+    if (string.IsNullOrEmpty(sender) || string.IsNullOrEmpty(recipient))
+        return Results.Problem(detail: "Microsoft Graph is not configured (Graph:SenderAddress/RecipientAddress)", statusCode: 500);
 
     var itemLines = order.Items.Select(i =>
         i.UnitPrice.HasValue
@@ -122,25 +143,38 @@ app.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
             : $"  {i.Title} x{i.Quantity} = Kontakta för pris");
 
     var totalLine = order.Total.HasValue ? $"{order.Total.Value} kr" : "—";
-
-    var body = "Ny beställning från " + order.Name + " (" + order.Email + ")\n\n" +
-        "Artiklar:\n" + string.Join("\n", itemLines) + "\n\n" +
-               "Totalt: " + totalLine + "\n\n" +
-   "Meddelande:\n" + (order.Message ?? "(inget meddelande)");
+    var bodyText = $"Ny beställning från {order.Name} ({order.Email})\n\n" +
+                   $"Artiklar:\n{string.Join("\n", itemLines)}\n\n" +
+                   $"Totalt: {totalLine}\n\n" +
+                   $"Meddelande:\n{order.Message ?? "(inget meddelande)"}";
 
     try
     {
-        using var smtp = new System.Net.Mail.SmtpClient(host, port)
+        using var http = new HttpClient();
+        var accessToken = await GetGraphToken(http, config);
+        http.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+        var mailPayload = new
         {
-            Credentials = new System.Net.NetworkCredential(user, pass),
-            EnableSsl = true,
+            message = new
+            {
+                subject = $"Ny beställning – {order.Name}",
+                body = new { contentType = "Text", content = bodyText },
+                toRecipients = new[] { new { emailAddress = new { address = recipient } } },
+                replyTo = new[] { new { emailAddress = new { address = order.Email, name = order.Name } } },
+            },
+            saveToSentItems = false,
         };
-        var mail = new System.Net.Mail.MailMessage(from, to)
+
+        var sendResp = await http.PostAsJsonAsync(
+            $"https://graph.microsoft.com/v1.0/users/{sender}/sendMail", mailPayload);
+
+        if (!sendResp.IsSuccessStatusCode)
         {
-            Subject = $"Ny beställning – {order.Name}",
-            Body = body,
-        };
-        await smtp.SendMailAsync(mail);
+            var body = await sendResp.Content.ReadAsStringAsync();
+            return Results.Problem(detail: $"Graph {(int)sendResp.StatusCode}: {body}", statusCode: 500);
+        }
         return Results.Ok(new { success = true });
     }
     catch (Exception ex)
@@ -149,40 +183,111 @@ app.MapPost("/send-order", async (HttpRequest req, IConfiguration config) =>
     }
 });
 
+// ── POST /api/send-contact ─────────────────────────────────────────────────────────
+// Body: { namn, epost, telefon?, meddelande } — from the contact form (Swedish field names)
+api.MapPost("/send-contact", async (HttpRequest req, IConfiguration config) =>
+{
+    var form = await req.ReadFromJsonAsync<ContactRequest>();
+    if (form is null || string.IsNullOrWhiteSpace(form.Namn) || string.IsNullOrWhiteSpace(form.Epost))
+        return Results.BadRequest(new { success = false, error = "Namn och epost krävs" });
+
+    var bodyText = $"Meddelande från {form.Namn} ({form.Epost})\n" +
+                   (string.IsNullOrEmpty(form.Telefon) ? "" : $"Telefon: {form.Telefon}\n") +
+                   $"\n{form.Meddelande}";
+
+    try
+    {
+        using var http = new HttpClient();
+        var token = await GetGraphToken(http, config);
+        http.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var sender = config["Graph:SenderAddress"]!;
+        var recipient = config["Graph:RecipientAddress"]!;
+
+        var mailPayload = new
+        {
+            message = new
+            {
+                subject = $"Kontaktformulär – {form.Namn}",
+                body = new { contentType = "Text", content = bodyText },
+                toRecipients = new[] { new { emailAddress = new { address = recipient } } },
+                replyTo = new[] { new { emailAddress = new { address = form.Epost, name = form.Namn } } },
+            },
+            saveToSentItems = false,
+        };
+
+        var sendResp = await http.PostAsJsonAsync(
+            $"https://graph.microsoft.com/v1.0/users/{sender}/sendMail", mailPayload);
+        if (!sendResp.IsSuccessStatusCode)
+        {
+            var body = await sendResp.Content.ReadAsStringAsync();
+            return Results.Problem(detail: $"Graph {(int)sendResp.StatusCode}: {body}", statusCode: 500);
+        }
+        return Results.Ok(new { success = true });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(detail: ex.Message, statusCode: 500);
+    }
+});
+
+// SPA fallback — serve index.html for any route not matched above (React Router)
+app.MapFallbackToFile("index.html");
+
 app.Run();
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
-static SftpClient? CreateClient(IConfiguration config, out string? error)
+static async Task<AsyncFtpClient> CreateFtpClient(IConfiguration config)
 {
-    var host = config["Sftp:Host"];
-    var user = config["Sftp:User"];
-    var password = config["Sftp:Password"];
+    var host = config["Ftp:Host"] ?? throw new InvalidOperationException("Ftp:Host not configured");
+    var user = config["Ftp:User"] ?? throw new InvalidOperationException("Ftp:User not configured");
+    var password = config["Ftp:Password"] ?? throw new InvalidOperationException("Ftp:Password not configured");
+    var port = int.TryParse(config["Ftp:Port"], out var p) ? p : 21;
 
-    if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
+    var ftp = new AsyncFtpClient(host, user, password, port);
+    ftp.Config.ValidateAnyCertificate = true;
+
+    var profiles = await ftp.AutoDetect();
+    if (profiles.Count > 0)
     {
-        error = "SFTP credentials not configured (Sftp:Host / Sftp:User / Sftp:Password)";
-        return null;
+        var profile = profiles[0];
+        ftp.Config.EncryptionMode = profile.Encryption;
+        ftp.Config.DataConnectionType = profile.DataConnection;
+        ftp.Config.SslProtocols = profile.Protocols;
+    }
+    else
+    {
+        ftp.Config.EncryptionMode = FtpEncryptionMode.Explicit;
     }
 
-    var port = int.TryParse(config["Sftp:Port"], out var p) ? p : 22;
-    error = null;
-    return new SftpClient(host, port, user, password);
+    await ftp.Connect();
+    return ftp;
 }
 
-static void EnsureDirectory(SftpClient client, string path)
+static async Task<string> GetGraphToken(HttpClient http, IConfiguration config)
 {
-    var parts = path.TrimStart('/').Split('/');
-    var current = "";
-    foreach (var part in parts)
-    {
-        current += "/" + part;
-        if (!client.Exists(current))
-            client.CreateDirectory(current);
-    }
+    var tenantId = config["Graph:TenantId"] ?? throw new InvalidOperationException("Graph:TenantId not configured");
+    var clientId = config["Graph:ClientId"] ?? throw new InvalidOperationException("Graph:ClientId not configured");
+    var secret = config["Graph:ClientSecret"] ?? throw new InvalidOperationException("Graph:ClientSecret not configured");
+
+    var resp = await http.PostAsync(
+        $"https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token",
+        new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+            ["grant_type"] = "client_credentials",
+            ["client_id"] = clientId,
+            ["client_secret"] = secret,
+            ["scope"] = "https://graph.microsoft.com/.default",
+        }));
+    resp.EnsureSuccessStatusCode();
+    var doc = await resp.Content.ReadFromJsonAsync<System.Text.Json.JsonDocument>();
+    return doc!.RootElement.GetProperty("access_token").GetString()!;
 }
 
 // ── records ───────────────────────────────────────────────────────────────────
 record OrderItem(string Title, int Quantity, decimal? UnitPrice);
 record OrderRequest(string Name, string Email, string? Message, List<OrderItem> Items, decimal? Total);
+record ContactRequest(string Namn, string Epost, string? Telefon, string Meddelande);
 

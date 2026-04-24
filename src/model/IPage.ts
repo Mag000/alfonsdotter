@@ -70,11 +70,29 @@ export interface ICard {
   title?: string;
   teaser?: string;
   longText?: string;
+  infoSection?: IInfoSection;
 }
 
 export interface ICardSection {
   cards: ICard[];
 }
+
+export interface IInfoItem {
+  text?: string;
+  image?: IImage;
+}
+
+export interface IInfoSection {
+  items: IInfoItem[];
+}
+
+export type SectionType =
+  | "leadSection"
+  | "contentSection"
+  | "cardSection"
+  | "carouselSection"
+  | "bottomSection"
+  | "infoSection";
 
 export interface IPage {
   navSection?: INavSection;
@@ -82,6 +100,19 @@ export interface IPage {
   contentSection?: IContentSection;
   carouselSection?: ICarouselSection;
   cardSection?: ICardSection;
+  infoSection?: IInfoSection;
   bottomSection?: IBottomSection;
   menuItems?: IPage[];
+  sectionOrder?: SectionType[];
+}
+
+export interface ISiteSettings {
+  instagramUrl?: string;
+  contactEmail?: string;
+  footerCopyright?: string;
+}
+
+export interface IPagesData {
+  pages: IPage[];
+  siteSettings: ISiteSettings;
 }

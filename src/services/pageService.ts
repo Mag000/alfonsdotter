@@ -1,6 +1,6 @@
 import { IGalleryItem } from "../model/IGalleryItem";
 import { IImage } from "../model/IImage";
-import { IPage } from "../model/IPage";
+import { IPage, IPagesData, ISiteSettings } from "../model/IPage";
 import { IShopItem } from "../model/IShopItem";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, ""); // e.g. "/dist"
@@ -60,10 +60,24 @@ const getImageGallery = (folderName: string): IImage[] => {
 };
 
 export const pageService = {
+  getPagesData: async (): Promise<IPagesData> => {
+    const res = await fetch("/pages.json");
+    const raw: IPage[] | IPagesData = await res.json();
+    // Backward compatible: support legacy format (plain IPage[]) and new wrapped format
+    const pages = Array.isArray(raw) ? raw : (raw.pages ?? []);
+    const siteSettings = Array.isArray(raw) ? {} : (raw.siteSettings ?? {});
+    return {
+      siteSettings,
+      pages: pages.map(prefixPagePaths),
+    };
+  },
   getPages: async (): Promise<IPage[]> => {
-    const pages = await fetch("/pages.json");
-    const data: IPage[] = await pages.json();
-    return data.map(prefixPagePaths);
+    const data = await pageService.getPagesData();
+    return data.pages;
+  },
+  getSiteSettings: async (): Promise<ISiteSettings> => {
+    const data = await pageService.getPagesData();
+    return data.siteSettings;
   },
   // getPage: (name: string) => {
   //   return pages.find((p) => p.navTitle == name);

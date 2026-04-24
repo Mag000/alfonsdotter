@@ -30,7 +30,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useBlocker } from "react-router-dom";
 import { IEditorHistory, IValidationError } from "../../model/IEditorState";
-import { IPage } from "../../model/IPage";
+import { IPage, ISiteSettings } from "../../model/IPage";
 import {
   deployPages,
   downloadJson,
@@ -38,11 +38,13 @@ import {
   loadJsonFile,
   logout,
   pagesEqual,
+  siteSettingsEqual,
   validatePages,
 } from "../../services/editorService";
 import { AdminLogin } from "./AdminLogin";
 import { PageForm } from "./PageForm";
 import { PageList } from "./PageList";
+import { SiteSettingsForm } from "./SiteSettingsForm";
 
 const useStyles = makeStyles({
   root: {
@@ -65,6 +67,30 @@ const useStyles = makeStyles({
     borderRight: `1px solid ${tokens.colorNeutralStroke1}`,
     overflow: "auto",
     backgroundColor: tokens.colorNeutralBackground2,
+    display: "flex",
+    flexDirection: "column",
+  },
+  siteSettingsButton: {
+    margin: tokens.spacingVerticalS,
+    textAlign: "left",
+    cursor: "pointer",
+    padding: `${tokens.spacingVerticalS} ${tokens.spacingHorizontalM}`,
+    borderRadius: tokens.borderRadiusMedium,
+    border: "none",
+    backgroundColor: "transparent",
+    fontFamily: "inherit",
+    fontSize: tokens.fontSizeBase300,
+    display: "flex",
+    alignItems: "center",
+    gap: tokens.spacingHorizontalS,
+    width: "calc(100% - 16px)",
+  },
+  siteSettingsButtonSelected: {
+    backgroundColor: tokens.colorNeutralBackground1Selected,
+  },
+  sidebarDivider: {
+    borderTop: `1px solid ${tokens.colorNeutralStroke1}`,
+    margin: `0 ${tokens.spacingHorizontalM}`,
   },
   main: {
     flex: 1,
@@ -104,9 +130,12 @@ export const PagesEditor: React.FC = () => {
   // Data state
   const [pages, setPages] = useState<IPage[]>([]);
   const [savedPages, setSavedPages] = useState<IPage[]>([]);
+  const [siteSettings, setSiteSettings] = useState<ISiteSettings>({});
+  const [savedSiteSettings, setSavedSiteSettings] = useState<ISiteSettings>({});
   const [selectedPageIndex, setSelectedPageIndex] = useState<number | null>(
     null,
   );
+  const [showSiteSettings, setShowSiteSettings] = useState(false);
   const [validationErrors, setValidationErrors] = useState<IValidationError[]>(
     [],
   );
@@ -124,7 +153,9 @@ export const PagesEditor: React.FC = () => {
   });
 
   // Computed state
-  const hasUnsavedChanges = !pagesEqual(pages, savedPages);
+  const hasUnsavedChanges =
+    !pagesEqual(pages, savedPages) ||
+    !siteSettingsEqual(siteSettings, savedSiteSettings);
   const canUndo = history.currentIndex > 0;
   const canRedo = history.currentIndex < history.states.length - 1;
 
@@ -155,17 +186,25 @@ export const PagesEditor: React.FC = () => {
         if (!res.ok) throw new Error("Failed to fetch pages.json");
         return res.json();
       })
-      .then((loadedPages: IPage[]) => {
-        setPages(loadedPages);
-        setSavedPages(JSON.parse(JSON.stringify(loadedPages)));
-        setSelectedPageIndex(loadedPages.length > 0 ? 0 : null);
-        setValidationErrors(validatePages(loadedPages));
-        setHistory({
-          states: [JSON.parse(JSON.stringify(loadedPages))],
-          currentIndex: 0,
-          maxHistory: MAX_HISTORY,
-        });
-      })
+      .then(
+        (raw: { pages?: IPage[]; siteSettings?: ISiteSettings } | IPage[]) => {
+          const loadedPages = Array.isArray(raw) ? raw : (raw.pages ?? []);
+          const loadedSettings: ISiteSettings = Array.isArray(raw)
+            ? {}
+            : (raw.siteSettings ?? {});
+          setPages(loadedPages);
+          setSavedPages(JSON.parse(JSON.stringify(loadedPages)));
+          setSiteSettings(loadedSettings);
+          setSavedSiteSettings(JSON.parse(JSON.stringify(loadedSettings)));
+          setSelectedPageIndex(loadedPages.length > 0 ? 0 : null);
+          setValidationErrors(validatePages(loadedPages));
+          setHistory({
+            states: [JSON.parse(JSON.stringify(loadedPages))],
+            currentIndex: 0,
+            maxHistory: MAX_HISTORY,
+          });
+        },
+      )
       .catch((error) => {
         setLoadError(
           error instanceof Error
@@ -231,13 +270,17 @@ export const PagesEditor: React.FC = () => {
 
       try {
         setLoadError(null);
-        const loadedPages = await loadJsonFile(file);
-        setPages(loadedPages);
-        setSavedPages(JSON.parse(JSON.stringify(loadedPages)));
-        setSelectedPageIndex(loadedPages.length > 0 ? 0 : null);
-        setValidationErrors(validatePages(loadedPages));
+        const pagesData = await loadJsonFile(file);
+        setPages(pagesData.pages);
+        setSavedPages(JSON.parse(JSON.stringify(pagesData.pages)));
+        setSiteSettings(pagesData.siteSettings);
+        setSavedSiteSettings(
+          JSON.parse(JSON.stringify(pagesData.siteSettings)),
+        );
+        setSelectedPageIndex(pagesData.pages.length > 0 ? 0 : null);
+        setValidationErrors(validatePages(pagesData.pages));
         setHistory({
-          states: [JSON.parse(JSON.stringify(loadedPages))],
+          states: [JSON.parse(JSON.stringify(pagesData.pages))],
           currentIndex: 0,
           maxHistory: MAX_HISTORY,
         });
@@ -255,9 +298,10 @@ export const PagesEditor: React.FC = () => {
 
   // Handle download
   const handleDownload = useCallback(() => {
-    downloadJson(pages);
+    downloadJson({ pages, siteSettings });
     setSavedPages(JSON.parse(JSON.stringify(pages)));
-  }, [pages]);
+    setSavedSiteSettings(JSON.parse(JSON.stringify(siteSettings)));
+  }, [pages, siteSettings]);
 
   // Handle page update
   const handlePageUpdate = useCallback(
@@ -276,15 +320,21 @@ export const PagesEditor: React.FC = () => {
     setDeployStatus("deploying");
     setDeployError(null);
     try {
-      await deployPages(pages);
+      await deployPages({ pages, siteSettings });
       setSavedPages(JSON.parse(JSON.stringify(pages)));
+      setSavedSiteSettings(JSON.parse(JSON.stringify(siteSettings)));
       setDeployStatus("success");
       setTimeout(() => setDeployStatus("idle"), 4000);
     } catch (error) {
       setDeployError(error instanceof Error ? error.message : "Deploy failed");
       setDeployStatus("error");
     }
-  }, [pages]);
+  }, [pages, siteSettings]);
+
+  // Handle site settings update
+  const handleSiteSettingsUpdate = useCallback((updated: ISiteSettings) => {
+    setSiteSettings(updated);
+  }, []);
 
   // Handle logout
   const handleLogout = useCallback(() => {
@@ -417,19 +467,37 @@ export const PagesEditor: React.FC = () => {
 
         {/* Content */}
         <div className={styles.content}>
-          {/* Sidebar - Page List */}
+          {/* Sidebar - Page List + Site Settings */}
           <div className={styles.sidebar}>
             <PageList
               pages={pages}
-              selectedIndex={selectedPageIndex}
-              onSelect={setSelectedPageIndex}
+              selectedIndex={showSiteSettings ? null : selectedPageIndex}
+              onSelect={(i) => {
+                setSelectedPageIndex(i);
+                setShowSiteSettings(false);
+              }}
               validationErrors={validationErrors}
             />
+            <div className={styles.sidebarDivider} />
+            <button
+              className={`${styles.siteSettingsButton}${showSiteSettings ? ` ${styles.siteSettingsButtonSelected}` : ""}`}
+              onClick={() => {
+                setShowSiteSettings(true);
+                setSelectedPageIndex(null);
+              }}
+            >
+              ⚙ Site Settings
+            </button>
           </div>
 
-          {/* Main - Page Form */}
+          {/* Main - Page Form or Site Settings */}
           <div className={styles.main}>
-            {selectedPage ? (
+            {showSiteSettings ? (
+              <SiteSettingsForm
+                settings={siteSettings}
+                onChange={handleSiteSettingsUpdate}
+              />
+            ) : selectedPage ? (
               <PageForm
                 page={selectedPage}
                 pageIndex={selectedPageIndex!}

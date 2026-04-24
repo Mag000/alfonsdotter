@@ -1,0 +1,374 @@
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 00:01:46
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 00:01:46 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://alfonsdotter.se 200 0 0 646 625 114
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 00:26:00
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 00:26:00 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/107.0.0.0+Safari/537.36 - 200 0 0 646 311 159
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 00:51:04
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 00:51:04 82.99.18.119 GET / - 80 - 185.15.121.103 python-httpx/0.28.1 - 200 0 0 646 225 145
+2026-04-22 00:55:58 82.99.18.119 GET / - 80 - 185.15.121.103 python-httpx/0.28.1 - 200 0 0 646 224 1
+2026-04-22 01:02:18 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://www.alfonsdotter.se 200 0 0 646 638 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 01:30:49
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 01:30:49 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 223 122
+2026-04-22 01:35:46 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 220 1
+2026-04-22 01:45:37 82.99.18.119 GET /robots.txt - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+SemrushBot/7~bl;++http://www.semrush.com/bot.html) - 404 0 2 5071 296 2
+2026-04-22 01:45:39 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(compatible;+SemrushBot/7~bl;++http://www.semrush.com/bot.html) - 200 0 0 646 383 2
+2026-04-22 01:45:49 82.99.18.119 GET /sitemap.xml - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+SemrushBot/7~bl;++http://www.semrush.com/bot.html) - 404 0 2 5073 297 1
+2026-04-22 01:56:43 82.99.18.119 GET /robots.txt - 80 - 185.15.121.102 Mozilla/5.0+(compatible;PetalBot;+https://webmaster.petalsearch.com/site/petalbot) - 404 0 2 5071 398 1
+2026-04-22 02:10:26 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 224 1
+2026-04-22 02:15:13 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 220 2
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 02:50:10
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 02:50:10 82.99.18.119 GET / - 80 - 185.15.121.103 python-httpx/0.28.1 - 200 0 0 646 223 187
+2026-04-22 02:54:57 82.99.18.119 GET / - 80 - 185.15.121.102 python-httpx/0.28.1 - 200 0 0 646 223 1
+2026-04-22 03:09:43 82.99.18.119 GET /robots.txt - 80 - 185.15.121.103 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 404 0 2 5067 270 2
+2026-04-22 03:09:45 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 200 0 0 646 260 1
+2026-04-22 03:20:07 82.99.18.119 GET /robots.txt - 80 - 185.15.121.102 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 404 0 2 5067 269 1
+2026-04-22 03:20:07 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 200 0 0 646 259 2
+2026-04-22 03:29:24 82.99.18.119 GET / - 80 - 185.15.121.102 python-httpx/0.28.1 - 200 0 0 646 224 1
+2026-04-22 03:34:14 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 224 1
+2026-04-22 03:41:20 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 200 0 0 646 403 1
+2026-04-22 03:41:21 82.99.18.119 GET /xmlrpc.php rsd 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 5070 418 1
+2026-04-22 03:41:22 82.99.18.119 GET /blog/wp-includes/wlwmanifest.xml - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 5111 436 1
+2026-04-22 03:41:23 82.99.18.119 GET /wordpress/wp-includes/wlwmanifest.xml - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 5121 441 2
+2026-04-22 03:41:23 82.99.18.119 GET /wp/wp-includes/wlwmanifest.xml - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/78.0.3904.108+Safari/537.36 - 404 0 2 5107 434 1
+2026-04-22 03:42:25 82.99.18.119 GET /admin.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5064 782 1
+2026-04-22 03:42:25 82.99.18.119 GET /inputs.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 1
+2026-04-22 03:42:25 82.99.18.119 GET /file.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:25 82.99.18.119 GET /goods.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5064 782 1
+2026-04-22 03:42:25 82.99.18.119 GET /ms-edit.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:25 82.99.18.119 GET /simple.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 1
+2026-04-22 03:42:25 82.99.18.119 GET /bgymj.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5064 782 1
+2026-04-22 03:42:26 82.99.18.119 GET /wp-content/plugins/twenty/login.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5116 808 1
+2026-04-22 03:42:26 82.99.18.119 GET /404.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:26 82.99.18.119 GET /file3.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5064 782 1
+2026-04-22 03:42:26 82.99.18.119 GET /wp-mail.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:26 82.99.18.119 GET /about.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5064 782 1
+2026-04-22 03:42:26 82.99.18.119 GET /wp.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:26 82.99.18.119 GET /.dj/index.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5072 786 1
+2026-04-22 03:42:27 82.99.18.119 GET /adminfuns.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5072 786 1
+2026-04-22 03:42:27 82.99.18.119 GET /php8.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:27 82.99.18.119 GET /classwithtostring.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5088 794 1
+2026-04-22 03:42:27 82.99.18.119 GET /info.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:27 82.99.18.119 GET /ioxi-o.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 0
+2026-04-22 03:42:27 82.99.18.119 GET /011i.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:27 82.99.18.119 GET /edit.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:28 82.99.18.119 GET /sid3.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:28 82.99.18.119 GET /load.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:28 82.99.18.119 GET /166.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:28 82.99.18.119 GET /wp-mail.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:28 82.99.18.119 GET /leaf.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:28 82.99.18.119 GET /grsiuk.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 1
+2026-04-22 03:42:28 82.99.18.119 GET /8.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:29 82.99.18.119 GET /fs.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:29 82.99.18.119 GET /ws38.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:29 82.99.18.119 GET /a7.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:29 82.99.18.119 GET /classsmtps.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5074 787 1
+2026-04-22 03:42:29 82.99.18.119 GET /amax.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:29 82.99.18.119 GET /CDX1.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:29 82.99.18.119 GET /rip.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:30 82.99.18.119 GET /1.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:30 82.99.18.119 GET /chosen.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 1
+2026-04-22 03:42:30 82.99.18.119 GET /css.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:30 82.99.18.119 GET /php.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:30 82.99.18.119 GET /wp-Blogs.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5070 785 1
+2026-04-22 03:42:30 82.99.18.119 GET /wp-content/index.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5086 793 1
+2026-04-22 03:42:30 82.99.18.119 GET /wp-content/plugins/beteng88/ws83.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5118 809 1
+2026-04-22 03:42:31 82.99.18.119 GET /ws83.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:31 82.99.18.119 GET /file61.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 1
+2026-04-22 03:42:31 82.99.18.119 GET /sadcut1.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:31 82.99.18.119 GET /y.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:31 82.99.18.119 GET /akcc.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:31 82.99.18.119 GET /wp-admin/user/12.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5086 793 1
+2026-04-22 03:42:31 82.99.18.119 GET /index/function.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5082 791 1
+2026-04-22 03:42:32 82.99.18.119 GET /term.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:32 82.99.18.119 GET /666.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:32 82.99.18.119 GET /7.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:32 82.99.18.119 GET /wp-config-sample.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5086 793 1
+2026-04-22 03:42:32 82.99.18.119 GET /log.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:32 82.99.18.119 GET /a5.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:32 82.99.18.119 GET /aa.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:33 82.99.18.119 GET /bolt.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:33 82.99.18.119 GET /x.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:33 82.99.18.119 GET /jga.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:33 82.99.18.119 GET /k.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:33 82.99.18.119 GET /vx.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:33 82.99.18.119 GET /ws77.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:33 82.99.18.119 GET /2.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:34 82.99.18.119 GET /abcd.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:34 82.99.18.119 GET /wp-content/plugins/admin.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5102 801 1
+2026-04-22 03:42:34 82.99.18.119 GET /asd.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:34 82.99.18.119 GET /default.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:34 82.99.18.119 GET /gettest.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:34 82.99.18.119 GET /install.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:34 82.99.18.119 GET /tfm.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:35 82.99.18.119 GET /ws81.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 2
+2026-04-22 03:42:35 82.99.18.119 GET /222.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5060 780 1
+2026-04-22 03:42:35 82.99.18.119 GET /t.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:35 82.99.18.119 GET /wp-admin/maint/index.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5094 797 1
+2026-04-22 03:42:35 82.99.18.119 GET /6xBAm3vODE05BSzkJZRAws.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5098 799 1
+2026-04-22 03:42:35 82.99.18.119 GET /a.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:35 82.99.18.119 GET /a1.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+2026-04-22 03:42:36 82.99.18.119 GET /onclickfuns.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5076 788 1
+2026-04-22 03:42:36 82.99.18.119 GET /w.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:36 82.99.18.119 GET /wp-admin/maint/about.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5094 797 1
+2026-04-22 03:42:36 82.99.18.119 GET /wp-content/plugins/index.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5102 801 1
+2026-04-22 03:42:36 82.99.18.119 GET /wp-good.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5068 784 1
+2026-04-22 03:42:36 82.99.18.119 GET /.info.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5064 782 1
+2026-04-22 03:42:36 82.99.18.119 GET /config.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5066 783 1
+2026-04-22 03:42:37 82.99.18.119 GET /item.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5062 781 1
+2026-04-22 03:42:37 82.99.18.119 GET /m.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5056 778 1
+2026-04-22 03:42:37 82.99.18.119 GET /rh.php - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/120.0.0.0+Safari/537.36 - 404 0 2 5058 779 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 04:08:43
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 04:08:43 82.99.18.119 GET / - 80 - 185.15.121.102 python-httpx/0.28.1 - 200 0 0 646 225 98
+2026-04-22 04:13:25 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 224 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 04:29:49
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 04:29:48 82.99.18.119 GET /.git/config - 80 - 185.15.121.103 Mozilla/5.0+(X11;+Linux+x86_64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/81.0.4044.129+Safari/537.36 - 404 0 2 5069 321 7
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 04:47:46
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 04:47:46 82.99.18.119 GET / - 80 - 185.15.121.101 python-httpx/0.28.1 - 200 0 0 646 223 1
+2026-04-22 04:52:34 82.99.18.119 GET / - 80 - 185.15.121.102 python-httpx/0.28.1 - 200 0 0 646 223 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 06:32:30
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 06:32:30 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://alfonsdotter.se 200 0 0 646 626 106
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 07:11:48
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 07:11:48 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://alfonsdotter.se 200 0 0 646 626 116
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 08:15:18
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 08:15:18 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://www.alfonsdotter.se 200 0 0 646 638 206
+2026-04-22 08:15:52 82.99.18.119 GET /robots.txt - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+wpbot/1.4;++https://forms.gle/ajBaxygz9jSR8p8G9) - 404 0 2 5071 274 2
+2026-04-22 08:15:52 82.99.18.119 GET /enhancecp - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+wpbot/1.4;++https://forms.gle/ajBaxygz9jSR8p8G9) - 404 0 2 5069 273 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 08:43:55
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 08:43:55 82.99.18.119 GET /robots.txt - 80 - 185.15.121.102 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/131.0.0.0+Safari/537.36;+compatible;+OAI-SearchBot/1.0;++https://openai.com/searchbot - 404 0 2 5071 530 16
+2026-04-22 08:43:57 82.99.18.119 GET /robots.txt - 80 - 185.15.121.102 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/131.0.0.0+Safari/537.36;+compatible;+OAI-SearchBot/1.0;++https://openai.com/searchbot - 404 0 2 5071 530 0
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 09:38:31
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 09:38:31 82.99.18.119 GET /wp-admin/css/ - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5073 530 112
+2026-04-22 09:38:47 82.99.18.119 GET /.well-known/ - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5071 529 1
+2026-04-22 09:39:03 82.99.18.119 GET /sites/default/files/ - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5087 537 2
+2026-04-22 09:39:20 82.99.18.119 GET /admin/controller/extension/extension/ - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5121 554 4
+2026-04-22 09:39:37 82.99.18.119 GET /uploads/ - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5063 525 1
+2026-04-22 09:39:54 82.99.18.119 GET /images/ - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5061 524 1
+2026-04-22 09:40:16 82.99.18.119 GET /files/ - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/90.0.4430.85+Safari/537.36 binance.com 404 0 2 5059 523 1
+2026-04-22 09:53:46 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://alfonsdotter.se 200 0 0 646 626 2
+2026-04-22 09:54:55 82.99.18.119 GET /robots.txt - 80 - 185.15.121.103 Sogou+web+spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07) - 404 0 2 5071 295 1
+2026-04-22 09:54:55 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+18_7_6+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/26.0+Mobile/15E148+Safari/604.1 - 200 0 0 646 802 1
+2026-04-22 10:07:43 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36 - 200 0 0 646 349 2
+2026-04-22 10:19:21 82.99.18.119 GET /wp-login.php - 80 - 185.15.121.102 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/605.1.15+Version/17.0+Safari/605.1.15 - 404 0 2 5070 311 0
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 11:31:43
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 11:31:42 82.99.18.119 GET /wp-login.php - 80 - 185.15.121.103 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/605.1.15+Version/17.0+Safari/605.1.15 - 404 0 2 5070 312 6
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 12:03:40
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 12:03:40 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+MixrankBot;+crawler@mixrank.com) - 200 0 0 646 331 158
+2026-04-22 12:09:58 82.99.18.119 GET /robots.txt - 80 - 185.15.121.103 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_10_1)+AppleWebKit/600.2.5+(KHTML,+like+Gecko)+Version/8.0.2+Safari/600.2.5+(Gort) - 404 0 2 5071 331 2
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 12:43:47
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 12:43:47 82.99.18.119 GET /robots.txt - 80 - 185.15.121.103 Mozilla/5.0+(compatible;+Googlebot/2.1;++http://www.google.com/bot.html) - 404 0 2 5067 310 14
+2026-04-22 12:43:48 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0.1;+Nexus+5X+Build/MMB29P)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.7680.177+Mobile+Safari/537.36+(compatible;+Googlebot/2.1;++http://www.google.com/bot.html) - 200 0 0 646 572 153
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 13:47:18
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 13:47:18 82.99.18.119 POST /xmlrpc.php - 80 - 185.15.121.102 Mozilla/5.0+(X11;+Ubuntu;+Linux+x86_64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Edge/81.0.0.0+Safari/537.36 - 404 0 2 5066 1092 6
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 14:05:23
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 14:05:22 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://alfonsdotter.se 200 0 0 646 627 126
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 14:23:07
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 14:23:07 82.99.18.119 GET /.git/config - 80 - 185.15.121.102 Mozilla/5.0+(X11;+Linux+x86_64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/81.0.4044.129+Safari/537.36 - 404 0 2 5069 321 1
+2026-04-22 14:29:46 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(X11;+Linux+x86_64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/142.0.0.0+Safari/537.36 - 200 0 0 646 688 1
+2026-04-22 14:29:49 82.99.18.119 GET /favicon.ico - 80 - 185.15.121.103 Mozilla/5.0+(X11;+Linux+x86_64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/142.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 4122 734 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 15:00:28
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 15:00:27 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://www.alfonsdotter.se 200 0 0 646 638 154
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 15:27:14
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 15:27:14 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/106.0.0.0+Safari/537.36 - 200 0 0 646 281 114
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 18:27:29
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 18:27:28 82.99.18.119 GET /demo - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 964 801 101
+2026-04-22 18:27:28 82.99.18.119 GET /demo/assets/index-6QEKhMqx.css - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 565 729 1
+2026-04-22 18:27:28 82.99.18.119 GET /demo/assets/index-Ca50qgAJ.js - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 292485 714 40
+2026-04-22 18:27:30 82.99.18.119 GET /pages.json - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 9299 664 2
+2026-04-22 18:27:31 82.99.18.119 GET /img/angesback/Citat_1.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 21063 739 2
+2026-04-22 18:27:31 82.99.18.119 GET /img/angesback/Loggo_Angesback.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 22767 747 1
+2026-04-22 18:27:33 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 646 764 2
+2026-04-22 18:27:36 82.99.18.119 GET /img/angesback/Topp_1.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 64 1835261 738 5222
+2026-04-22 18:27:36 82.99.18.119 GET /img/angesback/Ang.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 995 2097405 735 5220
+2026-04-22 18:27:40 82.99.18.119 GET /img/angesback/Topp_1.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 206 0 0 305 797 1
+2026-04-22 18:27:40 82.99.18.119 GET /img/angesback/Loggo_Angesback.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 206 0 0 299 802 1
+2026-04-22 18:27:40 82.99.18.119 GET /img/angesback/Ang.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 206 0 0 305 794 7
+2026-04-22 18:27:40 82.99.18.119 GET /img/angesback/Loggo_Angesback.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 206 0 0 14310 803 1
+2026-04-22 18:27:42 82.99.18.119 GET /demo/favicon.ico - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 4120 701 1
+2026-04-22 18:27:42 82.99.18.119 GET /demo/manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 746 639 0
+2026-04-22 18:27:42 82.99.18.119 GET /demo/logo192.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 200 0 0 5595 701 1
+2026-04-22 18:27:45 82.99.18.119 GET /img/angesback/Topp_1.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 206 0 0 3115061 798 5368
+2026-04-22 18:27:47 82.99.18.119 GET /img/angesback/Ang.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo 206 0 0 4708622 795 7874
+2026-04-22 18:27:56 82.99.18.119 GET /img/angesback/Topp_2.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/aktuellt 200 0 0 814954 714 41
+2026-04-22 18:27:57 82.99.18.119 GET /img/aktuellt/Sommarcafe.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/aktuellt 200 0 0 3070467 717 1998
+2026-04-22 18:28:00 82.99.18.119 GET /img/new/Alfonsdotter_Portratt.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/aktuellt 200 0 0 2877796 722 3806
+2026-04-22 18:28:00 82.99.18.119 GET /img/aktuellt/Sommaryoga.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/aktuellt 200 0 0 3089201 717 3985
+2026-04-22 18:28:05 82.99.18.119 GET /img/angesback/Citat_3.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/yoga 200 0 0 22325 711 3
+2026-04-22 18:28:05 82.99.18.119 GET /img/angesback/Topp_3.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/yoga 200 0 0 950900 710 16
+2026-04-22 18:28:05 82.99.18.119 GET /img/yoga/Tekopp.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/yoga 200 0 0 2032868 705 153
+2026-04-22 18:28:08 82.99.18.119 GET /img/yoga/Yinyoga_fri.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/yoga 200 0 0 3357819 710 2768
+2026-04-22 18:28:11 82.99.18.119 GET /img/yoga/Yinyoga_ny.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/yoga 200 0 0 3198248 709 6204
+2026-04-22 18:28:12 82.99.18.119 GET /img/new/Alfonsdotter_Portratt.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/byalfonsdotter 206 0 0 306 789 1
+2026-04-22 18:28:12 82.99.18.119 GET /img/angesback/Topp_4.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/byalfonsdotter 200 0 0 1445613 720 39
+2026-04-22 18:28:17 82.99.18.119 GET /img/kontakt/karta.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/kontakt 404 0 2 5091 710 11
+2026-04-22 18:28:17 82.99.18.119 GET /img/angesback/Topp_5.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/kontakt 200 0 0 897730 713 36
+2026-04-22 18:28:17 82.99.18.119 GET /img/yoga/Mindful_yoga.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/yoga 200 0 0 3338773 711 12444
+2026-04-22 18:28:58 82.99.18.119 GET /img/new/Alfonsdotter_Portratt.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/aktuellt 200 0 0 2877796 722 25
+2026-04-22 18:29:09 82.99.18.119 GET /img/new/Alfonsdotter_Portratt.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/byalfonsdotter 206 0 0 306 789 0
+2026-04-22 18:29:09 82.99.18.119 GET /img/angesback/Topp_4.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/byalfonsdotter 200 0 0 1445613 720 18
+2026-04-22 18:29:09 82.99.18.119 GET /img/new/Alfonsdotter_Portratt.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/byalfonsdotter 206 0 0 699386 789 8
+2026-04-22 18:29:13 82.99.18.119 GET /img/kontakt/karta.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/kontakt 404 0 2 5091 710 1
+2026-04-22 18:42:29 82.99.18.119 GET /admin/assets/global/plugins/plupload/examples/upload.php - 80 - 185.15.121.102 ALittle+Client - 404 0 2 5158 296 1
+2026-04-22 18:43:53 82.99.18.119 GET /Default.aspx - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 404 0 0 2126 776 13
+2026-04-22 18:43:53 82.99.18.119 GET /favicon.ico - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/Default.aspx 200 0 0 4122 704 1
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 19:14:53
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 19:14:52 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36+Edg/147.0.0.0 - 200 0 0 646 778 117
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 19:43:05
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 19:43:05 82.99.18.119 GET /robots.txt - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 404 0 2 5067 270 14
+2026-04-22 19:43:05 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 200 0 0 646 260 104
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 20:14:23
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 20:14:23 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+X11;+Ubuntu;+Linux+x86_64;+rv:126.0+Gecko/20100101+Firefox/126.0 http://alfonsdotter.se/ 200 0 0 646 294 117
+2026-04-22 20:29:44 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(iPhone;+CPU+iPhone+OS+13_2_3+like+Mac+OS+X)+AppleWebKit/605.1.15+(KHTML,+like+Gecko)+Version/13.0.3+Mobile/15E148+Safari/604.1 http://www.alfonsdotter.se 500 31 2147549183 2540 638 250
+2026-04-22 20:37:06 82.99.18.119 GET /.env - 80 - 185.15.121.103 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_14_6)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/77.0.3844.0+Safari/537.36 - 500 31 2147549183 2540 329 1
+2026-04-22 20:46:10 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 1142 764 44
+2026-04-22 20:46:10 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 565 687 0
+2026-04-22 20:46:10 82.99.18.119 GET /assets/index-BsynJ3cX.js - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 296428 672 28
+2026-04-22 20:47:44 82.99.18.119 GET /img/angesback/Topp_4.webp - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/demo/byalfonsdotter 200 0 0 1445613 720 45
+2026-04-22 20:52:08 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 1142 316 1
+2026-04-22 20:52:08 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 1142 316 1
+2026-04-22 20:52:10 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 http://www.alfonsdotter.se/ 200 0 0 1142 354 2
+2026-04-22 20:52:11 82.99.18.119 GET /favicon.ico - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 http://www.alfonsdotter.se/favicon.ico 200 0 0 4122 376 1
+2026-04-22 20:52:11 82.99.18.119 GET /logo192.png - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 http://www.alfonsdotter.se/logo192.png 200 0 0 5596 376 1
+2026-04-22 20:52:12 82.99.18.119 GET / - 80 - 185.15.121.101 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 1142 308 1
+2026-04-22 20:52:12 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 1142 308 1
+2026-04-22 20:52:14 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 1142 737 1
+2026-04-22 20:52:14 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 565 660 0
+2026-04-22 20:52:14 82.99.18.119 GET /assets/index-BsynJ3cX.js - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 296428 645 32
+2026-04-22 20:52:18 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 http://alfonsdotter.se/ 200 0 0 1142 342 1
+2026-04-22 20:52:18 82.99.18.119 GET /favicon.ico - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 http://alfonsdotter.se/favicon.ico 200 0 0 4122 364 1
+2026-04-22 21:01:48 82.99.18.119 GET /demo - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 - 301 0 0 374 831 1
+2026-04-22 21:01:48 82.99.18.119 GET /demo/ - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 - 200 0 0 964 832 1
+2026-04-22 21:01:48 82.99.18.119 GET /demo/assets/index-6QEKhMqx.css - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 565 760 0
+2026-04-22 21:01:48 82.99.18.119 GET /demo/assets/index-Ca50qgAJ.js - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 292485 745 34
+2026-04-22 21:01:48 82.99.18.119 GET /demo/manifest.json - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 746 703 0
+2026-04-22 21:01:48 82.99.18.119 GET /pages.json - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 10203 695 1
+2026-04-22 21:01:48 82.99.18.119 GET /demo/logo192.png - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 5595 765 1
+2026-04-22 21:01:48 82.99.18.119 GET /img/angesback/Citat_1.webp - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 21063 770 5
+2026-04-22 21:01:48 82.99.18.119 GET /pages.json - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 10203 695 1
+2026-04-22 21:01:49 82.99.18.119 GET /img/angesback/Loggo_Angesback.webp - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 22767 778 2
+2026-04-22 21:01:49 82.99.18.119 GET /img/angesback/Topp_1.webp - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 3557859 769 1158
+2026-04-22 21:01:49 82.99.18.119 GET /img/angesback/Ang.webp - 80 - 185.15.121.101 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 4821703 766 1288
+2026-04-22 21:01:51 82.99.18.119 GET /img/angesback/Topp_1.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 3557859 704 276
+2026-04-22 21:01:51 82.99.18.119 GET /img/angesback/Ang.webp - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 4821703 696 844
+2026-04-22 21:08:06 82.99.18.119 GET /robots.txt - 80 - 185.15.121.103 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 200 0 0 468 269 0
+2026-04-22 21:08:08 82.99.18.119 GET / - 80 - 185.15.121.103 Mozilla/5.0+(compatible;+MJ12bot/v2.0.5;+http://mj12bot.com/) - 200 0 0 1142 259 1
+2026-04-22 21:21:40 82.99.18.119 GET / - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 969 796 38
+2026-04-22 21:21:40 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 564 719 0
+2026-04-22 21:21:40 82.99.18.119 GET /assets/index-CvrShkyz.js - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 296517 704 32
+2026-04-22 21:21:40 82.99.18.119 GET /manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 746 662 1
+2026-04-22 21:21:40 82.99.18.119 GET /pages.json - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 10203 744 1
+2026-04-22 21:21:40 82.99.18.119 GET /logo192.png - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 5596 724 1
+2026-04-22 21:21:40 82.99.18.119 GET /favicon.ico - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 4121 724 1
+2026-04-22 21:21:40 82.99.18.119 GET /img/angesback/Citat_1.webp - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 21063 820 2
+2026-04-22 21:21:40 82.99.18.119 GET /img/angesback/Loggo_Angesback.webp - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 22767 828 37
+2026-04-22 21:21:41 82.99.18.119 GET /img/angesback/Topp_1.webp - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 3557859 819 830
+2026-04-22 21:21:41 82.99.18.119 GET /img/angesback/Ang.webp - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/ 200 0 0 4821703 816 1736
+2026-04-22 21:21:49 82.99.18.119 GET /apitest - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 - 200 0 0 969 803 2
+2026-04-22 21:21:49 82.99.18.119 GET /manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 165 754 0
+2026-04-22 21:21:49 82.99.18.119 GET /assets/index-CvrShkyz.js - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 166 797 0
+2026-04-22 21:21:49 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 165 811 43
+2026-04-22 21:21:49 82.99.18.119 GET /logo192.png - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 166 817 1
+2026-04-22 21:21:49 82.99.18.119 GET /api/test - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/147.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 969 664 45
+2026-04-22 21:22:28 82.99.18.119 GET /apitest - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 - 200 0 0 969 834 0
+2026-04-22 21:22:28 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 564 757 0
+2026-04-22 21:22:28 82.99.18.119 GET /assets/index-CvrShkyz.js - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 296517 742 30
+2026-04-22 21:22:28 82.99.18.119 GET /manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 746 700 0
+2026-04-22 21:22:28 82.99.18.119 GET /logo192.png - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 5596 762 1
+2026-04-22 21:22:28 82.99.18.119 GET /pages.json - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 10203 697 1
+2026-04-22 21:22:28 82.99.18.119 GET /api/test - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 969 695 0
+2026-04-22 21:23:05 82.99.18.119 GET /demo/logo192.png - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/demo/ 200 0 0 5595 765 1
+2026-04-22 21:23:13 82.99.18.119 GET /apitest - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 - 200 0 0 969 834 1
+2026-04-22 21:23:13 82.99.18.119 GET /manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 746 700 0
+2026-04-22 21:23:13 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 564 757 0
+2026-04-22 21:23:13 82.99.18.119 GET /assets/index-CvrShkyz.js - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 296517 742 28
+2026-04-22 21:23:13 82.99.18.119 GET /logo192.png - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 5596 762 0
+2026-04-22 21:23:13 82.99.18.119 GET /pages.json - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 10203 697 1
+2026-04-22 21:23:13 82.99.18.119 GET /api/test - 80 - 185.15.121.103 Mozilla/5.0+(Linux;+Android+6.0;+Nexus+5+Build/MRA58N)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Mobile+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 969 695 1
+2026-04-22 21:23:42 82.99.18.119 GET /api/test - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 969 858 1
+2026-04-22 21:23:42 82.99.18.119 GET /manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/api/test 304 0 0 92 723 0
+2026-04-22 21:23:42 82.99.18.119 GET /assets/index-CvrShkyz.js - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/api/test 304 0 0 166 766 0
+2026-04-22 21:23:42 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/api/test 304 0 0 92 780 28
+2026-04-22 21:23:42 82.99.18.119 GET /logo192.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/api/test 304 0 0 93 786 0
+#Software: Microsoft Internet Information Services 10.0
+#Version: 1.0
+#Date: 2026-04-22 21:26:47
+#Fields: date time s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Referer) sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+2026-04-22 21:26:47 82.99.18.119 GET /apitest - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 - 200 0 0 969 857 107
+2026-04-22 21:26:47 82.99.18.119 GET /manifest.json - 80 - 185.15.121.102 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 165 722 0
+2026-04-22 21:26:47 82.99.18.119 GET /assets/index-6QEKhMqx.css - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 165 779 0
+2026-04-22 21:26:47 82.99.18.119 GET /assets/index-CvrShkyz.js - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 166 765 0
+2026-04-22 21:26:47 82.99.18.119 GET /api/test - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 200 0 0 969 718 2
+2026-04-22 21:26:47 82.99.18.119 GET /logo192.png - 80 - 185.15.121.103 Mozilla/5.0+(Windows+NT+10.0;+Win64;+x64)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/146.0.0.0+Safari/537.36 https://alfonsdotter.se/apitest 304 0 0 166 785 23

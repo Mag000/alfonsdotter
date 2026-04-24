@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# SFTP deploy credentials — never commit
+deploy-sftp.config.ps1
+
+# Production secrets — never commit
+API/appsettings.Production.json
+
+# Downloaded deploy tools
+.tools/

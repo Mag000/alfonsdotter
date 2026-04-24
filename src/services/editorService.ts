@@ -1,5 +1,5 @@
 import { IAdminSession, IValidationError } from "../model/IEditorState";
-import { IPage } from "../model/IPage";
+import { IPage, IPagesData, ISiteSettings } from "../model/IPage";
 
 /** Admin password - in production, use VITE_ADMIN_PASSWORD env var */
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
@@ -28,7 +28,7 @@ const parseJsonError = (error: SyntaxError, content: string): string => {
 /**
  * Load pages.json from a File object
  */
-export const loadJsonFile = (file: File): Promise<IPage[]> => {
+export const loadJsonFile = (file: File): Promise<IPagesData> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -37,16 +37,28 @@ export const loadJsonFile = (file: File): Promise<IPage[]> => {
         const content = e.target?.result as string;
         const json = JSON.parse(content);
 
-        // Validate basic structure
-        if (!Array.isArray(json)) {
-          reject(new Error("Invalid JSON: Expected an array of pages"));
+        // Validate basic structure — support both legacy IPage[] and wrapped IPagesData
+        let pagesData: IPagesData;
+        if (Array.isArray(json)) {
+          pagesData = { pages: json, siteSettings: {} };
+        } else if (json && Array.isArray(json.pages)) {
+          pagesData = {
+            siteSettings: json.siteSettings ?? {},
+            pages: json.pages,
+          };
+        } else {
+          reject(
+            new Error(
+              "Invalid JSON: Expected an array of pages or a pages.json object",
+            ),
+          );
           return;
         }
 
         // Normalize line endings to \n
-        const normalized = normalizeLineEndings(json);
+        pagesData.pages = normalizeLineEndings(pagesData.pages);
 
-        resolve(normalized);
+        resolve(pagesData);
       } catch (error) {
         if (error instanceof SyntaxError) {
           const content = (e.target?.result as string) || "";
@@ -91,10 +103,10 @@ const normalizeLineEndings = (pages: IPage[]): IPage[] => {
  * Download pages as JSON file
  */
 export const downloadJson = (
-  pages: IPage[],
+  pagesData: IPagesData,
   filename: string = "pages.json",
 ): void => {
-  const json = JSON.stringify(pages, null, "\t");
+  const json = JSON.stringify(pagesData, null, "\t");
   const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
@@ -261,7 +273,14 @@ export const pagesEqual = (a: IPage[], b: IPage[]): boolean => {
   return JSON.stringify(a) === JSON.stringify(b);
 };
 
-/** Base path for the Azure Functions API. Vite proxies /api → http://localhost:7071 in dev. */
+export const siteSettingsEqual = (
+  a: ISiteSettings,
+  b: ISiteSettings,
+): boolean => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
+/** Base path for the API. Same origin in production — .NET serves both SPA and API. */
 const API_BASE = "/api";
 
 /**
@@ -277,8 +296,8 @@ const functionUrl = (path: string): string => {
  * Deploy pages.json to the web host via SFTP through the Azure Function.
  * Throws on failure.
  */
-export const deployPages = async (pages: IPage[]): Promise<void> => {
-  const json = JSON.stringify(pages, null, "\t");
+export const deployPages = async (pagesData: IPagesData): Promise<void> => {
+  const json = JSON.stringify(pagesData, null, "\t");
 
   const res = await fetch(functionUrl("deploy/pages"), {
     method: "POST",

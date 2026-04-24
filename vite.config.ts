@@ -3,22 +3,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig } from "vite";
 
-// In dev the app is served under /demo/ but content files (pages.json, img/)
-// live at the server root so they are independent of app deployments.
-// This plugin serves them at the root path from the local public/ folder.
+// In dev the app is served at the root. Content files (pages.json, img/)
+// are served from the local public/ folder by Vite automatically.
 const serveContentAtRoot = {
   name: "serve-content-at-root",
   configureServer(server: { middlewares: { use: (fn: Function) => void } }) {
     server.middlewares.use(
       (req: { url?: string }, res: any, next: () => void) => {
         const url = (req.url ?? "").split("?")[0];
-
-        // Redirect /demo → /demo/ so Vite doesn't show the "did you mean" error
-        if (url === "/demo") {
-          res.writeHead(301, { Location: "/demo/" });
-          res.end();
-          return;
-        }
 
         if (url !== "/pages.json" && !url.startsWith("/img/")) return next();
         const filePath = path.join(process.cwd(), "public", url);
@@ -43,7 +35,7 @@ const serveContentAtRoot = {
 
 export default defineConfig({
   plugins: [react(), serveContentAtRoot],
-  base: "/demo/",
+  base: "/",
   server: {
     proxy: {
       // Forward /api/* to the local ASP.NET Core API host during development
