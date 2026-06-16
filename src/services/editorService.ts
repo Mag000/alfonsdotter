@@ -293,6 +293,20 @@ const functionUrl = (path: string): string => {
 };
 
 /**
+ * List all images and folders on the production server by querying the API (which reads from FTP).
+ * images: paths in the form /img/folder/file.jpg
+ * folders: relative paths like "gallery", "gallery/sub"
+ */
+export const listImages = async (): Promise<{
+  images: string[];
+  folders: string[];
+}> => {
+  const res = await fetch(`${API_BASE}/images`);
+  if (!res.ok) throw new Error(`Failed to list images: ${res.status}`);
+  return res.json() as Promise<{ images: string[]; folders: string[] }>;
+};
+
+/**
  * Deploy pages.json to the web host via SFTP through the Azure Function.
  * Throws on failure.
  */

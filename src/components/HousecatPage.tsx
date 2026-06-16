@@ -51,7 +51,7 @@ const useStyles = makeStyles({
   nav: {
     display: "flex",
     flexDirection: "row",
-    gap: "40px",
+    gap: "24px",
     listStyle: "none",
     padding: "0",
     margin: "0",
@@ -66,17 +66,17 @@ const useStyles = makeStyles({
     fontFamily: "'Source Sans Pro', sans-serif",
     fontSize: "0.78rem",
     fontWeight: "400",
-    letterSpacing: "0.5px",
-    color: "#999",
+    letterSpacing: "0.2em",
+    color: "rgb(155,154,142)",
     cursor: "pointer",
     transition: "color 0.2s",
     ":hover": {
-      color: "#333",
+      color: "rgb(115,114,103)",
     },
   },
   navItemActive: {
-    color: "#333",
-    fontWeight: "700",
+    color: "rgb(115,114,103)",
+    fontWeight: "400",
     borderBottomColor: "transparent",
   },
   headerIcons: {
@@ -90,7 +90,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: "24px",
+    gap: "48px",
     [`@media (max-width: 768px)`]: {
       display: "none",
     },
@@ -103,9 +103,9 @@ const useStyles = makeStyles({
     border: "none",
     cursor: "pointer",
     padding: "4px",
-    color: "#999",
+    color: "rgb(115,114,103)",
     ":hover": {
-      color: "#333",
+      color: "rgb(95,94,85)",
     },
   },
   navRule: {
@@ -285,11 +285,22 @@ const useStyles = makeStyles({
     position: "relative",
     display: "flex",
     alignItems: "center",
+    [`@media (max-width: 700px)`]: {
+      display: "none",
+    },
   },
   carouselClip: {
     flex: "1",
     minWidth: "0",
     overflow: "hidden",
+  },
+  galleryMobileStack: {
+    display: "none",
+    flexDirection: "column",
+    gap: "16px",
+    [`@media (max-width: 700px)`]: {
+      display: "flex",
+    },
   },
   carouselTrack: {
     display: "grid",
@@ -380,6 +391,7 @@ const useStyles = makeStyles({
     backgroundColor: "rgb(196, 194, 187)",
     width: "100%",
     boxSizing: "border-box",
+    marginBottom: "20px",
   },
   bottomSectionInner: {
     maxWidth: "1200px",
@@ -430,6 +442,25 @@ const useStyles = makeStyles({
     whiteSpace: "pre-wrap",
     margin: "0",
   },
+  bottomButton: {
+    alignSelf: "flex-start",
+    marginTop: "24px",
+    background: "rgb(180,155,72)",
+    border: "none",
+    borderRadius: "24px",
+    color: "rgb(233,230,220)",
+    fontFamily: "'Source Sans Pro', sans-serif",
+    fontSize: "0.82rem",
+    letterSpacing: "0.5px",
+    padding: "6px 18px",
+    cursor: "pointer",
+    textDecoration: "none",
+    display: "inline-block",
+    ":hover": {
+      backgroundColor: "rgb(160,138,60)",
+      color: "rgb(233,230,220)",
+    },
+  },
 
   // ── Footer ────────────────────────────────────────────────────────────────
   footer: {
@@ -442,8 +473,12 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    fontSize: "0.75rem",
-    color: "#555",
+    fontFamily: "'Source Sans Pro', sans-serif",
+    fontSize: "0.78rem",
+    fontWeight: "400",
+    letterSpacing: "0.2em",
+    color: "#999",
+    textTransform: "uppercase",
     boxSizing: "border-box",
     [`@media (max-width: 600px)`]: {
       flexDirection: "column",
@@ -458,11 +493,14 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   footerLink: {
-    color: "#555",
+    fontFamily: "'Source Sans Pro', sans-serif",
+    fontSize: "0.78rem",
+    fontWeight: "400",
+    letterSpacing: "0.2em",
+    color: "#999",
     textDecoration: "none",
-    fontSize: "0.75rem",
     ":hover": {
-      textDecoration: "underline",
+      textDecoration: "none",
     },
   },
 });
@@ -744,6 +782,32 @@ const HousecatPage = (props: IPage & { showCart?: boolean }) => {
                     </button>
                   )}
                 </div>
+                {/* Mobile: single-column vertical stack */}
+                <div className={styles.galleryMobileStack}>
+                  {gItems.map((item, i) => (
+                    <div key={`mobile-${item.path}-${i}`}>
+                      <img
+                        src={item.path}
+                        alt={item.title || ""}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          display: "block",
+                          cursor: "zoom-in",
+                        }}
+                        onClick={() => setLightboxItem(item)}
+                      />
+                      {item.title && (
+                        <p
+                          className={styles.carouselItemTitle}
+                          style={{ marginTop: "8px" }}
+                        >
+                          {item.title}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </section>
             )}
             {hasShop && <ShopGrid items={props.contentSection!.shopItems!} />}
@@ -840,39 +904,61 @@ const HousecatPage = (props: IPage & { showCart?: boolean }) => {
           return null;
         return <InfoSection infoSection={props.infoSection} />;
 
-      case "bottomSection":
-        if (
-          !props.bottomSection ||
-          (!props.bottomSection.image && !props.bottomSection.text)
-        )
-          return null;
+      case "bottomSection": {
+        const items =
+          props.bottomSections ??
+          (props.bottomSection ? [props.bottomSection] : []);
+        const filled = items.filter((s) => s.image || s.text);
+        if (!filled.length) return null;
         return (
-          <div className={styles.bottomSection}>
-            <div className={styles.bottomSectionInner}>
-              {props.bottomSection.image && (
-                <img
-                  src={props.bottomSection.image.path}
-                  alt={props.bottomSection.image.altText || ""}
-                  className={styles.bottomImage}
-                />
-              )}
-              {(props.bottomSection.title || props.bottomSection.text) && (
-                <div className={styles.bottomTextBlock}>
-                  {props.bottomSection.title && (
-                    <p className={styles.bottomTitle}>
-                      {props.bottomSection.title}
-                    </p>
+          <>
+            {filled.map((section, idx) => (
+              <div key={idx} className={styles.bottomSection}>
+                <div className={styles.bottomSectionInner}>
+                  {section.image && (
+                    <img
+                      src={section.image.path}
+                      alt={section.image.altText || ""}
+                      className={styles.bottomImage}
+                    />
                   )}
-                  {props.bottomSection.text && (
-                    <p className={styles.bottomText}>
-                      {props.bottomSection.text}
-                    </p>
+                  {(section.title || section.text) && (
+                    <div className={styles.bottomTextBlock}>
+                      {section.title && (
+                        <p className={styles.bottomTitle}>{section.title}</p>
+                      )}
+                      {section.text && (
+                        <p className={styles.bottomText}>{section.text}</p>
+                      )}
+                      {section.buttonText &&
+                        section.buttonUrl &&
+                        (() => {
+                          const isExternal = /^(https?:)?\/\//.test(
+                            section.buttonUrl,
+                          );
+                          return (
+                            <a
+                              href={section.buttonUrl}
+                              {...(isExternal
+                                ? {
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  }
+                                : {})}
+                              className={styles.bottomButton}
+                            >
+                              {section.buttonText}
+                            </a>
+                          );
+                        })()}
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
-          </div>
+              </div>
+            ))}
+          </>
         );
+      }
 
       default:
         return null;
@@ -912,34 +998,36 @@ const HousecatPage = (props: IPage & { showCart?: boolean }) => {
             </ul>
           </nav>
           <div className={styles.headerIcons}>
-            <a
-              href="https://www.instagram.com/byalfonsdotter"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.headerIconBtn}
-              aria-label="Instagram"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {siteSettings.instagramUrl && (
+              <a
+                href={siteSettings.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.headerIconBtn}
+                aria-label="Instagram"
               >
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle
-                  cx="17.5"
-                  cy="6.5"
-                  r="0.8"
-                  fill="currentColor"
-                  stroke="none"
-                />
-              </svg>
-            </a>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="0.8"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              </a>
+            )}
             {props.showCart && <ShoppingCartWithBadge />}
           </div>{" "}
         </div>
@@ -976,9 +1064,11 @@ const HousecatPage = (props: IPage & { showCart?: boolean }) => {
         <hr className={styles.navRule} />
       </header>
 
-      {(props.sectionOrder ?? DEFAULT_SECTION_ORDER).map((type) => (
-        <React.Fragment key={type}>{renderBodySection(type)}</React.Fragment>
-      ))}
+      {(props.sectionOrder ?? DEFAULT_SECTION_ORDER)
+        .filter((type) => !(props.hiddenSections ?? []).includes(type))
+        .map((type) => (
+          <React.Fragment key={type}>{renderBodySection(type)}</React.Fragment>
+        ))}
 
       {/* ── Lightbox ── */}
       {lightboxItem && (
@@ -1027,38 +1117,6 @@ const HousecatPage = (props: IPage & { showCart?: boolean }) => {
               Email
             </a>
           )}
-        </div>
-        <div
-          title={
-            apiTestMessage === "testing api"
-              ? "API is connected"
-              : `API is disconnected: ${apiTestMessage}`
-          }
-          style={{ marginTop: "8px", lineHeight: 1 }}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke={apiTestMessage === "testing api" ? "#3a7d44" : "#aaa"}
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-label={`API status: ${apiTestMessage}`}
-          >
-            {/* Wifi-style network icon */}
-            <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-            <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-            <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-            <circle
-              cx="12"
-              cy="20"
-              r="1"
-              fill={apiTestMessage === "testing api" ? "#3a7d44" : "#aaa"}
-              stroke="none"
-            />
-          </svg>
         </div>
       </footer>
     </div>

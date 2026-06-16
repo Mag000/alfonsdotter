@@ -1,6 +1,6 @@
 import { makeStyles } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
-import { ICardSection, IInfoItem } from "../model/IPage";
+import { ICardSection } from "../model/IPage";
 
 const useStyles = makeStyles({
   section: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   cardImg: {
     display: "block",
     width: "100%",
-    aspectRatio: "4 / 3",
+    aspectRatio: "1 / 1",
     objectFit: "cover",
   },
   cardBody: {
@@ -153,29 +153,38 @@ const useStyles = makeStyles({
   },
   drawerContent: {
     display: "flex",
-    flexDirection: "row",
+    justifyContent: "center",
     flex: "1",
     minHeight: "0",
-    padding: "16px",
-    gap: "24px",
+    padding: "24px",
     boxSizing: "border-box",
   },
-  drawerImg: {
-    display: "block",
-    width: "45%",
-    flexShrink: "0",
-    objectFit: "cover",
-    borderRadius: "8px",
-  },
   drawerBody: {
-    padding: "8px 8px 16px",
+    width: "100%",
+    maxWidth: "100%",
+    paddingRight: "16px",
     fontFamily: "'Source Sans Pro', sans-serif",
     fontSize: "0.95rem",
     color: "#444",
     lineHeight: "1.7",
     whiteSpace: "pre-wrap",
     overflowY: "auto",
-    flex: "1",
+    boxSizing: "border-box",
+  },
+  drawerBodyContent: {
+    width: "66.6667%",
+    maxWidth: "66.6667%",
+    marginInline: "auto",
+    padding: "20px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    boxSizing: "border-box",
+    direction: "ltr",
+    textAlign: "left",
+    [`@media (max-width: 768px)`]: {
+      width: "100%",
+      maxWidth: "100%",
+    },
   },
   drawerTeaser: {
     fontFamily: "'Source Sans Pro', sans-serif",
@@ -184,13 +193,6 @@ const useStyles = makeStyles({
     color: "#555",
     marginBottom: "16px",
     lineHeight: "1.5",
-  },
-  drawerLeftCol: {
-    display: "flex",
-    flexDirection: "column",
-    width: "45%",
-    flexShrink: "0",
-    gap: "12px",
   },
   infoItemCard: {
     display: "flex",
@@ -212,27 +214,6 @@ const useStyles = makeStyles({
     color: "#555",
     lineHeight: "1.4",
     margin: "0",
-  },
-  infoItemDialogImg: {
-    display: "block",
-    width: "100%",
-    height: "auto",
-    borderRadius: "6px",
-    objectFit: "cover",
-  },
-  infoItemDialogText: {
-    fontFamily: "'Source Sans Pro', sans-serif",
-    fontSize: "0.85rem",
-    color: "#555",
-    lineHeight: "1.5",
-    margin: "0",
-    whiteSpace: "pre-wrap",
-  },
-  infoItemDialog: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: "8px",
   },
 });
 
@@ -387,51 +368,13 @@ export const CardSection = ({ cardSection }: CardSectionProps) => {
               </button>
             </div>
             <div className={styles.drawerContent}>
-              {(drawerCard.image || drawerCard.infoSection?.items.length) && (
-                <div className={styles.drawerLeftCol}>
-                  {drawerCard.image && (
-                    <img
-                      src={drawerCard.image.path}
-                      alt={drawerCard.image.altText || drawerCard.title || ""}
-                      className={styles.drawerImg}
-                    />
-                  )}
-                  {drawerCard.infoSection?.items.map(
-                    (item: IInfoItem, j: number) => (
-                      <div
-                        key={j}
-                        className={
-                          item.image && item.text
-                            ? styles.infoItemDialog
-                            : undefined
-                        }
-                      >
-                        {item.image && (
-                          <img
-                            src={item.image.path}
-                            alt={item.image.altText || ""}
-                            className={
-                              item.text
-                                ? styles.infoItemCardImg
-                                : styles.infoItemDialogImg
-                            }
-                          />
-                        )}
-                        {item.text && (
-                          <p className={styles.infoItemDialogText}>
-                            {item.text}
-                          </p>
-                        )}
-                      </div>
-                    ),
-                  )}
-                </div>
-              )}
               <div className={styles.drawerBody}>
-                {drawerCard.teaser && (
-                  <p className={styles.drawerTeaser}>{drawerCard.teaser}</p>
-                )}
-                {drawerCard.longText}
+                <div className={styles.drawerBodyContent}>
+                  {drawerCard.teaser && (
+                    <p className={styles.drawerTeaser}>{drawerCard.teaser}</p>
+                  )}
+                  {drawerCard.longText}
+                </div>
               </div>
             </div>
           </div>

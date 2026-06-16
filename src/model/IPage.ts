@@ -53,6 +53,8 @@ export interface IBottomSection {
   image?: IImage;
   title?: string;
   text?: string;
+  buttonText?: string;
+  buttonUrl?: string;
 }
 
 export interface ICarouselItem {
@@ -101,9 +103,12 @@ export interface IPage {
   carouselSection?: ICarouselSection;
   cardSection?: ICardSection;
   infoSection?: IInfoSection;
+  /** @deprecated use bottomSections */
   bottomSection?: IBottomSection;
+  bottomSections?: IBottomSection[];
   menuItems?: IPage[];
   sectionOrder?: SectionType[];
+  hiddenSections?: SectionType[];
 }
 
 export interface ISiteSettings {

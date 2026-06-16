@@ -59,6 +59,46 @@ var api = app.MapGroup("/api");
 // ── GET /api/test ────────────────────────────────────────────────────────────
 api.MapGet("/test", () => Results.Ok(new { message = "testing api" }));
 
+// ── GET /api/images ──────────────────────────────────────────────────────────
+// Returns { images: ["/img/..."], folders: ["gallery", "gallery/sub", ...] }
+api.MapGet("/images", async (IConfiguration config) =>
+{
+    var remoteBase = config["Ftp:ImgBasePath"] ?? "/Content/img";
+    var remoteBaseNorm = remoteBase.Replace('\\', '/').TrimEnd('/');
+    var imageExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        { ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".avif" };
+
+    string Relative(string fullPath) =>
+        fullPath.Replace('\\', '/').Replace(remoteBaseNorm, "").TrimStart('/');
+
+    try
+    {
+        await using var ftp = await CreateFtpClient(config);
+        var listing = await ftp.GetListing(remoteBase, FtpListOption.Recursive);
+        await ftp.Disconnect();
+
+        var images = listing
+            .Where(item => item.Type == FtpObjectType.File &&
+                           imageExtensions.Contains(Path.GetExtension(item.FullName)))
+            .Select(item => "/img/" + Relative(item.FullName))
+            .OrderBy(p => p)
+            .ToList();
+
+        var folders = listing
+            .Where(item => item.Type == FtpObjectType.Directory)
+            .Select(item => Relative(item.FullName))
+            .Where(f => !string.IsNullOrEmpty(f))
+            .OrderBy(f => f)
+            .ToList();
+
+        return Results.Ok(new { images, folders });
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(detail: ex.Message, statusCode: 500);
+    }
+});
+
 // ── POST /api/deploy/pages ──────────────────────────────────────────────────
 // Body: raw JSON content of pages.json
 api.MapPost("/deploy/pages", async (HttpRequest req, IConfiguration config) =>
@@ -109,12 +149,46 @@ api.MapPost("/deploy/upload", async (HttpRequest req, IConfiguration config) =>
         await ftp.CreateDirectory(remoteDir, true);
         using var stream = file.OpenReadStream();
         await ftp.UploadStream(stream, remotePath, FtpRemoteExists.Overwrite, true);
-        await ftp.Disconnect();
 
         var publicPath = string.IsNullOrEmpty(folder)
             ? $"/img/{safeName}"
             : $"/img/{folder}/{safeName}";
 
+        // Update images.json on the server so the picker reflects new uploads.
+        var pagesDir = Path.GetDirectoryName(
+            (config["Ftp:PagesPath"] ?? "/Content/pages.json").Replace('\\', '/'))
+            ?? "/Content";
+        var imagesJsonRemotePath = $"{pagesDir}/images.json";
+        try
+        {
+            List<string> imagesList;
+            if (await ftp.FileExists(imagesJsonRemotePath))
+            {
+                using var ms = new MemoryStream();
+                await ftp.DownloadStream(ms, imagesJsonRemotePath);
+                ms.Position = 0;
+                imagesList = System.Text.Json.JsonSerializer.Deserialize<List<string>>(ms) ?? [];
+            }
+            else
+            {
+                imagesList = [];
+            }
+
+            if (!imagesList.Contains(publicPath))
+            {
+                imagesList.Add(publicPath);
+                var opts = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                var json = System.Text.Json.JsonSerializer.Serialize(imagesList, opts);
+                using var jsonStream = new MemoryStream(Encoding.UTF8.GetBytes(json));
+                await ftp.UploadStream(jsonStream, imagesJsonRemotePath, FtpRemoteExists.Overwrite, true);
+            }
+        }
+        catch
+        {
+            // Non-critical: file was uploaded successfully even if images.json update fails.
+        }
+
+        await ftp.Disconnect();
         return Results.Ok(new { success = true, path = publicPath });
     }
     catch (Exception ex)

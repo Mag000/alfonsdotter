@@ -18,6 +18,8 @@ import {
   Delete24Regular,
   Document24Regular,
   ErrorCircle16Regular,
+  Eye24Regular,
+  EyeOff24Regular,
   Warning16Regular,
 } from "@fluentui/react-icons";
 import React, { useCallback } from "react";
@@ -40,6 +42,7 @@ import {
 import { IShopItem } from "../../model/IShopItem";
 import { GalleryEditor } from "./GalleryEditor";
 import { ImageField } from "./ImageField";
+import { ImagePicker } from "./ImagePicker";
 import { MenuEditor } from "./MenuEditor";
 import { ShopEditor } from "./ShopEditor";
 
@@ -176,7 +179,10 @@ const inferSectionOrder = (page: IPage): SectionType[] =>
       case "infoSection":
         return (page.infoSection?.items?.length ?? 0) > 0;
       case "bottomSection":
-        return !!(page.bottomSection?.image || page.bottomSection?.text);
+        return (
+          page.bottomSections ??
+          (page.bottomSection ? [page.bottomSection] : [])
+        ).some((s) => s.image || s.text);
       default:
         return false;
     }
@@ -246,11 +252,40 @@ export const PageForm: React.FC<IPageFormProps> = ({
     [page, onChange],
   );
 
-  const handleBottomChange = useCallback(
-    <K extends keyof IBottomSection>(field: K, value: IBottomSection[K]) => {
+  const handleBottomSectionChange = useCallback(
+    <K extends keyof IBottomSection>(
+      idx: number,
+      field: K,
+      value: IBottomSection[K],
+    ) => {
+      const sections = [
+        ...(page.bottomSections ??
+          (page.bottomSection ? [page.bottomSection] : [{}])),
+      ];
+      sections[idx] = { ...sections[idx], [field]: value };
+      onChange({ ...page, bottomSections: sections, bottomSection: undefined });
+    },
+    [page, onChange],
+  );
+
+  const handleAddBottomSection = useCallback(() => {
+    const sections = [
+      ...(page.bottomSections ??
+        (page.bottomSection ? [page.bottomSection] : [{}])),
+      {},
+    ];
+    onChange({ ...page, bottomSections: sections, bottomSection: undefined });
+  }, [page, onChange]);
+
+  const handleRemoveBottomSection = useCallback(
+    (idx: number) => {
+      const sections = (
+        page.bottomSections ?? (page.bottomSection ? [page.bottomSection] : [])
+      ).filter((_, i) => i !== idx);
       onChange({
         ...page,
-        bottomSection: { ...(page.bottomSection ?? {}), [field]: value },
+        bottomSections: sections.length ? sections : undefined,
+        bottomSection: undefined,
       });
     },
     [page, onChange],
@@ -445,8 +480,8 @@ export const PageForm: React.FC<IPageFormProps> = ({
         update.carouselSection = { items: [] };
       if (type === "infoSection" && !page.infoSection)
         update.infoSection = { items: [] };
-      if (type === "bottomSection" && !page.bottomSection)
-        update.bottomSection = {};
+      if (type === "bottomSection" && !page.bottomSections?.length)
+        update.bottomSections = [{}];
       onChange({ ...page, ...update });
     },
     [page, onChange, effectiveOrder],
@@ -473,7 +508,8 @@ export const PageForm: React.FC<IPageFormProps> = ({
           update.infoSection = undefined;
           break;
         case "bottomSection":
-          update.bottomSection = undefined;
+          update.bottomSections = undefined;
+          (update as Partial<IPage>).bottomSection = undefined;
           break;
       }
       onChange({ ...page, ...update });
@@ -509,6 +545,20 @@ export const PageForm: React.FC<IPageFormProps> = ({
 
   const availableSections = ALL_SECTIONS.filter(
     (t) => !effectiveOrder.includes(t),
+  );
+
+  const hiddenSections = page.hiddenSections ?? [];
+  const isSectionHidden = (type: SectionType) => hiddenSections.includes(type);
+
+  const handleToggleVisibility = useCallback(
+    (type: SectionType) => {
+      const hidden = page.hiddenSections ?? [];
+      const next = hidden.includes(type)
+        ? hidden.filter((t) => t !== type)
+        : [...hidden, type];
+      onChange({ ...page, hiddenSections: next.length ? next : undefined });
+    },
+    [page, onChange],
   );
 
   const renderSectionEditor = (type: SectionType) => {
@@ -746,10 +796,10 @@ export const PageForm: React.FC<IPageFormProps> = ({
                   />
                 </div>
                 <Field label="Sökväg">
-                  <Input
+                  <ImagePicker
                     value={item.path}
-                    onChange={(e, data) =>
-                      handleCarouselItemChange(i, "path", data.value)
+                    onChange={(value) =>
+                      handleCarouselItemChange(i, "path", value)
                     }
                     placeholder="/img/mapp/bild.webp"
                   />
@@ -826,32 +876,99 @@ export const PageForm: React.FC<IPageFormProps> = ({
             </Button>
           </div>
         );
-      case "bottomSection":
+      case "bottomSection": {
+        const bSections =
+          page.bottomSections ??
+          (page.bottomSection ? [page.bottomSection] : [{}]);
         return (
           <>
-            <ImageField
-              label="Bild"
-              image={page.bottomSection?.image}
-              onChange={(image: IImage | undefined) =>
-                handleBottomChange("image", image)
-              }
-            />
-            <Field label="Titel">
-              <Input
-                value={page.bottomSection?.title || ""}
-                onChange={(e, data) => handleBottomChange("title", data.value)}
-              />
-            </Field>
-            <Field label="Text">
-              <Textarea
-                value={page.bottomSection?.text || ""}
-                onChange={(e, data) => handleBottomChange("text", data.value)}
-                rows={5}
-                resize="vertical"
-              />
-            </Field>
+            {bSections.map((bs, idx) => (
+              <div
+                key={idx}
+                style={{
+                  border: "1px solid #e0e0e0",
+                  borderRadius: "4px",
+                  padding: "12px",
+                  marginBottom: "12px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <Text weight="semibold" size={200}>
+                    Bottensektion {bSections.length > 1 ? idx + 1 : ""}
+                  </Text>
+                  {bSections.length > 1 && (
+                    <Button
+                      appearance="subtle"
+                      icon={<Delete24Regular />}
+                      size="small"
+                      onClick={() => handleRemoveBottomSection(idx)}
+                      aria-label="Ta bort"
+                    />
+                  )}
+                </div>
+                <ImageField
+                  label="Bild"
+                  image={bs.image}
+                  onChange={(image: IImage | undefined) =>
+                    handleBottomSectionChange(idx, "image", image)
+                  }
+                />
+                <Field label="Titel">
+                  <Input
+                    value={bs.title || ""}
+                    onChange={(e, data) =>
+                      handleBottomSectionChange(idx, "title", data.value)
+                    }
+                  />
+                </Field>
+                <Field label="Text">
+                  <Textarea
+                    value={bs.text || ""}
+                    onChange={(e, data) =>
+                      handleBottomSectionChange(idx, "text", data.value)
+                    }
+                    rows={5}
+                    resize="vertical"
+                  />
+                </Field>
+                <Field label="Knapptext">
+                  <Input
+                    value={bs.buttonText || ""}
+                    onChange={(e, data) =>
+                      handleBottomSectionChange(idx, "buttonText", data.value)
+                    }
+                    placeholder="T.ex. Läs mer"
+                  />
+                </Field>
+                <Field label="Knapplänk (URL)">
+                  <Input
+                    value={bs.buttonUrl || ""}
+                    onChange={(e, data) =>
+                      handleBottomSectionChange(idx, "buttonUrl", data.value)
+                    }
+                    placeholder="https://..."
+                  />
+                </Field>
+              </div>
+            ))}
+            <Button
+              appearance="outline"
+              icon={<Add24Regular />}
+              size="small"
+              onClick={handleAddBottomSection}
+            >
+              Lägg till bottensektion
+            </Button>
           </>
         );
+      }
       default:
         return null;
     }
@@ -947,12 +1064,42 @@ export const PageForm: React.FC<IPageFormProps> = ({
       {/* Ordered sections */}
       {effectiveOrder.map((type, index) => (
         <React.Fragment key={type}>
-          <div className={styles.sectionPanel}>
+          <div
+            className={styles.sectionPanel}
+            style={isSectionHidden(type) ? { opacity: 0.45 } : undefined}
+          >
             <div className={styles.sectionPanelHeader}>
               <Text className={styles.sectionTitle}>
                 {SECTION_LABELS[type]}
+                {isSectionHidden(type) && (
+                  <span
+                    style={{
+                      marginLeft: "8px",
+                      fontSize: "0.75em",
+                      color: "#999",
+                      fontWeight: 400,
+                    }}
+                  >
+                    (dold)
+                  </span>
+                )}
               </Text>
               <div className={styles.sectionPanelControls}>
+                <Button
+                  appearance="subtle"
+                  icon={
+                    isSectionHidden(type) ? (
+                      <EyeOff24Regular />
+                    ) : (
+                      <Eye24Regular />
+                    )
+                  }
+                  size="small"
+                  onClick={() => handleToggleVisibility(type)}
+                  aria-label={
+                    isSectionHidden(type) ? "Visa sektion" : "Dölj sektion"
+                  }
+                />
                 <Button
                   appearance="subtle"
                   icon={<ArrowUp24Regular />}
